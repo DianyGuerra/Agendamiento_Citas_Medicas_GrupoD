@@ -1,0 +1,1 @@
+export { useRecord } from './useRecord';
