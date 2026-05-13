@@ -69,8 +69,10 @@ const validateType = (value, type) => {
       return typeof value === 'number' && !isNaN(value);
     case 'boolean':
       return typeof value === 'boolean';
-    case 'email':
-      return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    case 'email':{
+      if (typeof value !== 'string' || value.length > 254) return false;
+      const html5EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;    
+      return html5EmailRegex.test(value);}
     case 'uuid':
       return typeof value === 'string' && 
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);

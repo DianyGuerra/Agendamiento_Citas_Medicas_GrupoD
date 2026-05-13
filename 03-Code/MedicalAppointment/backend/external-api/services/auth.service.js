@@ -399,9 +399,11 @@ class AuthService {
   }
 
   _isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
+  if (!email || email.length > 254) return false;
+  const emailRegex = /^[^@\s.]+@[^@\s.]+\.[^@\s.]+$/;
+  
+  return emailRegex.test(email);
+}
 
   _validatePasswordStrength(password) {
     const errors = [];
