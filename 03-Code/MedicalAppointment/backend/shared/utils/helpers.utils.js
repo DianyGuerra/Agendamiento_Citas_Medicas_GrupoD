@@ -54,9 +54,10 @@ const formatDateDisplay = (date) => {
  * @param {string} prefix - Code prefix
  * @returns {string} Reference code
  */
+const crypto = require('node:crypto');
 const generateReferenceCode = (prefix) => {
   const timestamp = Date.now().toString(36).toUpperCase();
-  const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const random = crypto.randomBytes(3).toString('hex').substring(0, 4).toUpperCase();
   return `${prefix}-${timestamp}-${random}`;
 };
 

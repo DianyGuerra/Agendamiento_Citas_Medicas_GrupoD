@@ -16,6 +16,7 @@ const { parsePaginationQuery, createPagination } = require('../../shared/utils/h
 const bcrypt = require('bcrypt');
 const { supabase } = require('../../shared/config/database.config');
 const { createAuditLog, AuditActions } = require('../../shared/utils/audit.utils');
+const crypto = require('node:crypto');
 
 class DoctorController {
   /**
@@ -403,7 +404,8 @@ class DoctorController {
     }
 
     // Generate new temporary password
-    const tempPassword = `${user.cedula || 'TEMP'}${(user.last_name || 'XXX').substring(0, 3).toUpperCase()}!${Math.floor(Math.random() * 1000)}`;
+    const secureRandom = crypto.randomInt(1000, 10000);
+    const tempPassword = `${user.cedula || 'TEMP'}${(user.last_name || 'XXX').substring(0, 3).toUpperCase()}!${secureRandom}`;
     const hashedPassword = await bcrypt.hash(tempPassword, 12);
 
     // Update password

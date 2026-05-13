@@ -440,11 +440,15 @@ class BillingCalculationService {
 
   _generateInvoiceNumber() {
     const prefix = 'INV';
-    const date = new Date();
-    const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
-    const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    
+
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array); 
+    const random = (array[0] % 10000).toString().padStart(4, '0');
+
     return `${prefix}-${dateStr}-${random}`;
-  }
+}
 
   /**
    * Get billing status string - billings.status is a varchar, not a FK
