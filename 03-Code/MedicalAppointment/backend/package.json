@@ -9,7 +9,7 @@
     "start:crud": "node crud-api/server.js",
     "start:business": "node business-api/server.js",
     "start:external": "node external-api/server.js",
-    "start:all": "npm run start:crud & npm run start:business & npm run start:external",
+    "start:all": "concurrently -n CRUD,BUSINESS,EXTERNAL -c blue,green,magenta \"node crud-api/server.js\" \"node business-api/server.js\" \"node external-api/server.js\"",
     "dev:crud": "nodemon crud-api/server.js",
     "dev:business": "nodemon business-api/server.js",
     "dev:external": "nodemon external-api/server.js"
@@ -44,6 +44,7 @@
     "winston": "^3.14.2"
   },
   "devDependencies": {
+     "concurrently": "^9.1.2",
     "nodemon": "^3.1.4"
   }
 }
