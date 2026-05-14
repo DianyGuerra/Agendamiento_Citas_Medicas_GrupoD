@@ -92,32 +92,38 @@ class ScheduleExceptionRepository extends BaseRepository {
    * @returns {Promise<Array>}
    */
   async createVacation(doctorId, startDate, endDate, reason = null) {
-    const dates = [];
-    const current = new Date(startDate);
-    const end = new Date(endDate);
+  const dates = [];
+  const current = new Date(startDate);
+  const end = new Date(endDate);
 
-    while (current <= end) {
-      dates.push({
-        doctor_id: doctorId,
-        exception_date: current.toISOString().split('T')[0],
-        exception_type: 'vacation',
-        is_all_day: true,
-        reason
-      });
-      current.setDate(current.getDate() + 1);
-    }
+  // Calculamos el número de iteraciones 
+  const diffInMs = end.getTime() - current.getTime();
+  const totalDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
-    const { data, error } = await this.db
-      .from(this.tableName)
-      .insert(dates)
-      .select();
+  //Usamos un bucle for basado en el conteo de días.
+  for (let i = 0; i <= totalDays; i++) {
+    const dateToInsert = new Date(current);
+    dateToInsert.setDate(current.getDate() + i);
 
-    if (error) {
-      throw new Error(`Database error: ${error.message}`);
-    }
-
-    return data;
+    dates.push({
+      doctor_id: doctorId,
+      exception_date: dateToInsert.toISOString().split('T')[0],
+      exception_type: 'vacation',
+      is_all_day: true,
+      reason
+    });
   }
+  const { data, error } = await this.db
+    .from(this.tableName)
+    .insert(dates)
+    .select();
+
+  if (error) {
+    throw new Error(`Database error: ${error.message}`);
+  }
+
+  return data;
+}
 
   /**
    * Delete exceptions for date range

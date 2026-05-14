@@ -163,7 +163,7 @@ class AuditLogRepository extends BaseRepository {
     }
 
     // Get unique values
-    const uniqueTables = [...new Set(data.map(d => d.table_name))].sort();
+    const uniqueTables = [...new Set(data.map(d => d.table_name))].sort((a, b) => a.localeCompare(b));
     return uniqueTables;
   }
 
@@ -181,7 +181,7 @@ class AuditLogRepository extends BaseRepository {
       throw new Error(`Database error: ${error.message}`);
     }
 
-    const uniqueActions = [...new Set(data.map(d => d.action))].sort();
+    const uniqueActions = [...new Set(data.map(d => d.action))].sort((a, b) => a.localeCompare(b));
     return uniqueActions;
   }
 }

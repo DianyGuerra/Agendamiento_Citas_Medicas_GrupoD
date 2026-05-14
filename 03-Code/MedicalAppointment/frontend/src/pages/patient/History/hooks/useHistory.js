@@ -50,7 +50,7 @@ export function useHistory() {
     consultationNotes.forEach((r) => {
       if (r.specialty_name) specs.add(r.specialty_name);
     });
-    return Array.from(specs).sort();
+    return Array.from(specs).sort((a, b) => a.localeCompare(b));
   }, [consultationNotes]);
 
   const filteredHistory = useMemo(() => {

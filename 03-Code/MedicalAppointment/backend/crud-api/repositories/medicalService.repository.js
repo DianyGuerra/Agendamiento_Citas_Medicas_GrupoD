@@ -82,7 +82,7 @@ class MedicalServiceRepository extends BaseRepository {
     if (error) throw error;
     
     const categories = [...new Set(data.map(d => d.category))];
-    return categories.sort();
+    return categories.sort((a, b) => a.localeCompare(b));
   }
 }
 

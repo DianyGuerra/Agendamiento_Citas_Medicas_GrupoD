@@ -111,48 +111,59 @@ export default function DoctorSchedule() {
   };
 
   const handleRequestSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  
+  if (!requestForm.exception_date) {
+    showNotification('Debe seleccionar una fecha', 'error');
+    return;
+  }
+
+  try {
+    setSubmitting(true);
     
-    if (!requestForm.exception_date) {
-      showNotification('Debe seleccionar una fecha', 'error');
-      return;
-    }
-
-    try {
-      setSubmitting(true);
+    if (requestForm.exception_type === 'vacation' && requestForm.end_date) {
+      const start = new Date(requestForm.exception_date);
+      const end = new Date(requestForm.end_date);
       
-      // If vacation with range, create multiple requests
-      if (requestForm.exception_type === 'vacation' && requestForm.end_date) {
-        const start = new Date(requestForm.exception_date);
-        const end = new Date(requestForm.end_date);
-        
-        if (end < start) {
-          showNotification('La fecha de fin debe ser posterior a la fecha de inicio', 'error');
-          setSubmitting(false);
-          return;
-        }
+      if (end < start) {
+        showNotification('La fecha de fin debe ser posterior a la fecha de inicio', 'error');
+        setSubmitting(false);
+        return;
+      }
 
-        // Create request for each day
-        const current = new Date(start);
-        while (current <= end) {
-          await DoctorModel.requestException({
+      // Calculamos el número de días para el bucle for
+      const diffInMs = end.getTime() - start.getTime();
+      const totalDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+      // creamos todas las promesas para enviarlas en paralelo 
+      const requests = [];
+      for (let i = 0; i <= totalDays; i++) {
+        const tempDate = new Date(start);
+        tempDate.setDate(start.getDate() + i);
+        
+        requests.push(
+          DoctorModel.requestException({
             exception_type: 'vacation',
-            exception_date: current.toISOString().split('T')[0],
+            exception_date: tempDate.toISOString().split('T')[0],
             is_all_day: true,
             reason: requestForm.reason
-          });
-          current.setDate(current.getDate() + 1);
-        }
-      } else {
-        await DoctorModel.requestException({
-          exception_type: requestForm.exception_type,
-          exception_date: requestForm.exception_date,
-          is_all_day: requestForm.is_all_day,
-          exception_start_time: requestForm.is_all_day ? null : requestForm.exception_start_time,
-          exception_end_time: requestForm.is_all_day ? null : requestForm.exception_end_time,
-          reason: requestForm.reason
-        });
+          })
+        );
       }
+      // Ejecutamos todas las peticiones al mismo tiempo
+      await Promise.all(requests);
+
+    } else {
+      // Petición única para otros tipos o un solo día
+      await DoctorModel.requestException({
+        exception_type: requestForm.exception_type,
+        exception_date: requestForm.exception_date,
+        is_all_day: requestForm.is_all_day,
+        exception_start_time: requestForm.is_all_day ? null : requestForm.exception_start_time,
+        exception_end_time: requestForm.is_all_day ? null : requestForm.exception_end_time,
+        reason: requestForm.reason
+      });
+    }
 
       showNotification('Solicitud enviada correctamente', 'success');
       setShowRequestModal(false);
