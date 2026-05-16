@@ -309,23 +309,23 @@ class BillingCalculationService {
 
     data.forEach(bill => {
       const statusCode = bill.status || 'unknown';
-      stats.totalRevenue += parseFloat(bill.total_amount) || 0;
+      stats.totalRevenue += Number.parseFloat(bill.total_amount) || 0;
       
       if (!stats.byStatus[statusCode]) {
         stats.byStatus[statusCode] = { count: 0, amount: 0 };
       }
       stats.byStatus[statusCode].count++;
-      stats.byStatus[statusCode].amount += parseFloat(bill.total_amount) || 0;
+      stats.byStatus[statusCode].amount += Number.parseFloat(bill.total_amount) || 0;
 
       switch (statusCode) {
         case 'paid':
-          stats.paidAmount += parseFloat(bill.total_amount) || 0;
+          stats.paidAmount += Number.parseFloat(bill.total_amount) || 0;
           break;
         case 'pending':
-          stats.pendingAmount += parseFloat(bill.total_amount) || 0;
+          stats.pendingAmount += Number.parseFloat(bill.total_amount) || 0;
           break;
         case 'overdue':
-          stats.overdueAmount += parseFloat(bill.total_amount) || 0;
+          stats.overdueAmount += Number.parseFloat(bill.total_amount) || 0;
           break;
       }
     });
@@ -387,7 +387,7 @@ class BillingCalculationService {
   _calculateBaseAmount(appointment) {
     // Priority 1: Specialty fee from database
     if (appointment.doctors?.specialties?.consultation_fee) {
-      return parseFloat(appointment.doctors.specialties.consultation_fee);
+      return Number.parseFloat(appointment.doctors.specialties.consultation_fee);
     }
     
     // Priority 2: Default
@@ -417,7 +417,7 @@ class BillingCalculationService {
       .eq('is_active', true)
       .single();
 
-    return parseFloat(data?.coverage_percentage || 15); // Default 15% if not found
+    return Number.parseFloat(data?.coverage_percentage || 15); // Default 15% if not found
   }
 
   _getDurationMultiplier(durationMinutes) {

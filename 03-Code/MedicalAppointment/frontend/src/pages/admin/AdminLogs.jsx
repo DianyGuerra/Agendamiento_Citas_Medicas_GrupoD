@@ -423,44 +423,44 @@ export default function AdminLogs() {
               <div className="p-4 sm:p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs text-gray-500">Fecha y Hora</label>
+                    <span className="block text-xs text-gray-500">Fecha y Hora</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">{formatDate(selectedLog.timestamp)}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Usuario</label>
+                    <span className="block text-xs text-gray-500">Usuario</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">
                       {selectedLog.users?.first_name} {selectedLog.users?.last_name}
                     </p>
                     <p className="text-xs sm:text-sm text-gray-500 truncate">{selectedLog.users?.email}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Tabla</label>
+                    <span className="block text-xs text-gray-500">Tabla</span>
                     <code className="bg-gray-100 px-2 py-1 rounded text-xs sm:text-sm">{selectedLog.table_name}</code>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">ID Registro</label>
+                    <span className="block text-xs text-gray-500">ID Registro</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">{selectedLog.record_id || '-'}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Dirección IP</label>
+                    <span className="block text-xs text-gray-500">Dirección IP</span>
                     <p className="font-mono text-gray-800 text-sm sm:text-base">{selectedLog.ip_address || '-'}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">User Agent</label>
+                    <span className="block text-xs text-gray-500">User Agent</span>
                     <p className="text-xs sm:text-sm text-gray-600 truncate">{selectedLog.user_agent || '-'}</p>
                   </div>
                 </div>
 
                 {selectedLog.description && (
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1">Descripción</label>
+                    <span className="block text-xs text-gray-500 mb-1">Descripción</span>
                     <p className="p-3 bg-gray-50 rounded-lg text-gray-700 text-sm">{selectedLog.description}</p>
                   </div>
                 )}
 
                 {selectedLog.old_values && (
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1">Valores Anteriores</label>
+                    <span className="block text-xs text-gray-500 mb-1">Valores Anteriores</span>
                     <pre className="p-3 bg-red-50 rounded-lg text-xs sm:text-sm text-red-800 overflow-x-auto">
                       {JSON.stringify(selectedLog.old_values, null, 2)}
                     </pre>
@@ -469,7 +469,7 @@ export default function AdminLogs() {
 
                 {selectedLog.new_values && (
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1">Nuevos Valores</label>
+                    <span className="block text-xs text-gray-500 mb-1">Nuevos Valores</span>
                     <pre className="p-3 bg-green-50 rounded-lg text-xs sm:text-sm text-green-800 overflow-x-auto">
                       {JSON.stringify(selectedLog.new_values, null, 2)}
                     </pre>

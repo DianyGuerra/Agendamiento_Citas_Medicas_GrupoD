@@ -54,9 +54,9 @@ export default function UploadModal({
 
           {/* Lab Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <span className="block text-sm font-medium text-gray-700 mb-2">
               Nombre del Laboratorio (opcional)
-            </label>
+            </span>
             <input
               type="text"
               value={uploadData.lab_name}
@@ -164,9 +164,9 @@ export default function UploadModal({
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <span className="block text-sm font-medium text-gray-700 mb-2">
               Notas adicionales
-            </label>
+            </span>
             <textarea
               value={uploadData.notes}
               onChange={(e) => setUploadData({ ...uploadData, notes: e.target.value })}

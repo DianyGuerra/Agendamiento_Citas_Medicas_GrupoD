@@ -190,12 +190,12 @@ export default function VerifyPrescriptionQR() {
               {/* Medical Info */}
               <div className="border-t pt-6 space-y-6">
                 <div>
-                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Diagnóstico</label>
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Diagnóstico</span>
                   <p className="text-gray-900 font-medium mt-2">{result.data?.prescription?.diagnosis || 'No especificado'}</p>
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Medicamentos Prescritos</label>
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Medicamentos Prescritos</span>
                   <div className="mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
                     <pre className="text-gray-800 whitespace-pre-wrap font-medium text-sm font-sans">{formatMedications(result.data?.prescription?.medications)}</pre>
                   </div>
@@ -203,14 +203,14 @@ export default function VerifyPrescriptionQR() {
 
                 {result.data?.prescription?.instructions && (
                   <div>
-                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Instrucciones de Uso</label>
+                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Instrucciones de Uso</span>
                     <p className="text-gray-800 mt-2 leading-relaxed text-sm">{result.data?.prescription?.instructions}</p>
                   </div>
                 )}
 
                 {result.data?.prescription?.duration && (
                   <div>
-                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Duración del Tratamiento</label>
+                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Duración del Tratamiento</span>
                     <p className="text-gray-900 font-medium mt-2">{result.data?.prescription?.duration}</p>
                   </div>
                 )}
@@ -218,7 +218,7 @@ export default function VerifyPrescriptionQR() {
 
               {/* Validity Status */}
               <div className="mt-6 pt-6 border-t">
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</label>
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</span>
                 <div className="flex items-center gap-2 mt-3">
                   {!result.data?.prescription?.expired ? (
                     <>

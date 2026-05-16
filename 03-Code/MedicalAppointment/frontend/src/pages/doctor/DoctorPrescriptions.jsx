@@ -1113,9 +1113,9 @@ export default function DoctorPrescriptions() {
                 </p>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Diagnóstico (puede modificar)
-                  </label>
+                  </span>
                   <input
                     type="text"
                     value={approveData.diagnosis}
@@ -1126,9 +1126,9 @@ export default function DoctorPrescriptions() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Duración (puede modificar)
-                  </label>
+                  </span>
                   <input
                     type="text"
                     value={approveData.duration}
@@ -1139,9 +1139,9 @@ export default function DoctorPrescriptions() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Respuesta para el paciente (opcional)
-                  </label>
+                  </span>
                   <textarea
                     value={approveData.response || ''}
                     onChange={(e) => setApproveData({...approveData, response: e.target.value})}
@@ -1198,9 +1198,9 @@ export default function DoctorPrescriptions() {
                 </p>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Motivo del rechazo <span className="text-red-500">*</span>
-                  </label>
+                  </span>
                   <textarea
                     value={rejectReason}
                     onChange={(e) => setRejectReason(e.target.value)}
@@ -1453,9 +1453,9 @@ export default function DoctorPrescriptions() {
 
                 {/* Diagnosis */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <span className="block text-sm font-semibold text-gray-700 mb-2">
                     Diagnóstico (opcional)
-                  </label>
+                  </span>
                   <input
                     type="text"
                     value={generalDiagnosis}
@@ -1504,7 +1504,7 @@ export default function DoctorPrescriptions() {
                   <div className="bg-white p-4 rounded-lg border border-green-200">
                     <div className="grid grid-cols-2 gap-3 mb-3">
                       <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Medicamento *</label>
+                        <span className="block text-xs font-medium text-gray-600 mb-1">Medicamento *</span>
                         <input
                           type="text"
                           value={newMedication.medication}
@@ -1514,7 +1514,7 @@ export default function DoctorPrescriptions() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Dosis *</label>
+                        <span className="block text-xs font-medium text-gray-600 mb-1">Dosis *</span>
                         <input
                           type="text"
                           value={newMedication.dosage}
@@ -1526,7 +1526,7 @@ export default function DoctorPrescriptions() {
                     </div>
                     <div className="grid grid-cols-2 gap-3 mb-3">
                       <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Frecuencia</label>
+                        <span className="block text-xs font-medium text-gray-600 mb-1">Frecuencia</span>
                         <input
                           type="text"
                           value={newMedication.frequency}
@@ -1536,7 +1536,7 @@ export default function DoctorPrescriptions() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Duración</label>
+                        <span className="block text-xs font-medium text-gray-600 mb-1">Duración</span>
                         <input
                           type="text"
                           value={newMedication.duration}
@@ -1547,7 +1547,7 @@ export default function DoctorPrescriptions() {
                       </div>
                     </div>
                     <div className="mb-3">
-                      <label className="block text-xs font-medium text-gray-600 mb-1">Instrucciones específicas</label>
+                      <span className="block text-xs font-medium text-gray-600 mb-1">Instrucciones específicas</span>
                       <input
                         type="text"
                         value={newMedication.instructions}
@@ -1568,9 +1568,9 @@ export default function DoctorPrescriptions() {
 
                 {/* General Instructions */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <span className="block text-sm font-semibold text-gray-700 mb-2">
                     Indicaciones Generales (opcional)
-                  </label>
+                  </span>
                   <textarea
                     value={generalInstructions}
                     onChange={(e) => setGeneralInstructions(e.target.value)}
@@ -1582,9 +1582,9 @@ export default function DoctorPrescriptions() {
 
                 {/* General Duration */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <span className="block text-sm font-semibold text-gray-700 mb-2">
                     Duración General del Tratamiento (opcional)
-                  </label>
+                  </span>
                   <input
                     type="text"
                     value={generalDuration}

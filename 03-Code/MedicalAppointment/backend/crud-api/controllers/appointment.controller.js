@@ -119,8 +119,8 @@ class AppointmentController {
     const appointments = await appointmentRepository.findByPatient(patientUserId, {
       status,
       upcoming: upcoming === 'true',
-      limit: parseInt(limit) || 100, // Increased limit to show more appointments
-      offset: parseInt(offset) || 0
+      limit: Number.parseInt(limit) || 100, // Increased limit to show more appointments
+      offset: Number.parseInt(offset) || 0
     });
 
     console.log('[Appointments] Found', appointments.length, 'appointments');
@@ -162,8 +162,8 @@ class AppointmentController {
     const appointments = await appointmentRepository.findByPatient(patientUserId, {
       status,
       upcoming: upcoming === 'true',
-      limit: parseInt(limit) || 50,
-      offset: parseInt(offset) || 0
+      limit: Number.parseInt(limit) || 50,
+      offset: Number.parseInt(offset) || 0
     });
 
     // Transform nested data to flat structure
@@ -197,11 +197,11 @@ class AppointmentController {
 
     const appointments = await appointmentRepository.findByDoctor(doctor.id, {
       date,
-      status: status ? parseInt(status) : undefined,
+      status: status ? Number.parseInt(status) : undefined,
       startDate,
       endDate,
-      limit: parseInt(limit) || 20,
-      offset: parseInt(offset) || 0
+      limit: Number.parseInt(limit) || 20,
+      offset: Number.parseInt(offset) || 0
     });
 
     return ResponseBuilder.success(res, appointments);
@@ -346,7 +346,7 @@ class AppointmentController {
 
     // Auto-generate billing when appointment is marked as completed
     let billingGenerated = null;
-    if (parseInt(status_id) === AppointmentStatus.COMPLETED) {
+    if (Number.parseInt(status_id) === AppointmentStatus.COMPLETED) {
       try {
         // Check if billing already exists
         const { data: existingBilling } = await supabase
@@ -608,14 +608,14 @@ class AppointmentController {
 
     const now = new Date();
     const futureDate = new Date();
-    futureDate.setDate(now.getDate() + parseInt(days));
+    futureDate.setDate(now.getDate() + Number.parseInt(days));
 
     let appointments;
 
     if (userRole === 'patient') {
       appointments = await appointmentRepository.findByPatient(userId, {
         upcoming: true,
-        limit: parseInt(limit)
+        limit: Number.parseInt(limit)
       });
     } else if (userRole === 'doctor') {
       const doctor = await doctorRepository.findByUserId(userId);
@@ -624,7 +624,7 @@ class AppointmentController {
           startDate: now.toISOString().split('T')[0],
           endDate: futureDate.toISOString().split('T')[0],
           status: AppointmentStatus.SCHEDULED,
-          limit: parseInt(limit)
+          limit: Number.parseInt(limit)
         });
       }
     }

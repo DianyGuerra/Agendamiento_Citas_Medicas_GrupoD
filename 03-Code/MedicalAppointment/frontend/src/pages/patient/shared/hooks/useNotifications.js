@@ -212,7 +212,7 @@ export async function generateNotifications(userId) {
           id: `billing-new-${billing.id}`,
           type: 'billing_new',
           title: 'Nueva Factura Generada',
-          message: `Tienes una nueva factura por $${parseFloat(billing.total_amount).toFixed(2)}.`,
+          message: `Tienes una nueva factura por $${Number.parseFloat(billing.total_amount).toFixed(2)}.`,
           date: billing.created_at,
           relatedId: billing.id,
           relatedType: 'billing'
@@ -227,7 +227,7 @@ export async function generateNotifications(userId) {
             id: `billing-paid-${billing.id}`,
             type: 'billing_paid',
             title: 'Pago Confirmado',
-            message: `Tu pago de $${parseFloat(billing.total_amount).toFixed(2)} ha sido confirmado.`,
+            message: `Tu pago de $${Number.parseFloat(billing.total_amount).toFixed(2)} ha sido confirmado.`,
             date: billing.payment_date,
             relatedId: billing.id,
             relatedType: 'billing'
@@ -242,7 +242,7 @@ export async function generateNotifications(userId) {
             id: `billing-overdue-${billing.id}`,
             type: 'billing_overdue',
             title: 'Factura Vencida',
-            message: `La factura por $${parseFloat(billing.total_amount).toFixed(2)} está vencida.`,
+            message: `La factura por $${Number.parseFloat(billing.total_amount).toFixed(2)} está vencida.`,
             date: billing.due_date,
             relatedId: billing.id,
             relatedType: 'billing'

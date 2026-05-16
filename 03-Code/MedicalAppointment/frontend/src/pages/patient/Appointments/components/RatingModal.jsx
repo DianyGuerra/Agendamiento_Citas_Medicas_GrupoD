@@ -155,9 +155,9 @@ export default function RatingModal({ appointment, onSubmit, onClose }) {
 
           {/* Comment */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <span className="block text-sm font-medium text-gray-700 mb-2">
               Comentario (opcional)
-            </label>
+            </span>
             <textarea
               value={ratingData.comment}
               onChange={(e) => setRatingData({...ratingData, comment: e.target.value})}

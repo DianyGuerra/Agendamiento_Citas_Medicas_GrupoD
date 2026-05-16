@@ -134,7 +134,7 @@ export default function PatientLayout({ children }) {
       // Fallback to localStorage value
       const storedCount = localStorage.getItem('patient_unread_notifications_count');
       if (storedCount) {
-        setNotificationCount(parseInt(storedCount, 10) || 0);
+        setNotificationCount(Number.parseInt(storedCount, 10) || 0);
       }
     }
   }, []);

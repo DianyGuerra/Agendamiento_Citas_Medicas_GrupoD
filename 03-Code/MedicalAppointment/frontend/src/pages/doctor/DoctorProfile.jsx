@@ -170,9 +170,9 @@ export default function DoctorProfile() {
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                     Nombre
-                  </label>
+                  </span>
                   <input
                     type="text"
                     name="first_name"
@@ -184,9 +184,9 @@ export default function DoctorProfile() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                     Apellido
-                  </label>
+                  </span>
                   <input
                     type="text"
                     name="last_name"
@@ -201,9 +201,9 @@ export default function DoctorProfile() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-2">
                     Email
-                  </label>
+                  </span>
                   <input
                     type="email"
                     name="email"
@@ -214,9 +214,9 @@ export default function DoctorProfile() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-2">
                     Teléfono
-                  </label>
+                  </span>
                   <input
                     type="tel"
                     name="phone_number"
@@ -229,9 +229,9 @@ export default function DoctorProfile() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-2">
                     Especialidad
-                  </label>
+                  </span>
                   <input
                     type="text"
                     name="specialty_name"
@@ -242,9 +242,9 @@ export default function DoctorProfile() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-2">
                     ID Profesional
-                  </label>
+                  </span>
                   <input
                     type="text"
                     name="professional_id"
@@ -256,9 +256,9 @@ export default function DoctorProfile() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <span className="block text-sm font-medium text-gray-700 mb-2">
                   Biografía
-                </label>
+                </span>
                 <textarea
                   name="bio"
                   value={formData.bio}
@@ -291,9 +291,9 @@ export default function DoctorProfile() {
 
             <form onSubmit={handlePasswordSubmit} className="space-y-6 max-w-md">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <span className="block text-sm font-medium text-gray-700 mb-2">
                   Contraseña Actual
-                </label>
+                </span>
                 <input
                   type="password"
                   name="current_password"
@@ -305,9 +305,9 @@ export default function DoctorProfile() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <span className="block text-sm font-medium text-gray-700 mb-2">
                   Nueva Contraseña
-                </label>
+                </span>
                 <input
                   type="password"
                   name="new_password"
@@ -319,9 +319,9 @@ export default function DoctorProfile() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <span className="block text-sm font-medium text-gray-700 mb-2">
                   Confirmar Nueva Contraseña
-                </label>
+                </span>
                 <input
                   type="password"
                   name="confirm_password"

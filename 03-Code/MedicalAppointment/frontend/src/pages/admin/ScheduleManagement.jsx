@@ -668,7 +668,7 @@ export default function ScheduleManagement() {
               
               <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Doctor</label>
+                  <span className="block text-sm font-medium text-gray-700 mb-2">Doctor</span>
                   <select
                     value={scheduleForm.doctor_id}
                     onChange={(e) => setScheduleForm(prev => ({ ...prev, doctor_id: e.target.value }))}
@@ -717,7 +717,7 @@ export default function ScheduleManagement() {
                         {schedule.is_working_day && (
                           <div className="grid grid-cols-2 gap-2 sm:gap-4">
                             <div>
-                              <label className="block text-xs text-gray-500 mb-1">Hora inicio</label>
+                              <span className="block text-xs text-gray-500 mb-1">Hora inicio</span>
                               <input
                                 type="time"
                                 value={schedule.start_time || ''}
@@ -731,7 +731,7 @@ export default function ScheduleManagement() {
                               />
                             </div>
                             <div>
-                              <label className="block text-xs text-gray-500 mb-1">Hora fin</label>
+                              <span className="block text-xs text-gray-500 mb-1">Hora fin</span>
                               <input
                                 type="time"
                                 value={schedule.end_time || ''}
@@ -745,7 +745,7 @@ export default function ScheduleManagement() {
                               />
                             </div>
                             <div>
-                              <label className="block text-xs text-gray-500 mb-1">Inicio descanso</label>
+                              <span className="block text-xs text-gray-500 mb-1">Inicio descanso</span>
                               <input
                                 type="time"
                                 value={schedule.break_start_time || ''}
@@ -759,7 +759,7 @@ export default function ScheduleManagement() {
                               />
                             </div>
                             <div>
-                              <label className="block text-xs text-gray-500 mb-1">Fin descanso</label>
+                              <span className="block text-xs text-gray-500 mb-1">Fin descanso</span>
                               <input
                                 type="time"
                                 value={schedule.break_end_time || ''}
@@ -810,23 +810,23 @@ export default function ScheduleManagement() {
               <div className="p-6 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs text-gray-500">Doctor</label>
+                    <span className="block text-xs text-gray-500">Doctor</span>
                     <p className="font-medium text-gray-800">
                       {selectedRequest.doctor?.users?.first_name} {selectedRequest.doctor?.users?.last_name}
                     </p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Tipo</label>
+                    <span className="block text-xs text-gray-500">Tipo</span>
                     <p className="font-medium text-gray-800">
                       {getExceptionTypeInfo(selectedRequest.exception_type).icon} {getExceptionTypeInfo(selectedRequest.exception_type).label}
                     </p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Fecha</label>
+                    <span className="block text-xs text-gray-500">Fecha</span>
                     <p className="font-medium text-gray-800">{formatDate(selectedRequest.exception_date)}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Horario</label>
+                    <span className="block text-xs text-gray-500">Horario</span>
                     <p className="font-medium text-gray-800">
                       {selectedRequest.is_all_day 
                         ? 'Todo el día' 
@@ -837,7 +837,7 @@ export default function ScheduleManagement() {
                 </div>
                 
                 <div>
-                  <label className="block text-xs text-gray-500">Motivo del doctor</label>
+                  <span className="block text-xs text-gray-500">Motivo del doctor</span>
                   <p className="mt-1 p-3 bg-gray-50 rounded-lg text-gray-700">
                     {selectedRequest.reason || 'Sin motivo especificado'}
                   </p>
@@ -845,9 +845,9 @@ export default function ScheduleManagement() {
 
                 {selectedRequest.status === 'pending' ? (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="block text-sm font-medium text-gray-700 mb-2">
                       Notas del administrador
-                    </label>
+                    </span>
                     <textarea
                       value={adminNotes}
                       onChange={(e) => setAdminNotes(e.target.value)}
@@ -859,12 +859,12 @@ export default function ScheduleManagement() {
                 ) : (
                   <>
                     <div>
-                      <label className="block text-xs text-gray-500">Estado</label>
+                      <span className="block text-xs text-gray-500">Estado</span>
                       <div className="mt-1">{getStatusBadge(selectedRequest.status)}</div>
                     </div>
                     {selectedRequest.admin_notes && (
                       <div>
-                        <label className="block text-xs text-gray-500">Notas del administrador</label>
+                        <span className="block text-xs text-gray-500">Notas del administrador</span>
                         <p className="mt-1 p-3 bg-gray-50 rounded-lg text-gray-700">
                           {selectedRequest.admin_notes}
                         </p>

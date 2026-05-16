@@ -142,8 +142,8 @@ const createPagination = (total, page, limit) => {
  * @returns {Object} Parsed pagination params
  */
 const parsePaginationQuery = (query) => {
-  const page = Math.max(1, parseInt(query.page) || 1);
-  const limit = Math.min(100, Math.max(1, parseInt(query.limit) || 20));
+  const page = Math.max(1, Number.parseInt(query.page) || 1);
+  const limit = Math.min(100, Math.max(1, Number.parseInt(query.limit) || 20));
   const offset = (page - 1) * limit;
   return { page, limit, offset };
 };

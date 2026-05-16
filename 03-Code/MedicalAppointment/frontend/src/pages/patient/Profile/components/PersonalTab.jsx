@@ -7,7 +7,7 @@ export function PersonalTab({ formData, handleInputChange }) {
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Información Personal</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Nombre *</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Nombre *</span>
           <input
             type="text"
             name="first_name"
@@ -18,7 +18,7 @@ export function PersonalTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Apellido *</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Apellido *</span>
           <input
             type="text"
             name="last_name"
@@ -29,7 +29,7 @@ export function PersonalTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Cédula *</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Cédula *</span>
           <input
             type="text"
             name="cedula"
@@ -41,7 +41,7 @@ export function PersonalTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Fecha de Nacimiento</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Fecha de Nacimiento</span>
           <input
             type="date"
             name="date_of_birth"
@@ -51,7 +51,7 @@ export function PersonalTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Género</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Género</span>
           <select
             name="gender"
             value={formData.gender}

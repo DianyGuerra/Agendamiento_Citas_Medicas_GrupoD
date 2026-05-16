@@ -57,7 +57,7 @@ class InsuranceProviderRepository extends BaseRepository {
       .single();
 
     if (error) return 0;
-    return parseFloat(data?.discount_percentage || 0);
+    return Number.parseFloat(data?.discount_percentage || 0);
   }
 }
 

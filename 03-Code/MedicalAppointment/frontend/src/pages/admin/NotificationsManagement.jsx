@@ -456,9 +456,9 @@ export default function NotificationsManagement() {
               
               <div className="p-4 sm:p-6 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Asunto
-                  </label>
+                  </span>
                   <input
                     type="text"
                     value={announcementForm.subject}
@@ -470,9 +470,9 @@ export default function NotificationsManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Mensaje
-                  </label>
+                  </span>
                   <textarea
                     value={announcementForm.message}
                     onChange={(e) => setAnnouncementForm(prev => ({ ...prev, message: e.target.value }))}
@@ -483,9 +483,9 @@ export default function NotificationsManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Destinatarios
-                  </label>
+                  </span>
                   <select
                     value={announcementForm.target}
                     onChange={(e) => setAnnouncementForm(prev => ({ ...prev, target: e.target.value }))}

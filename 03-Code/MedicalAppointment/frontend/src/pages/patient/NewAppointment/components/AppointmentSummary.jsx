@@ -7,7 +7,7 @@ import { CheckCircleIcon } from '@heroicons/react/24/outline';
 function formatTime(time) {
   if (!time) return '';
   const [hours, minutes] = time.split(':');
-  const hour = parseInt(hours);
+  const hour = Number.parseInt(hours);
   const period = hour >= 12 ? 'p. m.' : 'a. m.';
   const displayHour = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
   return `${displayHour.toString().padStart(2, '0')}:${minutes} ${period}`;
@@ -15,7 +15,7 @@ function formatTime(time) {
 
 function formatDate(dateString) {
   const [year, month, day] = dateString.split('-');
-  const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  const date = new Date(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day));
   return date.toLocaleDateString('es-EC', {
     weekday: 'long',
     year: 'numeric',
@@ -71,9 +71,9 @@ export default function AppointmentSummary({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <span className="block text-sm font-medium text-gray-700 mb-2">
           Motivo de la Consulta *
-        </label>
+        </span>
         <input
           type="text"
           value={reason}

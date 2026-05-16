@@ -7,7 +7,7 @@ export function EmergencyTab({ formData, handleInputChange }) {
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Contacto de Emergencia</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</span>
           <input
             type="text"
             name="emergency_contact_name"
@@ -17,7 +17,7 @@ export function EmergencyTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Relación</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Relación</span>
           <input
             type="text"
             name="emergency_contact_relation"
@@ -28,7 +28,7 @@ export function EmergencyTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Teléfono</span >
           <input
             type="tel"
             name="emergency_contact_phone"

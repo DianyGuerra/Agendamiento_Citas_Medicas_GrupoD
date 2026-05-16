@@ -47,9 +47,9 @@ export default function RenewalModal({
           </div>
           
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <span className="block text-sm font-semibold text-gray-700 mb-2">
               ¿Por qué necesitas renovar esta receta? <span className="text-red-500">*</span>
-            </label>
+            </span>
             <textarea
               value={reason}
               onChange={(e) => onReasonChange(e.target.value)}

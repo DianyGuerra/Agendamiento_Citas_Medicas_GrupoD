@@ -41,7 +41,7 @@ class AvailabilityController {
     const { startDate, weeks } = req.query;
 
     const start = startDate || new Date().toISOString().split('T')[0];
-    const numWeeks = parseInt(weeks) || 4;
+    const numWeeks = Number.parseInt(weeks) || 4;
 
     const availability = await availabilityService.getWeeklyAvailability(
       doctorId, 
@@ -65,7 +65,7 @@ class AvailabilityController {
     const { doctorId } = req.params;
     const { daysAhead } = req.query;
 
-    const days = parseInt(daysAhead) || 30;
+    const days = Number.parseInt(daysAhead) || 30;
 
     const nextSlot = await availabilityService.getNextAvailableSlot(doctorId, days);
 

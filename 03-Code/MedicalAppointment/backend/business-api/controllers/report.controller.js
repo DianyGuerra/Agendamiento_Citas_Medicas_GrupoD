@@ -37,7 +37,7 @@ class ReportController {
       startDate, 
       endDate, 
       status,
-      limit: parseInt(limit)
+      limit: Number.parseInt(limit)
     });
 
     return ResponseBuilder.success(res, appointments);
@@ -51,7 +51,7 @@ class ReportController {
     const userId = req.user.id;
     const { limit = 20 } = req.query;
 
-    const ratings = await reportService.getDoctorRatings(userId, { limit: parseInt(limit) });
+    const ratings = await reportService.getDoctorRatings(userId, { limit: Number.parseInt(limit) });
 
     return ResponseBuilder.success(res, ratings);
   });

@@ -213,7 +213,7 @@ export default function AdminProfile() {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Nombre</span>
                     <input
                       type="text"
                       value={profileForm.first_name}
@@ -223,7 +223,7 @@ export default function AdminProfile() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Apellido</span>
                     <input
                       type="text"
                       value={profileForm.last_name}
@@ -233,7 +233,7 @@ export default function AdminProfile() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Email</span>
                     <input
                       type="email"
                       value={profileForm.email}
@@ -243,7 +243,7 @@ export default function AdminProfile() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Teléfono</span>
                     <input
                       type="tel"
                       value={profileForm.phone_number}
@@ -272,21 +272,21 @@ export default function AdminProfile() {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs text-gray-500">Nombre Completo</label>
+                    <span className="block text-xs text-gray-500">Nombre Completo</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">
                       {adminData?.first_name} {adminData?.last_name}
                     </p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Email</label>
+                    <span className="block text-xs text-gray-500">Email</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base truncate">{adminData?.email}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Teléfono</label>
+                    <span className="block text-xs text-gray-500">Teléfono</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">{adminData?.phone_number || '-'}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Miembro desde</label>
+                    <span className="block text-xs text-gray-500">Miembro desde</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">{formatDate(adminData?.created_at)}</p>
                   </div>
                 </div>
@@ -414,9 +414,9 @@ export default function AdminProfile() {
               
               <div className="p-6 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Contraseña Actual
-                  </label>
+                  </span>
                   <div className="relative">
                     <input
                       type={showPasswords.current ? 'text' : 'password'}
@@ -435,9 +435,9 @@ export default function AdminProfile() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Nueva Contraseña
-                  </label>
+                  </span>
                   <div className="relative">
                     <input
                       type={showPasswords.new ? 'text' : 'password'}
@@ -457,9 +457,9 @@ export default function AdminProfile() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Confirmar Nueva Contraseña
-                  </label>
+                  </span>
                   <div className="relative">
                     <input
                       type={showPasswords.confirm ? 'text' : 'password'}

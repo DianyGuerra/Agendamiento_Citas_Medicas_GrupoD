@@ -7,7 +7,7 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Información Médica</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Sangre</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Tipo de Sangre</span>
           <select
             name="blood_type"
             value={formData.blood_type}
@@ -26,7 +26,7 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Altura (cm)</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Altura (cm)</span>
           <input
             type="number"
             name="height"
@@ -36,7 +36,7 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Peso (kg)</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Peso (kg)</span>
           <input
             type="number"
             name="weight"
@@ -47,9 +47,9 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <span className="block text-sm font-medium text-gray-700 mb-2">
             Proveedor de Seguro Médico
-          </label>
+          </span>
           <select
             name="insurance_provider_id"
             value={formData.insurance_provider_id}
@@ -70,7 +70,7 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Número de Póliza</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Número de Póliza</span>
           <input
             type="text"
             name="insurance_number"
@@ -81,7 +81,7 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
           />
         </div>
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Alergias</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Alergias</span>
           <textarea
             name="allergies"
             value={formData.allergies}
@@ -92,7 +92,7 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
           />
         </div>
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Condiciones Crónicas</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Condiciones Crónicas</span>
           <textarea
             name="medical_conditions"
             value={formData.medical_conditions}
@@ -103,7 +103,7 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
           />
         </div>
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Medicamentos Actuales</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Medicamentos Actuales</span>
           <textarea
             name="current_medications"
             value={formData.current_medications}

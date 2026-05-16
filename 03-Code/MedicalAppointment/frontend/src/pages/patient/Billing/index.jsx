@@ -37,12 +37,12 @@ export default function PatientBilling() {
     const specialty = billing.specialty_name || billing.doctor?.specialties?.name || 'Consulta General';
 
     const subtotal =
-      parseFloat(billing.subtotal) ||
-      parseFloat(billing.base_amount) ||
-      parseFloat(billing.total_amount) ||
+      Number.parseFloat(billing.subtotal) ||
+      Number.parseFloat(billing.base_amount) ||
+      Number.parseFloat(billing.total_amount) ||
       0;
-    const discount = parseFloat(billing.insurance_discount_amount) || 0;
-    const total = parseFloat(billing.total_amount) || subtotal - discount;
+    const discount = Number.parseFloat(billing.insurance_discount_amount) || 0;
+    const total = Number.parseFloat(billing.total_amount) || subtotal - discount;
 
     const primaryColor = [59, 130, 246];
     const textDark = [31, 41, 55];

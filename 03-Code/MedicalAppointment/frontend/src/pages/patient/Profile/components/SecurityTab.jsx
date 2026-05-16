@@ -7,7 +7,7 @@ export function SecurityTab({ passwordData, handlePasswordChange }) {
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Cambiar Contraseña</h2>
       <div className="grid grid-cols-1 gap-6 max-w-xl">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Contraseña Actual *</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Contraseña Actual *</span>
           <input
             type="password"
             name="current_password"
@@ -18,7 +18,7 @@ export function SecurityTab({ passwordData, handlePasswordChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Nueva Contraseña *</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Nueva Contraseña *</span>
           <input
             type="password"
             name="new_password"
@@ -31,7 +31,7 @@ export function SecurityTab({ passwordData, handlePasswordChange }) {
           <p className="text-sm text-gray-500 mt-1">Mínimo 8 caracteres</p>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña *</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña *</span>
           <input
             type="password"
             name="confirm_password"

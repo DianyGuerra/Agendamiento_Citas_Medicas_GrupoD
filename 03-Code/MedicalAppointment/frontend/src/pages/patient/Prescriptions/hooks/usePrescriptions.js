@@ -10,7 +10,7 @@ const parseDurationToDays = (duration) => {
   const numberMatch = str.match(/(\d+)/);
   if (!numberMatch) return 90;
   
-  const number = parseInt(numberMatch[1]);
+  const number = Number.parseInt(numberMatch[1]);
   
   if (str.includes('semana')) return number * 7;
   if (str.includes('mes')) return number * 30;
@@ -25,8 +25,8 @@ export const formatDuration = (duration) => {
   const str = String(duration).trim();
   if (str.match(/[a-zA-ZáéíóúÁÉÍÓÚ]/)) return str;
   
-  const days = parseInt(str);
-  if (isNaN(days)) return 'No especificado';
+  const days = Number.parseInt(str);
+  if (Number.isNaN(days)) return 'No especificado';
   
   if (days >= 30) {
     const months = Math.floor(days / 30);

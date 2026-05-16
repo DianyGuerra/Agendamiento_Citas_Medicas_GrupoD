@@ -451,30 +451,30 @@ export default function LaboratoryManagement() {
               <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs text-gray-500">Paciente</label>
+                    <span className="block text-xs text-gray-500">Paciente</span>
                     <p className="font-medium text-gray-800">
                       {selectedOrder.patient?.first_name} {selectedOrder.patient?.last_name}
                     </p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Doctor Solicitante</label>
+                    <span className="block text-xs text-gray-500">Doctor Solicitante</span>
                     <p className="font-medium text-gray-800">
                       Dr. {selectedOrder.doctor?.first_name} {selectedOrder.doctor?.last_name}
                     </p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Examen</label>
+                    <span className="block text-xs text-gray-500">Examen</span>
                     <p className="font-medium text-gray-800">{selectedOrder.test_name}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Fecha de Orden</label>
+                    <span className="block text-xs text-gray-500">Fecha de Orden</span>
                     <p className="font-medium text-gray-800">{formatDate(selectedOrder.order_date)}</p>
                   </div>
                 </div>
 
                 {selectedOrder.doctor_notes && (
                   <div>
-                    <label className="block text-xs text-gray-500">Notas del Doctor</label>
+                    <span className="block text-xs text-gray-500">Notas del Doctor</span>
                     <p className="mt-1 p-3 bg-gray-50 rounded-lg text-gray-700">
                       {selectedOrder.doctor_notes}
                     </p>
@@ -483,7 +483,7 @@ export default function LaboratoryManagement() {
 
                 {selectedOrder.lab_results && selectedOrder.lab_results.length > 0 && (
                   <div>
-                    <label className="block text-xs text-gray-500 mb-2">Resultados</label>
+                    <span className="block text-xs text-gray-500 mb-2">Resultados</span>
                     <div className="border border-gray-200 rounded-lg overflow-hidden">
                       <table className="w-full text-sm">
                         <thead className="bg-gray-50">
@@ -553,7 +553,7 @@ export default function LaboratoryManagement() {
               <div className="p-6 space-y-6">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <label className="block text-sm font-medium text-gray-700">Parámetros</label>
+                    <span className="block text-sm font-medium text-gray-700">Parámetros</span>
                     <button
                       type="button"
                       onClick={addResultRow}
@@ -616,9 +616,9 @@ export default function LaboratoryManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-2">
                     Observaciones
-                  </label>
+                  </span>
                   <textarea
                     value={resultForm.notes}
                     onChange={(e) => setResultForm(prev => ({ ...prev, notes: e.target.value }))}

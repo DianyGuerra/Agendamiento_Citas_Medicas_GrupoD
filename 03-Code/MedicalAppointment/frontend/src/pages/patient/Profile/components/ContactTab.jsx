@@ -7,7 +7,7 @@ export function ContactTab({ formData, handleInputChange }) {
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Información de Contacto</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</span>
           <input
             type="email"
             name="email"
@@ -18,7 +18,7 @@ export function ContactTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Teléfono Móvil *</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Teléfono Móvil *</span>
           <input
             type="tel"
             name="phone_number"
@@ -30,7 +30,7 @@ export function ContactTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Teléfono Fijo</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Teléfono Fijo</span>
           <input
             type="tel"
             name="home_phone"
@@ -40,7 +40,7 @@ export function ContactTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Ciudad</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Ciudad</span>
           <input
             type="text"
             name="city"
@@ -50,7 +50,7 @@ export function ContactTab({ formData, handleInputChange }) {
           />
         </div>
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Dirección</span>
           <input
             type="text"
             name="address"
@@ -60,7 +60,7 @@ export function ContactTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Provincia</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Provincia</span>
           <input
             type="text"
             name="state"
@@ -70,7 +70,7 @@ export function ContactTab({ formData, handleInputChange }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Código Postal</label>
+          <span className="block text-sm font-medium text-gray-700 mb-2">Código Postal</span>
           <input
             type="text"
             name="postal_code"

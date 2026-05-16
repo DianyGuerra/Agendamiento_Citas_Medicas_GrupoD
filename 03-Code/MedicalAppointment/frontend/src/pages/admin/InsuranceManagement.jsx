@@ -466,9 +466,9 @@ export default function InsuranceManagement() {
               <form onSubmit={handleSubmit} className="p-6 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Nombre *
-                    </label>
+                    </span>
                     <input
                       type="text"
                       value={formData.name}
@@ -479,9 +479,9 @@ export default function InsuranceManagement() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Código *
-                    </label>
+                    </span>
                     <input
                       type="text"
                       value={formData.code}
@@ -494,9 +494,9 @@ export default function InsuranceManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Porcentaje de Descuento
-                  </label>
+                  </span>
                   <div className="flex items-center gap-2">
                     <input
                       type="number"
@@ -504,7 +504,7 @@ export default function InsuranceManagement() {
                       max="100"
                       step="0.01"
                       value={formData.discount_percentage}
-                      onChange={(e) => setFormData(prev => ({ ...prev, discount_percentage: parseFloat(e.target.value) || 0 }))}
+                      onChange={(e) => setFormData(prev => ({ ...prev, discount_percentage: Number.parseFloat(e.target.value) || 0 }))}
                       className="w-32 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500"
                     />
                     <span className="text-gray-500">%</span>
@@ -513,9 +513,9 @@ export default function InsuranceManagement() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Teléfono de Contacto
-                    </label>
+                    </span>
                     <input
                       type="tel"
                       value={formData.contact_phone}
@@ -525,9 +525,9 @@ export default function InsuranceManagement() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Email de Contacto
-                    </label>
+                    </span>
                     <input
                       type="email"
                       value={formData.contact_email}
@@ -539,9 +539,9 @@ export default function InsuranceManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-2">
                     Tipos de Cobertura
-                  </label>
+                  </span>
                   <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto p-2 border border-gray-200 rounded-lg">
                     {coverageOptions.map((coverage) => (
                       <label key={coverage} className="flex items-center gap-2 cursor-pointer">

@@ -781,24 +781,24 @@ export default function DoctorAppointments() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 uppercase">Fecha</label>
+                    <span className="block text-xs font-medium text-gray-500 uppercase">Fecha</span>
                     <p className="text-gray-900">{formatFullDate(selectedAppointment.scheduled_start)}</p>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 uppercase">Hora</label>
+                    <span className="block text-xs font-medium text-gray-500 uppercase">Hora</span>
                     <p className="text-gray-900">{formatTime(selectedAppointment.scheduled_start)}</p>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-500 uppercase">Motivo</label>
+                  <span className="block text-xs font-medium text-gray-500 uppercase">Motivo</span>
                   <p className="text-gray-900">{selectedAppointment.reason || 'Consulta general'}</p>
                 </div>
 
                 {/* Additional patient info if available */}
                 {(selectedAppointment.patient?.cedula || selectedAppointment.patient_cedula) && (
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 uppercase">Cédula</label>
+                    <span className="block text-xs font-medium text-gray-500 uppercase">Cédula</span>
                     <p className="text-gray-900">{selectedAppointment.patient?.cedula || selectedAppointment.patient_cedula}</p>
                   </div>
                 )}
@@ -807,11 +807,11 @@ export default function DoctorAppointments() {
                 {selectedAppointment.scheduled_end && (
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-gray-500 uppercase">Hora Inicio</label>
+                      <span className="block text-xs font-medium text-gray-500 uppercase">Hora Inicio</span>
                       <p className="text-gray-900 font-medium">{formatTime(selectedAppointment.scheduled_start)}</p>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-500 uppercase">Hora Fin</label>
+                      <span className="block text-xs font-medium text-gray-500 uppercase">Hora Fin</span>
                       <p className="text-gray-900">{formatTime(selectedAppointment.scheduled_end)}</p>
                     </div>
                   </div>
@@ -820,7 +820,7 @@ export default function DoctorAppointments() {
                 {/* Room info if available */}
                 {(selectedAppointment.consultation_rooms?.name || selectedAppointment.location) && (
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 uppercase">Consultorio</label>
+                    <span className="block text-xs font-medium text-gray-500 uppercase">Consultorio</span>
                     <p className="text-gray-900">
                       {selectedAppointment.consultation_rooms?.name || selectedAppointment.location}
                       {selectedAppointment.consultation_rooms?.room_number && ` - Sala ${selectedAppointment.consultation_rooms.room_number}`}
@@ -830,7 +830,7 @@ export default function DoctorAppointments() {
 
                 {(selectedAppointment.patient_allergies || selectedAppointment.allergies) && (
                   <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <label className="block text-xs font-bold text-red-700 uppercase mb-1">⚠️ Alergias</label>
+                    <span className="block text-xs font-bold text-red-700 uppercase mb-1">⚠️ Alergias</span>
                     <p className="text-red-700 text-sm font-medium">
                       {selectedAppointment.patient_allergies || selectedAppointment.allergies}
                     </p>
@@ -855,7 +855,7 @@ export default function DoctorAppointments() {
                       
                       return (
                         <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                          <label className="block text-xs font-medium text-blue-700 uppercase mb-1">Tiempo para la cita</label>
+                          <span className="block text-xs font-medium text-blue-700 uppercase mb-1">Tiempo para la cita</span>
                           <p className="text-blue-800 text-sm font-medium">{timeText}</p>
                         </div>
                       );
@@ -866,7 +866,7 @@ export default function DoctorAppointments() {
 
                 {getAvailableActions(selectedAppointment).length > 0 && (
                   <div className="pt-4 border-t border-gray-200">
-                    <label className="block text-xs font-medium text-gray-500 uppercase mb-3">Acciones</label>
+                    <span className="block text-xs font-medium text-gray-500 uppercase mb-3">Acciones</span>
                     <div className="grid grid-cols-2 gap-2">
                       {getAvailableActions(selectedAppointment).map((action) => {
                         const Icon = action.icon;

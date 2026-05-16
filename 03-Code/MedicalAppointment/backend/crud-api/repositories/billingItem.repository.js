@@ -80,7 +80,7 @@ class BillingItemRepository extends BaseRepository {
    */
   async calculateBillingTotal(billingId) {
     const items = await this.findByBilling(billingId);
-    return items.reduce((sum, item) => sum + parseFloat(item.total_price || 0), 0);
+    return items.reduce((sum, item) => sum + Number.parseFloat(item.total_price || 0), 0);
   }
 
   /**

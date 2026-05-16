@@ -227,10 +227,10 @@ class ReportService {
     }));
 
     return {
-      average: parseFloat((sumRating / total).toFixed(1)),
-      averagePunctuality: parseFloat((sumPunctuality / total).toFixed(1)),
-      averageAttention: parseFloat((sumAttention / total).toFixed(1)),
-      averageRecommendation: parseFloat((sumRecommendation / total).toFixed(1)),
+      average: Number.parseFloat((sumRating / total).toFixed(1)),
+      averagePunctuality: Number.parseFloat((sumPunctuality / total).toFixed(1)),
+      averageAttention: Number.parseFloat((sumAttention / total).toFixed(1)),
+      averageRecommendation: Number.parseFloat((sumRecommendation / total).toFixed(1)),
       ratings: formattedRatings,
       total,
       breakdown
@@ -543,7 +543,7 @@ class ReportService {
     const byDoctor = {};
 
     (data || []).forEach(bill => {
-      const amount = parseFloat(bill.total_amount) || 0;
+      const amount = Number.parseFloat(bill.total_amount) || 0;
       totals.totalRevenue += amount;
 
       switch (bill.status) {
@@ -559,10 +559,10 @@ class ReportService {
       }
 
       if (bill.insurance_approved_amount) {
-        totals.insuranceCollected += parseFloat(bill.insurance_approved_amount) || 0;
+        totals.insuranceCollected += Number.parseFloat(bill.insurance_approved_amount) || 0;
       }
       if (bill.patient_responsibility) {
-        totals.patientPayments += parseFloat(bill.patient_responsibility) || 0;
+        totals.patientPayments += Number.parseFloat(bill.patient_responsibility) || 0;
       }
 
       const periodKey = this._getPeriodKey(bill.created_at, groupBy);
@@ -855,11 +855,11 @@ class ReportService {
       const averageAppointmentsPerDoctor = uniqueDoctors.size > 0 ? (total / uniqueDoctors.size).toFixed(2) : 0;
 
       return {
-        averageDailyAppointments: parseFloat(averageDailyAppointments),
-        averageAppointmentsPerDoctor: parseFloat(averageAppointmentsPerDoctor),
-        completionRate: parseFloat(completionRate),
-        cancellationRate: parseFloat(cancellationRate),
-        noShowRate: parseFloat(noShowRate),
+        averageDailyAppointments: Number.parseFloat(averageDailyAppointments),
+        averageAppointmentsPerDoctor: Number.parseFloat(averageAppointmentsPerDoctor),
+        completionRate: Number.parseFloat(completionRate),
+        cancellationRate: Number.parseFloat(cancellationRate),
+        noShowRate: Number.parseFloat(noShowRate),
         peakHours,
         // Add efficiencyScore and completionRate to each doctor
         doctorPerformance: Object.values(doctorPerformance)
@@ -873,7 +873,7 @@ class ReportService {
               efficiencyScore: completionRate // Same as completion rate
             };
           })
-          .sort((a, b) => parseFloat(b.efficiencyScore) - parseFloat(a.efficiencyScore))
+          .sort((a, b) => Number.parseFloat(b.efficiencyScore) - Number.parseFloat(a.efficiencyScore))
           .slice(0, 10),
         // Add completionRate, averageDuration and demandScore to each specialty
         specialtyPerformance: Object.values(specialtyPerformance).map(spec => {

@@ -401,9 +401,9 @@ export default function ConsultationRoomManagement() {
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Nombre *
-                    </label>
+                    </span>
                     <input
                       type="text"
                       value={formData.name}
@@ -416,9 +416,9 @@ export default function ConsultationRoomManagement() {
 
                   <div className="grid grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-sm font-medium text-gray-700 mb-1">
                         Número de Sala
-                      </label>
+                      </span>
                       <input
                         type="text"
                         value={formData.room_number}
@@ -428,9 +428,9 @@ export default function ConsultationRoomManagement() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-sm font-medium text-gray-700 mb-1">
                         Piso
-                      </label>
+                      </span>
                       <input
                         type="text"
                         value={formData.floor}
@@ -443,9 +443,9 @@ export default function ConsultationRoomManagement() {
 
                   <div className="grid grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-sm font-medium text-gray-700 mb-1">
                         Edificio
-                      </label>
+                      </span>
                       <input
                         type="text"
                         value={formData.building}
@@ -455,14 +455,14 @@ export default function ConsultationRoomManagement() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-sm font-medium text-gray-700 mb-1">
                         Capacidad
-                      </label>
+                      </span>
                       <input
                         type="number"
                         min="1"
                         value={formData.capacity}
-                        onChange={(e) => setFormData({...formData, capacity: parseInt(e.target.value)})}
+                        onChange={(e) => setFormData({...formData, capacity: Number.parseInt(e.target.value)})}
                         className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                         style={{ fontSize: '16px' }}
                       />
@@ -470,9 +470,9 @@ export default function ConsultationRoomManagement() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Equipamiento
-                    </label>
+                    </span>
                     <div className="space-y-2">
                       {/* Tags de equipamiento */}
                       {formData.equipment.length > 0 && (
@@ -518,9 +518,9 @@ export default function ConsultationRoomManagement() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Notas
-                    </label>
+                    </span>
                     <textarea
                       value={formData.notes}
                       onChange={(e) => setFormData({...formData, notes: e.target.value})}

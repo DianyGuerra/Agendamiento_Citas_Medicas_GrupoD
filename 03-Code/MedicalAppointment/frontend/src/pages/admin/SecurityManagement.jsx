@@ -1239,7 +1239,7 @@ function RolesTab({ showNotification, onDataChange }) {
         >
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nombre*</label>
+              <span className="block text-sm font-medium text-gray-700 mb-1">Nombre*</span>
               <input
                 type="text"
                 value={formData.name}
@@ -1250,7 +1250,7 @@ function RolesTab({ showNotification, onDataChange }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Código*</label>
+              <span className="block text-sm font-medium text-gray-700 mb-1">Código*</span>
               <input
                 type="text"
                 value={formData.code}
@@ -1265,7 +1265,7 @@ function RolesTab({ showNotification, onDataChange }) {
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Etiqueta</label>
+              <span className="block text-sm font-medium text-gray-700 mb-1">Etiqueta</span>
               <input
                 type="text"
                 value={formData.label}
@@ -1275,7 +1275,7 @@ function RolesTab({ showNotification, onDataChange }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+              <span className="block text-sm font-medium text-gray-700 mb-1">Descripción</span>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData(f => ({ ...f, description: e.target.value }))}
@@ -1653,7 +1653,7 @@ function AdministratorsTab({ showNotification, onDataChange }) {
                       const permission = `${module}:${action}`;
                       const isChecked = editPermissions.includes(permission);
                       return (
-                        <label
+                        <span
                           key={permission}
                           className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded cursor-pointer"
                         >
@@ -1667,7 +1667,7 @@ function AdministratorsTab({ showNotification, onDataChange }) {
                             <span className="text-sm font-medium text-gray-700">{action}</span>
                             <p className="text-xs text-gray-500">{description}</p>
                           </div>
-                        </label>
+                        </span>
                       );
                     })}
                   </div>
@@ -1803,7 +1803,7 @@ function AuditTab({ showNotification }) {
         <div className="bg-white p-3 sm:p-4 rounded-lg border space-y-3 sm:space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Acción</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Acción</span>
               <select
                 value={filters.action}
                 onChange={(e) => setFilters(f => ({ ...f, action: e.target.value }))}
@@ -1817,7 +1817,7 @@ function AuditTab({ showNotification }) {
               </select>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Tabla</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Tabla</span>
               <select
                 value={filters.table_name}
                 onChange={(e) => setFilters(f => ({ ...f, table_name: e.target.value }))}
@@ -1831,7 +1831,7 @@ function AuditTab({ showNotification }) {
               </select>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Desde</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Desde</span>
               <input
                 type="date"
                 value={filters.start_date}
@@ -1841,7 +1841,7 @@ function AuditTab({ showNotification }) {
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Hasta</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Hasta</span>
               <input
                 type="date"
                 value={filters.end_date}

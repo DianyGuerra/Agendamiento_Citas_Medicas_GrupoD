@@ -14,12 +14,12 @@ import { formatDate, formatCurrency, paymentMethodLabels } from '../hooks';
  */
 export function BillingDetailModal({ billing, user, onDownload, onClose }) {
   const subtotal =
-    parseFloat(billing.subtotal) ||
-    parseFloat(billing.base_amount) ||
-    parseFloat(billing.total_amount) ||
+    Number.parseFloat(billing.subtotal) ||
+    Number.parseFloat(billing.base_amount) ||
+    Number.parseFloat(billing.total_amount) ||
     0;
-  const discount = parseFloat(billing.insurance_discount_amount) || 0;
-  const total = parseFloat(billing.total_amount) || subtotal - discount;
+  const discount = Number.parseFloat(billing.insurance_discount_amount) || 0;
+  const total = Number.parseFloat(billing.total_amount) || subtotal - discount;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
