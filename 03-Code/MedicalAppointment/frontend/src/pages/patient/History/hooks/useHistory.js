@@ -119,7 +119,7 @@ export function parseNotesContent(rawContent) {
     if (typeof parsed === 'object') {
       return Object.entries(parsed)
         .filter(([_, value]) => value && value !== '')
-        .map(([key, value]) => `${key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ')}: ${value}`)
+        .map(([key, value]) => `${key.charAt(0).toUpperCase() + key.slice(1).replaceAll('_', ' ')}: ${value}`)
         .join('\n');
     }
 

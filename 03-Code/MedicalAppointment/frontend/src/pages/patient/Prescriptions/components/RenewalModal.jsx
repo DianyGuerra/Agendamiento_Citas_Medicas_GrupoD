@@ -1,5 +1,5 @@
 import { ArrowPathIcon, XMarkIcon } from '@heroicons/react/24/outline';
-
+import PropTypes from 'prop-types';
 export default function RenewalModal({ 
   prescription, 
   reason, 
@@ -82,3 +82,12 @@ export default function RenewalModal({
     </div>
   );
 }
+
+RenewalModal.propTypes = {
+  prescription: PropTypes.object.isRequired,   
+  reason: PropTypes.string.isRequired,         
+  onReasonChange: PropTypes.func.isRequired,   
+  onSubmit: PropTypes.func.isRequired,         
+  onClose: PropTypes.func.isRequired,          
+  formatDate: PropTypes.func.isRequired,       
+};

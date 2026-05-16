@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
 import { AppointmentModel } from '../../models';
+import PropTpes from 'prop-types';
 import { useAuth } from '../../context/AuthContext';
 import {
   Chart as ChartJS,
@@ -757,6 +758,13 @@ function QuickStatCard({ title, value, total, icon: Icon, color }) {
     </div>
   );
 }
+QuickStatCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  total: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  icon: PropTypes.elementType.isRequired,
+  color: PropTypes.oneOf(['blue', 'green', 'yellow', 'purple']).isRequired,
+};
 
 function QuickActionButton({ icon: Icon, label, href }) {
   return (
@@ -771,3 +779,8 @@ function QuickActionButton({ icon: Icon, label, href }) {
     </a>
   );
 }
+QuickActionButton.propTypes = {
+  icon: PropTypes.elementType.isRequired, 
+  label: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
+};

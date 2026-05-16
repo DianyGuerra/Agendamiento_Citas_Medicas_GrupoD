@@ -3,6 +3,9 @@
  * Displays a statistic card with icon, value and link
  */
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+
 
 export default function StatCard({ title, value, icon: Icon, color, bgColor, link }) {
   return (
@@ -22,3 +25,12 @@ export default function StatCard({ title, value, icon: Icon, color, bgColor, lin
     </Link>
   );
 }
+
+StatCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  icon: PropTypes.elementType.isRequired,
+  color: PropTypes.string.isRequired,
+  bgColor: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired
+};

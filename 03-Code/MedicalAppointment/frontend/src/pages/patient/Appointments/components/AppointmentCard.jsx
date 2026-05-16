@@ -10,6 +10,7 @@ import {
   StarIcon,
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 import { APPOINTMENT_STATUS } from '../../shared/constants';
 
 function formatDate(dateString) {
@@ -160,3 +161,11 @@ export default function AppointmentCard({
     </div>
   );
 }
+AppointmentCard.propTypes = {
+  appointment: PropTypes.object.isRequired, 
+  isRated: PropTypes.bool.isRequired,
+  onReschedule: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onRate: PropTypes.func.isRequired,
+};
+

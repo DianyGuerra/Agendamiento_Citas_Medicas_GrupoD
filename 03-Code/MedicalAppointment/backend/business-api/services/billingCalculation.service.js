@@ -440,7 +440,7 @@ class BillingCalculationService {
 
   _generateInvoiceNumber() {
     const prefix = 'INV';
-    const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const dateStr = new Date().toISOString().slice(0, 10).replaceAll('-', '');
     
 
     const array = new Uint32Array(1);

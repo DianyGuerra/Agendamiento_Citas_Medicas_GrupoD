@@ -8,6 +8,7 @@ import {
   ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline';
 import { formatDate, formatCurrency, paymentMethodLabels } from '../hooks';
+import PropTypes from 'prop-types';
 
 /**
  * Modal for displaying billing details
@@ -232,3 +233,9 @@ export function BillingDetailModal({ billing, user, onDownload, onClose }) {
     </div>
   );
 }
+BillingDetailModal.propTypes = {
+  billing: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,   
+  onDownload: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

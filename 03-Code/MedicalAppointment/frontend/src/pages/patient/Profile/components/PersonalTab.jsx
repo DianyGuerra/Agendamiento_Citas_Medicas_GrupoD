@@ -1,6 +1,8 @@
 /**
  * Personal information tab form fields
  */
+import PropTypes from 'prop-types';
+
 export function PersonalTab({ formData, handleInputChange }) {
   return (
     <div className="space-y-6">
@@ -68,3 +70,8 @@ export function PersonalTab({ formData, handleInputChange }) {
     </div>
   );
 }
+
+PersonalTab.propTypes = {
+  formData: PropTypes.object.isRequired,        
+  handleInputChange: PropTypes.func.isRequired, 
+};

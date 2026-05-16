@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import PropTypes from 'prop-types';
 import {
   HomeIcon,
   CalendarIcon,
@@ -203,3 +204,6 @@ export default function AdminLayout({ children }) {
     </div>
   );
 }
+AdminLayout.propTypes = {
+  children: PropTypes.node.isRequired
+};

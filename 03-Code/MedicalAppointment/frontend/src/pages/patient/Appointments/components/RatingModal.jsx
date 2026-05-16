@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import { XMarkIcon, UserIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
 function StarRatingInput({ value, onChange, label }) {
@@ -30,6 +31,11 @@ function StarRatingInput({ value, onChange, label }) {
     </div>
   );
 }
+StarRatingInput.propTypes = {
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string,
+};
 
 function InlineStarRating({ value, onChange }) {
   return (
@@ -51,6 +57,10 @@ function InlineStarRating({ value, onChange }) {
     </div>
   );
 }
+InlineStarRating.propTypes = {
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired
+};
 
 export default function RatingModal({ appointment, onSubmit, onClose }) {
   const [ratingData, setRatingData] = useState({
@@ -213,3 +223,8 @@ export default function RatingModal({ appointment, onSubmit, onClose }) {
     </div>
   );
 }
+RatingModal.propTypes = {
+  appointment: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

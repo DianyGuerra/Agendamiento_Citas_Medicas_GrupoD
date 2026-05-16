@@ -3,6 +3,7 @@
  * Displays the next upcoming appointment or empty state
  */
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { CalendarIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
 function formatDateTime(dateString) {
@@ -72,4 +73,7 @@ export default function NextAppointmentCard({ appointment }) {
       </div>
     </div>
   );
+}
+NextAppointmentCard.propTypes ={
+  appointment:PropTypes.object.isRequired,
 }

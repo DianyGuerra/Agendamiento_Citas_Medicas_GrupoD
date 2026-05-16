@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
+import PropTypes from 'prop-types';
 import { SpecialtyModel } from '../../models';
 import { 
   PlusIcon, 
@@ -434,3 +435,8 @@ function StatsCard({ title, value, color }) {
     </div>
   );
 }
+StatsCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  color: PropTypes.oneOf(['blue', 'green', 'yellow', 'purple']).isRequired,
+};

@@ -2,6 +2,7 @@
  * Loading Spinner Component
  * Displays a centered loading animation with optional message
  */
+import PropTypes from 'prop-types';
 export default function LoadingSpinner({ message = 'Cargando...', size = 'default' }) {
   const sizeClasses = {
     small: 'h-8 w-8',
@@ -20,3 +21,8 @@ export default function LoadingSpinner({ message = 'Cargando...', size = 'defaul
     </div>
   );
 }
+
+LoadingSpinner.propTypes = {
+  message: PropTypes.string,                         
+  size: PropTypes.oneOf(['small', 'default', 'large']), 
+};

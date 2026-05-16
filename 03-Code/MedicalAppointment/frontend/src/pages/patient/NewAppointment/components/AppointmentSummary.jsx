@@ -3,6 +3,7 @@
  * Shows the appointment summary before confirmation
  */
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 
 function formatTime(time) {
   if (!time) return '';
@@ -110,3 +111,15 @@ export default function AppointmentSummary({
     </form>
   );
 }
+
+AppointmentSummary.propTypes = {
+  specialty: PropTypes.object.isRequired,     
+  doctor: PropTypes.object.isRequired,        
+  date: PropTypes.string.isRequired,          
+  slot: PropTypes.object.isRequired,          
+  reason: PropTypes.string.isRequired,        
+  onReasonChange: PropTypes.func.isRequired,  
+  onBack: PropTypes.func.isRequired,          
+  onSubmit: PropTypes.func.isRequired,        
+  loading: PropTypes.bool.isRequired,         
+};

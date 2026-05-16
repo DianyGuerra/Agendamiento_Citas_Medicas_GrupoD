@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
+import PropType from 'prop-types';
 import SecurityModel from '../../models/Security.model';
 import {
   ShieldCheckIcon,
@@ -213,6 +214,13 @@ function StatCard({ title, value, subtitle, icon: Icon, color }) {
   );
 }
 
+StatCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  subtitle: PropTypes.string,
+  icon: PropTypes.elementType.isRequired, 
+  color: PropTypes.string.isRequired,
+};
 // ============================================================================
 // USERS TAB
 // ============================================================================
@@ -1007,6 +1015,11 @@ function UsersTab({ showNotification, onDataChange }) {
   );
 }
 
+UsersTab.propTypes = {
+  showNotification: PropTypes.func.isRequired, 
+  onDataChange: PropTypes.func.isRequired      
+};
+
 // ============================================================================
 // ROLES TAB
 // ============================================================================
@@ -1380,6 +1393,10 @@ function RolesTab({ showNotification, onDataChange }) {
   );
 }
 
+RolesTab.propTypes = {
+  showNotification: PropTypes.func.isRequired, 
+  onDataChange: PropTypes.func.isRequired      
+};
 // ============================================================================
 // ADMINISTRATORS TAB
 // ============================================================================
@@ -1711,7 +1728,10 @@ function AdministratorsTab({ showNotification, onDataChange }) {
     </div>
   );
 }
-
+AdministratorsTab.propTypes = {
+  showNotification: PropTypes.func.isRequired, 
+  onDataChange: PropTypes.func.isRequired      
+};
 // ============================================================================
 // AUDIT TAB
 // ============================================================================
@@ -2008,7 +2028,9 @@ function AuditTab({ showNotification }) {
     </div>
   );
 }
-
+AuditTab.propTypes = {
+  showNotification: PropTypes.func.isRequired  
+};
 // ============================================================================
 // HELPER COMPONENTS
 // ============================================================================
@@ -2039,6 +2061,13 @@ function Modal({ title, children, onClose, size = 'md' }) {
   );
 }
 
+Modal.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,       
+  onClose: PropTypes.func.isRequired,        
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+};
+
 function InfoField({ label, value }) {
   return (
     <div className="min-w-0">
@@ -2047,6 +2076,10 @@ function InfoField({ label, value }) {
     </div>
   );
 }
+InfoField.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, 
+};
 
 function ConfirmModal({ show, title, message, onConfirm, onCancel, type = 'warning' }) {
   if (!show) return null;
@@ -2108,3 +2141,12 @@ function ConfirmModal({ show, title, message, onConfirm, onCancel, type = 'warni
     </div>
   );
 }
+
+ConfirmModal.propTypes = {
+  show: PropTypes.bool.isRequired,            
+  title: PropTypes.string.isRequired,           
+  message: PropTypes.string.isRequired,         
+  onConfirm: PropTypes.func.isRequired,         
+  onCancel: PropTypes.func.isRequired,          
+  type: PropTypes.oneOf(['warning', 'info', 'success', 'error']), 
+};

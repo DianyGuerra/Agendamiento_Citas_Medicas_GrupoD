@@ -2,6 +2,7 @@
  * Tab Navigation Component
  * Horizontal tab navigation with active state
  */
+import PropTypes from 'prop-types';
 export default function TabNavigation({ tabs, activeTab, onChange, className = '' }) {
   return (
     <div className={`border-b border-gray-200 ${className}`}>
@@ -40,3 +41,17 @@ export default function TabNavigation({ tabs, activeTab, onChange, className = '
     </div>
   );
 }
+
+TabNavigation.propTypes = {
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,        
+      label: PropTypes.string.isRequired,     
+      icon: PropTypes.elementType,            
+      count: PropTypes.number,                
+    })
+  ).isRequired,
+  activeTab: PropTypes.string.isRequired,     
+  onChange: PropTypes.func.isRequired,        
+  className: PropTypes.string,                
+};

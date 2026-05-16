@@ -7,6 +7,7 @@
 
 import BackToHomeButton from './BackToHomeButton';
 import BrandingPanel from './BrandingPanel';
+import PropTypes from 'prop-types';
 
 /**
  * Two-column layout for auth pages
@@ -48,3 +49,10 @@ export default function AuthLayout({
     </div>
   );
 }
+
+AuthLayout.propTypes = {
+  children: PropTypes.node.isRequired,            
+  brandingTitle: PropTypes.string,                
+  brandingSubtitle: PropTypes.string,             
+};
+

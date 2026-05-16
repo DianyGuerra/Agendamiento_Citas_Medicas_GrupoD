@@ -71,7 +71,7 @@ export default function AdminLogs() {
         log.table_name,
         log.record_id,
         log.ip_address || '-',
-        `"${(log.description || '').replace(/"/g, '""')}"`
+        `"${(log.description || '').replaceAll('-','')}"` // Escape quotes and remove dashes to avoid CSV issues
       ].join(','))
     ].join('\n');
 

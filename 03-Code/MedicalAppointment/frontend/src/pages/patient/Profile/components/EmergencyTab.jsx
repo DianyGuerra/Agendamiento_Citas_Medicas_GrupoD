@@ -1,6 +1,8 @@
 /**
  * Emergency contact tab form fields
  */
+import PropTypes from 'prop-types';
+
 export function EmergencyTab({ formData, handleInputChange }) {
   return (
     <div className="space-y-6">
@@ -42,3 +44,8 @@ export function EmergencyTab({ formData, handleInputChange }) {
     </div>
   );
 }
+
+EmergencyTab.propTypes = {
+  formData: PropTypes.object.isRequired,        
+  handleInputChange: PropTypes.func.isRequired, 
+};

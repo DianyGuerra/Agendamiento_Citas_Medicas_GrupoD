@@ -3,6 +3,7 @@
  * Interactive star rating input with optional label
  */
 import { StarIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
 export default function StarRating({ 
@@ -49,3 +50,11 @@ export default function StarRating({
     </div>
   );
 }
+
+StarRating.propTypes = {
+  value: PropTypes.number,                        
+  onChange: PropTypes.func,                       
+  label: PropTypes.string,                        
+  size: PropTypes.oneOf(['small', 'default', 'large']), 
+  readonly: PropTypes.bool,                       
+};

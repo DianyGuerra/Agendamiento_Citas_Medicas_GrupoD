@@ -4,6 +4,8 @@ import {
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 import { formatCurrency } from '../hooks';
+import PropTypes from 'prop-types';
+
 
 /**
  * Summary cards for billing overview
@@ -49,3 +51,8 @@ export function BillingSummary({ totalCount, pendingTotal, paidTotal }) {
     </div>
   );
 }
+BillingSummary.propTypes = {
+  totalCount: PropTypes.number.isRequired,
+  pendingTotal: PropTypes.number.isRequired,
+  paidTotal: PropTypes.number.isRequired,
+};

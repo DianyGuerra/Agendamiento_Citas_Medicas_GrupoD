@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import PropTypes from 'prop-types';
 import { NotificationModel, AppointmentModel, PrescriptionModel, ScheduleModel, DoctorRatingModel } from '../models';
 import {
   HomeIcon,
@@ -301,3 +302,7 @@ export default function DoctorLayout({ children }) {
     </div>
   );
 }
+
+DoctorLayout.propTypes = {
+  children: PropTypes.node.isRequired
+};

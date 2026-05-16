@@ -6,6 +6,7 @@ import {
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 import { formatDate, formatCurrency, getStatusInfo } from '../hooks';
+import PropTypes from 'prop-types';
 
 /**
  * Individual billing card
@@ -78,3 +79,8 @@ export function BillingCard({ billing, onViewDetail, onDownload }) {
     </div>
   );
 }
+BillingCard.propTypes = {
+  billing: PropTypes.object.isRequired,   
+  onViewDetail: PropTypes.func.isRequired,
+  onDownload: PropTypes.func.isRequired,
+};

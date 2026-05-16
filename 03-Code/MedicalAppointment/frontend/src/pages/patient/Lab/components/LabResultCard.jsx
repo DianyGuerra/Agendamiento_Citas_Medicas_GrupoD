@@ -6,7 +6,7 @@ import {
   ExclamationTriangleIcon,
   ArrowUpTrayIcon,
 } from '@heroicons/react/24/outline';
-
+import PropTypes from 'prop-types';
 export default function LabResultCard({ 
   report, 
   statusConfig, 
@@ -146,3 +146,12 @@ export default function LabResultCard({
     </div>
   );
 }
+
+LabResultCard.propTypes = {
+  report: PropTypes.object.isRequired,                 
+  statusConfig: PropTypes.object.isRequired,           
+  formatDate: PropTypes.func.isRequired,               
+  getParameterStatusClass: PropTypes.func.isRequired,  
+  onDownload: PropTypes.func.isRequired,               
+  onUpload: PropTypes.func.isRequired,
+};

@@ -6,6 +6,7 @@
  */
 
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { 
   FormInput, 
   SubmitButton, 
@@ -79,6 +80,17 @@ export default function LoginForm({
     </>
   );
 }
+
+LoginForm.propTypes = {
+  email: PropTypes.string.isRequired,             
+  password: PropTypes.string.isRequired,          
+  setEmail: PropTypes.func.isRequired,            
+  setPassword: PropTypes.func.isRequired,         
+  onSubmit: PropTypes.func.isRequired,            
+  onGoogleLogin: PropTypes.func.isRequired,       
+  loading: PropTypes.bool,                        
+  error: PropTypes.string,                        
+};
 
 /**
  * Form header with title

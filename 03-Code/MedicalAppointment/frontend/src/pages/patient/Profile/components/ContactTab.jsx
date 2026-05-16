@@ -1,6 +1,7 @@
 /**
  * Contact information tab form fields
  */
+import PropTypes from 'prop-types';
 export function ContactTab({ formData, handleInputChange }) {
   return (
     <div className="space-y-6">
@@ -83,3 +84,8 @@ export function ContactTab({ formData, handleInputChange }) {
     </div>
   );
 }
+
+ContactTab.propTypes = {
+  formData: PropTypes.object.isRequired,        
+  handleInputChange: PropTypes.func.isRequired, 
+};

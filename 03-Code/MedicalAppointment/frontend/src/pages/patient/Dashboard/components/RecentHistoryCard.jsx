@@ -3,6 +3,7 @@
  * Displays recent medical history entries
  */
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 
 export default function RecentHistoryCard({ history }) {
@@ -51,3 +52,6 @@ export default function RecentHistoryCard({ history }) {
     </div>
   );
 }
+RecentHistoryCard.propTypes={
+  history: PropTypes.array.isRequired,
+};

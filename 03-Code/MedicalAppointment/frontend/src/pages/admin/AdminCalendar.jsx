@@ -333,12 +333,12 @@ export default function AdminCalendar() {
         start.toLocaleDateString('es-EC'),
         start.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }),
         end.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }),
-        (a.patient_name || 'N/A').replace(/,/g, ';'),
-        (a.doctor_name || 'N/A').replace(/,/g, ';'),
-        (a.specialty_name || 'N/A').replace(/,/g, ';'),
+        (a.patient_name || 'N/A').replaceAll('-', ''),
+        (a.doctor_name || 'N/A').replaceAll('-', ''),
+        (a.specialty_name || 'N/A').replaceAll('-', ''),
         a.status_label || a.status_code || 'N/A',
-        (a.reason || '').replace(/,/g, ';'),
-        (a.room_name || 'Sin asignar').replace(/,/g, ';')
+        (a.reason || '').replaceAll('-', ''),
+        (a.room_name || 'Sin asignar').replaceAll('-', '')
       ].join(',');
     }).join('\n');
 

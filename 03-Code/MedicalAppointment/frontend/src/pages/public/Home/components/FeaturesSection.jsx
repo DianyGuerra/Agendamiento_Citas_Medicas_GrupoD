@@ -6,6 +6,7 @@
  */
 
 import { FEATURES } from '../constants';
+import PropTypes from 'prop-types';
 
 /**
  * Features grid section
@@ -46,3 +47,9 @@ function FeatureCard({ image, title, description }) {
     </div>
   );
 }
+
+FeatureCard.propTypes = {
+  image: PropTypes.string.isRequired,        
+  title: PropTypes.string.isRequired,        
+  description: PropTypes.string.isRequired,  
+};

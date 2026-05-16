@@ -1,6 +1,8 @@
 /**
  * Security/Password tab form fields
  */
+import PropTypes from 'prop-types';
+
 export function SecurityTab({ passwordData, handlePasswordChange }) {
   return (
     <div className="space-y-6">
@@ -46,3 +48,8 @@ export function SecurityTab({ passwordData, handlePasswordChange }) {
     </div>
   );
 }
+
+SecurityTab.propTypes = {
+  passwordData: PropTypes.object.isRequired,        
+  handlePasswordChange: PropTypes.func.isRequired,  
+};

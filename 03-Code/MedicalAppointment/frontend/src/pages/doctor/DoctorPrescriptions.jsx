@@ -667,7 +667,7 @@ export default function DoctorPrescriptions() {
     }
 
     // Descargar
-    const patientName = getPatientName(prescription).replace(/\s+/g, '_');
+    const patientName = getPatientName(prescription).replaceAll('','_');
     const filename = `Receta_${patientName}_${new Date().getTime()}.pdf`;
     pdf.save(filename);
     showNotification('PDF descargado exitosamente', 'success');

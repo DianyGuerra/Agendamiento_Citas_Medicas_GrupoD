@@ -36,6 +36,8 @@ const GoogleIcon = () => (
  * @param {string} props.text - Button text
  * @returns {JSX.Element}
  */
+import PropTypes from 'prop-types';
+
 export default function GoogleAuthButton({ 
   onClick, 
   text = 'Continuar con Google' 
@@ -59,3 +61,9 @@ export default function GoogleAuthButton({
     </button>
   );
 }
+
+GoogleAuthButton.propTypes = {
+  onClick: PropTypes.func.isRequired,   
+  text: PropTypes.string,               
+};
+

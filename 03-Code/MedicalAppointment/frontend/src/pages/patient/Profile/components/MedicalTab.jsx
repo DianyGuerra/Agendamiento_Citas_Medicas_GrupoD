@@ -1,6 +1,8 @@
 /**
  * Medical information tab form fields
  */
+import PropTypes from 'proop-Types';
+
 export function MedicalTab({ formData, handleInputChange, insuranceProviders, loadingInsurance }) {
   return (
     <div className="space-y-6">
@@ -117,3 +119,10 @@ export function MedicalTab({ formData, handleInputChange, insuranceProviders, lo
     </div>
   );
 }
+
+MedicalTab.propTypes = {
+  formData: PropTypes.object.isRequired,        
+  handleInputChange: PropTypes.func.isRequired,
+  insuranceProviders: PropTypes.array.isRequired,
+  loadingInsurance: PropTypes.bool.isRequired,
+};

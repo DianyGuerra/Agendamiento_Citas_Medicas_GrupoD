@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import PropTypes from 'prop-types';
 
 // Public pages (refactored with Clean Code structure)
 import Home from './pages/public/Home';
@@ -84,6 +85,11 @@ function ProtectedRoute({ children, allowedRoles }) {
 
   return children;
 }
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  allowedRoles: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 function AppRoutes() {
   const { user } = useAuth();

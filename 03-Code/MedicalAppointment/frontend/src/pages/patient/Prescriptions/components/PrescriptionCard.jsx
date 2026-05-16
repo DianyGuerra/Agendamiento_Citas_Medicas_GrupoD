@@ -8,7 +8,7 @@ import {
   ArrowDownTrayIcon,
   ArrowPathIcon,
 } from '@heroicons/react/24/outline';
-
+import PropTypes from 'prop-types';
 const STATUS_COLORS = {
   active: 'bg-green-100 border-green-300 text-green-800',
   expiring: 'bg-yellow-100 border-yellow-300 text-yellow-800',
@@ -206,4 +206,16 @@ export default function PrescriptionCard({
       </div>
     </div>
   );
+}
+PrescriptionCard.propTypes = {
+  prescription: PropTypes.object.isRequired,        
+  formatDate: PropTypes.func.isRequired,
+  getDisplayDuration: PropTypes.func.isRequired,
+  parseMedications: PropTypes.func.isRequired,
+  getExpiryDate: PropTypes.func.isRequired,
+  processLineBreaks: PropTypes.func.isRequired,
+  onDownload: PropTypes.func.isRequired,
+  onRenew: PropTypes.func.isRequired,
+  renewalLoading: PropTypes.bool.isRequired,
+  hasPendingRenewal: PropTypes.bool.isRequired,
 }

@@ -2,6 +2,8 @@
  * Page Header Component
  * Gradient header with title, description and optional actions
  */
+import PropTypes from 'prop-types';
+
 export default function PageHeader({ 
   icon: Icon, 
   title, 
@@ -28,3 +30,11 @@ export default function PageHeader({
     </div>
   );
 }
+
+PageHeader.propTypes = {
+  icon: PropTypes.elementType,                
+  title: PropTypes.string.isRequired,         
+  description: PropTypes.string,              
+  children: PropTypes.node,                   
+  gradient: PropTypes.string,               
+};

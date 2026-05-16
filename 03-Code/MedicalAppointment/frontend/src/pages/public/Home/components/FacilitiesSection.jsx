@@ -6,6 +6,7 @@
  */
 
 import { FACILITIES } from '../constants';
+import PropTypes from 'prop-types';
 
 /**
  * Facilities showcase section
@@ -44,6 +45,12 @@ function SectionHeader({ title, subtitle }) {
   );
 }
 
+SectionHeader.propTypes = {
+  title: PropTypes.string.isRequired,     
+  subtitle: PropTypes.string,             
+};
+
+
 /**
  * Individual facility card
  * @param {Object} props - Facility data
@@ -69,3 +76,9 @@ function FacilityCard({ image, title, description }) {
     </div>
   );
 }
+
+FacilityCard.propTypes = {
+  image: PropTypes.string.isRequired,        
+  title: PropTypes.string.isRequired,        
+  description: PropTypes.string.isRequired,  
+};

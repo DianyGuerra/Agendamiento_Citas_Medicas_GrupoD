@@ -11,6 +11,8 @@
  * @param {string} props.text - Divider text
  * @returns {JSX.Element}
  */
+import PropTypes from 'prop-types';
+
 export default function FormDivider({ text = 'O' }) {
   return (
     <div className="relative my-6">
@@ -25,3 +27,6 @@ export default function FormDivider({ text = 'O' }) {
     </div>
   );
 }
+FormDivider.propTypes ={
+text: PropTypes.string,
+};

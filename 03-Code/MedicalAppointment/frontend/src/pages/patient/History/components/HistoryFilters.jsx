@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline';
-
+import PropTypes from 'prop-types';
 /**
  * Filter controls for medical history
  */
@@ -68,3 +68,14 @@ export function HistoryFilters({
     </div>
   );
 }
+  HistoryFilters.propTypes ={
+    search: PropTypes.string.isRequired,
+    setSearch: PropTypes.func.isRequired,
+    year: PropTypes.string.isRequired,
+    setYear: PropTypes.func.isRequired,
+    specialty: PropTypes.string.isRequired,
+    setSpecialty: PropTypes.func.isRequired,
+    years: PropTypes.array.isRequired,
+    specialties: PropTypes.array.isRequired,
+    totalResults: PropTypes.number.isRequired,
+  };

@@ -4,6 +4,7 @@ import {
   TrashIcon,
   ArrowUpTrayIcon,
 } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 
 export default function UploadModal({
   selectedReport,
@@ -208,3 +209,16 @@ export default function UploadModal({
     </div>
   );
 }
+
+UploadModal.propTypes = {
+  selectedReport: PropTypes.object.isRequired,   
+  uploadData: PropTypes.object.isRequired,       
+  setUploadData: PropTypes.func.isRequired,      
+  submitting: PropTypes.bool.isRequired,         
+  formatDate: PropTypes.func.isRequired,         
+  addParameter: PropTypes.func.isRequired,       
+  removeParameter: PropTypes.func.isRequired,    
+  updateParameter: PropTypes.func.isRequired,    
+  onSubmit: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
