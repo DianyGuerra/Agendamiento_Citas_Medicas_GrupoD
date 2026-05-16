@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import SecurityModel from '../../models/Security.model';
 import {
   ShieldCheckIcon,
@@ -2046,7 +2046,7 @@ function Modal({ title, children, onClose, size = 'md' }) {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex min-h-full items-center justify-center p-2 sm:p-4">
-        <div className="fixed inset-0 bg-black/50" onClick={onClose} />
+        <button type="button" className="fixed inset-0 bg-black/50"  onClick={onClose} aria-label="Cerrar modal"></button>
         <div className={`relative bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]} p-4 sm:p-6 max-h-[90vh] overflow-y-auto`}>
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate pr-2">{title}</h3>
@@ -2111,7 +2111,7 @@ function ConfirmModal({ show, title, message, onConfirm, onCancel, type = 'warni
   return (
     <div className="fixed inset-0 z-[60] overflow-y-auto">
       <div className="flex min-h-full items-center justify-center p-3 sm:p-4">
-        <div className="fixed inset-0 bg-black/50" onClick={onCancel} />
+        <button type="button"  className="fixed inset-0 bg-black/50" onClick={onCancel} aria-label="Cerrar modal"></button>
         <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md p-4 sm:p-6">
           <div className="flex items-start gap-3 sm:gap-4">
             <div className={`p-2 rounded-full flex-shrink-0 ${style.iconBg}`}>

@@ -623,9 +623,11 @@ export default function DoctorNotifications() {
               const notificationIsRead = isRead(notification.id);
 
               return (
-                <div
+                <button
                   key={notification.id}
+                  type="button"
                   onClick={() => markAsRead(notification.id)}
+                  aria-label="Marcar notificación como leída"
                   className={`
                     relative flex items-start gap-2 sm:gap-4 p-3 sm:p-4 rounded-lg border cursor-pointer
                     transition-all duration-200 bg-white shadow-sm
@@ -692,7 +694,7 @@ export default function DoctorNotifications() {
                       <TrashIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                     </button>
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>

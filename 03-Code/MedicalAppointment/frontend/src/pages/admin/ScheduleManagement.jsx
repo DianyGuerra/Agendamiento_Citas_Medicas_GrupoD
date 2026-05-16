@@ -411,9 +411,12 @@ export default function ScheduleManagement() {
                     })
                     .map((doctor) => (
                       <div key={doctor.id} className="bg-white">
-                        <div
-                          className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50"
+                        <button
+                          key={doctor.id}
+                          type="button"
                           onClick={() => toggleDoctorExpand(doctor.id)}
+                          aria-label={`Expandir información del doctor ${doctor.name}`}
+                          className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50"
                         >
                           <div className="flex items-center gap-4">
                             <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
@@ -444,7 +447,7 @@ export default function ScheduleManagement() {
                               <ChevronDownIcon className="w-5 h-5 text-gray-400" />
                             )}
                           </div>
-                        </div>
+                        </button>
                         
                         {expandedDoctors[doctor.id] && (
                           <div className="px-3 sm:px-4 pb-4 bg-gray-50">

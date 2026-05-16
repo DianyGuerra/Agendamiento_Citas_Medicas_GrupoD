@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import { DoctorModel, SpecialtyModel } from '../../models';
 import { 
   PlusIcon, 

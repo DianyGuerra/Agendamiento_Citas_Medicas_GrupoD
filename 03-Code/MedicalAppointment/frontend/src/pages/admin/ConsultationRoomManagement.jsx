@@ -296,7 +296,7 @@ export default function ConsultationRoomManagement() {
                           <p className="text-xs text-white/80">Sala {room.room_number}</p>
                         </div>
                       </div>
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${room.is_available ? 'bg-white/20 text-white' : 'bg-white/20 text-white'}`}>
+                      <span className={`px-2 py-1 text-xs font-medium rounded-fullbg-white/20 text-white' : 'bg-white/20 text-white'}`}>
                         {room.is_available ? '● Disponible' : '○ No Disponible'}
                       </span>
                     </div>

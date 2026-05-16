@@ -10,7 +10,7 @@ import {
   BeakerIcon,
   UserCircleIcon,
   DocumentTextIcon,
-  ArrowRightOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
   BuildingOffice2Icon,
   UsersIcon,
   CurrencyDollarIcon,
@@ -94,9 +94,11 @@ export default function AdminLayout({ children }) {
     <div className="flex min-h-screen bg-gray-50">
       {/* Mobile Overlay */}
       {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+        <button
+          type="button"
           onClick={() => setSidebarOpen(false)}
+          aria-label="Cerrar sidebar"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
         />
       )}
 
@@ -163,7 +165,7 @@ export default function AdminLayout({ children }) {
             onClick={handleLogout}
             className="flex items-center gap-2 w-full px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-all text-sm"
           >
-            <ArrowRightOnRectangleIcon className="w-4 h-4" />
+            <ArrowRightStartOnRectangleIcon className="w-4 h-4" />
             <span className="font-medium">Cerrar Sesión</span>
           </button>
         </div>

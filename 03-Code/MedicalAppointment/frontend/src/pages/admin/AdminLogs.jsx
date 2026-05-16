@@ -287,13 +287,15 @@ export default function AdminLogs() {
               {/* Mobile Cards View */}
               <div className="lg:hidden divide-y divide-gray-200">
                 {filteredLogs.map((log) => (
-                  <div 
-                    key={log.id} 
-                    className="p-4 hover:bg-gray-50 cursor-pointer"
+                  <button
+                    key={log.id}
+                    type="button"
                     onClick={() => {
                       setSelectedLog(log);
                       setShowDetailModal(true);
                     }}
+                    aria-label={`Ver detalles del log ${log.id}`}
+                    className="p-4 hover:bg-gray-50 cursor-pointer"
                   >
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div className="min-w-0 flex-1">
@@ -316,7 +318,7 @@ export default function AdminLogs() {
                     {log.description && (
                       <p className="mt-2 text-sm text-gray-600 line-clamp-2">{log.description}</p>
                     )}
-                  </div>
+                  </button>
                 ))}
               </div>
 

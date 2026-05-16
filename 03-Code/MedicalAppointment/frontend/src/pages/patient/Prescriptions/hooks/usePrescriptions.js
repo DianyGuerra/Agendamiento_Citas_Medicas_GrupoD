@@ -133,7 +133,7 @@ const getStatusInfo = (prescription) => {
 
 export const processLineBreaks = (text) => {
   if (!text) return '';
-  return text.replaceAll('\\n', '\n');
+  return text.replaceAll(String.raw`\n`, '\n');
 };
 
 export default function usePrescriptions() {

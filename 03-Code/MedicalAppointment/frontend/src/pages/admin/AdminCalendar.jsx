@@ -338,7 +338,7 @@ export default function AdminCalendar() {
         (a.specialty_name || 'N/A').replaceAll('-', ''),
         a.status_label || a.status_code || 'N/A',
         (a.reason || '').replaceAll('-', ''),
-        (a.room_name || 'Sin asignar').replaceAll('-', '')
+        (a.room_name || 'Sin asignar').replaceAll(',', ';')
       ].join(',');
     }).join('\n');
 
@@ -636,9 +636,11 @@ export default function AdminCalendar() {
                 const isSelected = selectedDay && day.toDateString() === selectedDay.toDateString();
                 
                 return (
-                  <div 
-                    key={key} 
+                  <button
+                    key={key}
+                    type="button"
                     onClick={() => handleDayClick(day)}
+                    aria-label={`Seleccionar día ${day}`}
                     className={`p-1 sm:p-1.5 md:p-2 min-h-[50px] sm:min-h-[70px] md:min-h-[90px] border rounded-lg transition-all cursor-pointer ${
                       isCurrentMonth ? 'bg-white hover:bg-blue-50' : 'bg-gray-50/50 opacity-50'
                     } ${isToday ? 'ring-2 ring-blue-500 ring-offset-1' : 'border-gray-100'} ${
@@ -656,7 +658,7 @@ export default function AdminCalendar() {
                         {count} <span className="hidden sm:inline">{count === 1 ? 'cita' : 'citas'}</span>
                       </div>
                     )}
-                  </div>
+                  </button>
                 );
               })}
             </div>

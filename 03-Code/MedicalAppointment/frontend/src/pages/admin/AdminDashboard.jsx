@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
 import { AppointmentModel } from '../../models';
-import PropTpes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useAuth } from '../../context/AuthContext';
 import {
   Chart as ChartJS,

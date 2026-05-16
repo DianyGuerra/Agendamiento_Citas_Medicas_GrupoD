@@ -526,11 +526,13 @@ export default function DoctorAppointments() {
                     {hourAppointments.map((apt, idx) => {
                       const status = apt.status || apt.status_code || apt.appointment_status?.code;
                       return (
-                        <div
+                        <button
                           key={idx}
+                          type="button"
                           onClick={() => setSelectedAppointment(apt)}
                           className={`mb-0.5 p-1.5 rounded text-xs font-semibold text-white cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all border-l-4 ${getStatusColor(status)} ${getStatusBorderColor(status)}`}
                           title={`${apt.patient_name || apt.patient?.first_name} - ${apt.reason || 'Consulta'} - ${getStatusLabel(status)}`}
+                          aria-label="Seleccionar cita"
                         >
                           <div className="flex items-center justify-between gap-1">
                             <span className="font-bold">{formatTime(apt.scheduled_start)}</span>
@@ -546,7 +548,7 @@ export default function DoctorAppointments() {
                               {apt.reason.length > 20 ? apt.reason.substring(0, 20) + '...' : apt.reason}
                             </div>
                           )}
-                        </div>
+                        </button>
                       );
                     })}
                   </div>

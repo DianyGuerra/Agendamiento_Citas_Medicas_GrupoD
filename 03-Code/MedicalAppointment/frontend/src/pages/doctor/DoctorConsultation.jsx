@@ -807,7 +807,7 @@ export default function DoctorConsultation() {
             onClick={handleGoBack}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
-            {fromPatientHistory ? 'Volver al historial del paciente' : fromAgenda ? 'Volver a Mi Agenda' : fromDashboard ? 'Volver al Dashboard' : 'Volver al Dashboard'}
+            {fromPatientHistory  ? 'Volver al historial del paciente'  : fromAgenda  ? 'Volver a Mi Agenda'  : fromDashboard  ? 'Volver al Dashboard Principal'  : 'Volver al Dashboard'}
           </button>
         </div>
       </DoctorLayout>
@@ -984,7 +984,7 @@ export default function DoctorConsultation() {
               <button
                 onClick={handleGoBack}
                 className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition"
-                title={fromPatientHistory ? 'Volver al historial del paciente' : fromAgenda ? 'Volver a Mi Agenda' : fromDashboard ? 'Volver al Dashboard' : 'Volver al Dashboard'}
+                title={fromPatientHistory ? 'Volver al historial del paciente': fromAgenda ? 'Volver a Mi Agenda' : fromDashboard ? 'Volver al Dashboard Principal' : 'Volver al Dashboard'}
               >
                 <ArrowLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
               </button>

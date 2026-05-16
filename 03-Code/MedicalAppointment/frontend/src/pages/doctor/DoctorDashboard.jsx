@@ -617,8 +617,15 @@ export default function DoctorDashboard() {
                 </h4>
                 <div className="space-y-2">
                   {pendingActions.map((action) => (
-                    <div
+                    <button
                       key={action.id}
+                      type="button"
+                      onClick={() => {
+                        if (action.type === 'start_consultation') {
+                          handleStartConsultation(action.appointmentId);
+                        }
+                      }}
+                      aria-label="Acción de cita"
                       className={`p-3 rounded-lg cursor-pointer transition ${
                         action.priority === 'urgent'
                           ? 'bg-red-50 border border-red-200 hover:bg-red-100'
@@ -626,11 +633,6 @@ export default function DoctorDashboard() {
                           ? 'bg-orange-50 border border-orange-200 hover:bg-orange-100'
                           : 'bg-gray-50 hover:bg-gray-100'
                       }`}
-                      onClick={() => {
-                        if (action.type === 'start_consultation') {
-                          handleStartConsultation(action.appointmentId);
-                        }
-                      }}
                     >
                       <div className="flex items-start gap-2">
                         <ExclamationCircleIcon className={`w-5 h-5 flex-shrink-0 ${
@@ -641,7 +643,7 @@ export default function DoctorDashboard() {
                           <p className="text-xs text-gray-500">{action.description}</p>
                         </div>
                       </div>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -784,10 +786,12 @@ export default function DoctorDashboard() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {appointments.map((apt) => (
-                <div
+                <button
                   key={apt.id}
-                  className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:shadow-md transition cursor-pointer"
+                  type="button"
                   onClick={() => handleStartConsultation(apt.id)}
+                  aria-label="Iniciar consulta"
+                  className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:shadow-md transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <CalendarIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
@@ -802,7 +806,7 @@ export default function DoctorDashboard() {
                   }`}>
                     {apt.status_label || 'Pendiente'}
                   </span>
-                </div>
+                </button>
               ))}
             </div>
           )}

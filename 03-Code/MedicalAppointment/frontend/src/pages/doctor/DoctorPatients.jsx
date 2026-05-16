@@ -653,11 +653,10 @@ export default function DoctorPatients() {
                     const config = statusConfig[status] || statusConfig.scheduled;
                     
                     return (
-                      <div 
-                        key={appointment.id || appointment.appointment_id || index} 
-                        className={`border border-gray-200 rounded-lg p-4 transition ${(status !== 'cancelled' && status !== 'no_show') ? 'hover:bg-gray-50 cursor-pointer' : 'cursor-default opacity-75'}`}
+                      <button
+                        key={appointment.id || appointment.appointment_id || index}
+                        type="button"
                         onClick={() => {
-                          // Don't navigate to cancelled or no_show appointments
                           if (status === 'cancelled' || status === 'no_show') return;
                           const appointmentId = appointment.id || appointment.appointment_id;
                           if (appointmentId) {
@@ -669,6 +668,12 @@ export default function DoctorPatients() {
                             });
                           }
                         }}
+                        aria-label="Abrir consulta"
+                        className={`border border-gray-200 rounded-lg p-4 transition ${
+                          (status !== 'cancelled' && status !== 'no_show') 
+                            ? 'hover:bg-gray-50 cursor-pointer' 
+                            : 'cursor-default opacity-75'
+                        }`}
                       >
                         <div className="flex justify-between items-start mb-2">
                           <div className="flex items-center gap-2">
@@ -747,7 +752,7 @@ export default function DoctorPatients() {
                             </span>
                           </div>
                         )}
-                      </div>
+                      </button>
                     );
                   })}
                 </div>

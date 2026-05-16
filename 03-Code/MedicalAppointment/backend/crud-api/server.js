@@ -46,8 +46,14 @@ const PORT = process.env.PORT || process.env.CRUD_API_PORT || 3001;
 
 // Security headers
 app.use(helmet({
-  // nosonar: Este CSP está desactivado temporalmente por compatibilidad con el equipo
-  contentSecurityPolicy: false, // NOSONAR
+  contentSecurityPolicy: {
+    directives: {
+      // Bloquea objetos inseguros como Flash, plugins, etc.
+      "object-src": ["'none'"],
+      // Permite estilos desde tu propio dominio y HTTPS
+      "style-src": ["'self'", "https:"]
+    },
+  },
   crossOriginEmbedderPolicy: false,
 }));
 
