@@ -937,5 +937,5 @@ function StatsCard({ title, value, color }) {
 StatsCard.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  color: PropTypes.oneOf(['blue', 'green', 'yellow', 'purple']).isRequired,
+  color: PropTypes.string.isRequired,
 };

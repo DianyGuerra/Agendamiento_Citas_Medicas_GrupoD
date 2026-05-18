@@ -2146,7 +2146,7 @@ ConfirmModal.propTypes = {
   show: PropTypes.bool.isRequired,            
   title: PropTypes.string.isRequired,           
   message: PropTypes.string.isRequired,         
-  onConfirm: PropTypes.func.isRequired,         
+  onConfirm: PropTypes.func,         
   onCancel: PropTypes.func.isRequired,          
   type: PropTypes.oneOf(['warning', 'info', 'success', 'error']), 
 };

@@ -55,7 +55,7 @@ export default function FormInput({
 
 FormInput.propTypes = {
   type: PropTypes.string,                  
-  name: PropTypes.string.isRequired,       
+  name: PropTypes.string,       
   value: PropTypes.oneOfType([             
     PropTypes.string,
     PropTypes.number,

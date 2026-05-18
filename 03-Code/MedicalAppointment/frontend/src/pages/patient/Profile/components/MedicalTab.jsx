@@ -1,7 +1,7 @@
 /**
  * Medical information tab form fields
  */
-import PropTypes from 'proop-Types';
+import PropTypes from 'prop-types';
 
 export function MedicalTab({ formData, handleInputChange, insuranceProviders, loadingInsurance }) {
   return (

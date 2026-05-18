@@ -192,10 +192,17 @@ export default function PatientNotifications() {
               const notificationIsRead = isRead(notification.id);
 
               return (
-                <button
+                <div
                   key={notification.id}
-                  type="button"
+                  role="button"
+                  tabIndex={0}
                   onClick={() => markAsRead(notification.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      markAsRead(notification.id);
+                    }
+                  }}
                   aria-label="Marcar notificación como leída"
                   className={`
                     relative flex items-start gap-4 p-4 rounded-lg border cursor-pointer
@@ -260,7 +267,7 @@ export default function PatientNotifications() {
                       <TrashIcon className="h-4 w-4" />
                     </button>
                   </div>
-                </button>
+                </div>
               );
             })
           )}
