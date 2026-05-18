@@ -1,0 +1,10 @@
+[
+  "medical_records",
+  "consultation_notes",
+  "prescriptions",
+  "prescription_qr_codes",
+  "prescription_renewals",
+  "consultation_rooms",
+  "lab_reports",
+  "lab_results"
+]
