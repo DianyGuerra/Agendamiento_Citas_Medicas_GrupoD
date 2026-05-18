@@ -52,6 +52,6 @@ TabNavigation.propTypes = {
     })
   ).isRequired,
   activeTab: PropTypes.string.isRequired,     
-  onChange: PropTypes.func.isRequired,        
+  onChange: PropTypes.func,        
   className: PropTypes.string,                
 };

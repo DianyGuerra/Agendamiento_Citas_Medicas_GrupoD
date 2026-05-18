@@ -1,5 +1,6 @@
-const createQueryMock = (result = { data: [], error: null, count: 0 }) => {
+const createQueryMock = (result) => {
 	const query = {};
+	const resolvedResult = result === undefined ? { data: [], error: null, count: 0 } : result;
 
 	const chainMethods = [
 		'select',
@@ -21,8 +22,8 @@ const createQueryMock = (result = { data: [], error: null, count: 0 }) => {
 		query[method] = jest.fn(() => query);
 	});
 
-	query.single = jest.fn(async () => result);
-	query.then = (resolve, reject) => Promise.resolve(result).then(resolve, reject);
+	query.single = jest.fn(async () => resolvedResult);
+	query.then = (resolve, reject) => Promise.resolve(resolvedResult).then(resolve, reject);
 
 	return query;
 };

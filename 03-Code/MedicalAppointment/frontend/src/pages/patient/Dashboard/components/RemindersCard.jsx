@@ -29,5 +29,5 @@ export default function RemindersCard({ reminders = DEFAULT_REMINDERS }) {
 }
 
 RemindersCard.propTypes ={
-reminders: PropTypes.array.isRequired,
+reminders: PropTypes.array,
 };
