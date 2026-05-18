@@ -6,3 +6,10 @@ npm run dev
 
 ############# COMANTO DE TEST####################
 npm test
+
+############# PRUEBAS UNITARIAS #################
+--------------- Appointments --------------------
+cd backend
+npm run test:appointment
+npm run test:appointment:watch
+npm install --save-dev jest //

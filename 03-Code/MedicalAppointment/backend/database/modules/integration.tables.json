@@ -1,0 +1,7 @@
+[
+  "reminders",
+  "password_resets",
+  "qr_access_logs",
+  "audit_logs",
+  "user_notifications"
+]
