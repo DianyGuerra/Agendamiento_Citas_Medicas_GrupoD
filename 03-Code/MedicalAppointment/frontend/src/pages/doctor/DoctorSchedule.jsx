@@ -218,7 +218,7 @@ export default function DoctorSchedule() {
             onClick={() => setShowRequestModal(true)}
             className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
-            <span>📝</span>
+            <span>📝</span>{' '}
             Nueva Solicitud
           </button>
         </div>
@@ -434,9 +434,9 @@ export default function DoctorSchedule() {
                 <form onSubmit={handleRequestSubmit} className="space-y-4">
                   {/* Exception Type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="block text-sm font-medium text-gray-700 mb-2">
                       Tipo de Solicitud
-                    </label>
+                    </span>
                     <div className="grid grid-cols-2 gap-2">
                       {EXCEPTION_TYPES.map(type => (
                         <button
@@ -474,9 +474,9 @@ export default function DoctorSchedule() {
                     
                     {requestForm.exception_type === 'vacation' && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <span className="block text-sm font-medium text-gray-700 mb-1">
                           Fecha Fin (opcional)
-                        </label>
+                        </span>
                         <input
                           type="date"
                           value={requestForm.end_date}
@@ -507,9 +507,9 @@ export default function DoctorSchedule() {
                       {!requestForm.is_all_day && (
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <span className="block text-sm font-medium text-gray-700 mb-1">
                               Hora Inicio
-                            </label>
+                            </span>
                             <input
                               type="time"
                               value={requestForm.exception_start_time}
@@ -518,9 +518,9 @@ export default function DoctorSchedule() {
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <span className="block text-sm font-medium text-gray-700 mb-1">
                               Hora Fin
-                            </label>
+                            </span>
                             <input
                               type="time"
                               value={requestForm.exception_end_time}
@@ -535,9 +535,9 @@ export default function DoctorSchedule() {
 
                   {/* Reason */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Motivo / Comentarios
-                    </label>
+                    </span>
                     <textarea
                       value={requestForm.reason}
                       onChange={(e) => setRequestForm({ ...requestForm, reason: e.target.value })}

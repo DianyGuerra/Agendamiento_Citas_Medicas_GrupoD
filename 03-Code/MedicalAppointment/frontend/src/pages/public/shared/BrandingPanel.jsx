@@ -12,6 +12,8 @@
  * @param {string} props.subtitle - Subtitle text
  * @returns {JSX.Element}
  */
+import PropTypes from 'prop-types';
+
 export default function BrandingPanel({ 
   title = '¡Bienvenido!', 
   subtitle = 'Tu salud es nuestra prioridad' 
@@ -35,3 +37,8 @@ export default function BrandingPanel({
     </div>
   );
 }
+
+BrandingPanel.propTypes = {
+  title: PropTypes.string,       
+  subtitle: PropTypes.string,    
+};

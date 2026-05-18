@@ -37,31 +37,28 @@ const createHttpClient = (apiType) => {
 
   // Response interceptor - handle errors
   instance.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      // Handle 401 - Unauthorized
-      if (error.response?.status === 401) {
-        // Don't redirect if already on login page
-        if (!window.location.pathname.includes('/login')) {
-          localStorage.removeItem(STORAGE_KEYS.TOKEN);
-          localStorage.removeItem(STORAGE_KEYS.USER);
-          window.location.href = '/login';
-        }
-      }
-
-      // Normalize error response
-      const normalizedError = {
-        status: error.response?.status || 500,
-        message: error.response?.data?.message || 
-                 error.response?.data?.error || 
-                 error.message || 
-                 'Error de conexión',
-        data: error.response?.data,
-      };
-
-      return Promise.reject(normalizedError);
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401 && !globalThis.location.pathname.includes('/login')) {
+      localStorage.removeItem(STORAGE_KEYS.TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.USER);
+      window.location.href = '/login';
     }
-  );
+
+    const normalizedError = new Error(
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      'Error de conexión'
+    );
+
+    normalizedError.status = error.response?.status || 500;
+    normalizedError.data = error.response?.data;
+
+    return Promise.reject(normalizedError);
+  }
+);
+
 
   return instance;
 };

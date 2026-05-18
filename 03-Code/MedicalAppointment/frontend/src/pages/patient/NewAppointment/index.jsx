@@ -64,9 +64,9 @@ export default function NewAppointment() {
               <div className="space-y-4 md:space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="block text-sm font-medium text-gray-700 mb-2">
                       Especialidad *
-                    </label>
+                    </span>
                     <select
                       value={searchParams.specialty_id}
                       onChange={(e) => handleSearchChange('specialty_id', e.target.value)}
@@ -82,9 +82,9 @@ export default function NewAppointment() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="block text-sm font-medium text-gray-700 mb-2">
                       Doctor *
-                    </label>
+                    </span>
                     <select
                       value={searchParams.doctor_id}
                       onChange={(e) => handleSearchChange('doctor_id', e.target.value)}
@@ -101,9 +101,9 @@ export default function NewAppointment() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="block text-sm font-medium text-gray-700 mb-2">
                       Fecha *
-                    </label>
+                    </span>
                     <input
                       type="date"
                       value={searchParams.date}

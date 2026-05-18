@@ -66,7 +66,7 @@ const validateType = (value, type) => {
     case 'string':
       return typeof value === 'string';
     case 'number':
-      return typeof value === 'number' && !isNaN(value);
+      return typeof value === 'number' && !Number.isNaN(value);
     case 'boolean':
       return typeof value === 'boolean';
     case 'email':{
@@ -77,7 +77,7 @@ const validateType = (value, type) => {
       return typeof value === 'string' && 
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
     case 'date':
-      return !isNaN(Date.parse(value));
+      return !Number.isNaN(Date.parse(value));
     case 'array':
       return Array.isArray(value);
     case 'object':

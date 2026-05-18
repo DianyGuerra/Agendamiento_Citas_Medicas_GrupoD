@@ -26,12 +26,7 @@ export default function ForgotPassword() {
 
       const data = await response.json();
 
-      if (response.ok) {
-        setSuccess(true);
-      } else {
-        // Don't reveal if email exists or not for security
-        setSuccess(true);
-      }
+      setSuccess(true);
     } catch (err) {
       console.error('Password reset error:', err);
       // Still show success to not reveal if email exists

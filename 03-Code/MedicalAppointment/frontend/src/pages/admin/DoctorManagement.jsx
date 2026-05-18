@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
+import PropTypes from 'prop-types';
 import { DoctorModel, SpecialtyModel } from '../../models';
 import { 
   PlusIcon, 
@@ -352,7 +353,7 @@ export default function DoctorManagement() {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Especialidad</label>
+            <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Especialidad</span>
             <select
               value={specialtyFilter}
               onChange={(e) => setSpecialtyFilter(e.target.value)}
@@ -367,7 +368,7 @@ export default function DoctorManagement() {
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Estado</label>
+            <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Estado</span>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -382,7 +383,7 @@ export default function DoctorManagement() {
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Buscar Doctor</label>
+            <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Buscar Doctor</span>
             <div className="relative">
               <MagnifyingGlassIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -563,9 +564,9 @@ export default function DoctorManagement() {
             <form onSubmit={handleSubmit} className="p-4 sm:p-8 space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Cédula <span className="text-red-500">*</span>
-                  </label>
+                  </span>
                   <input
                     type="text"
                     required
@@ -580,9 +581,9 @@ export default function DoctorManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Nombres <span className="text-red-500">*</span>
-                  </label>
+                  </span>
                   <input
                     type="text"
                     required
@@ -595,9 +596,9 @@ export default function DoctorManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Apellidos <span className="text-red-500">*</span>
-                  </label>
+                  </span>
                   <input
                     type="text"
                     required
@@ -610,9 +611,9 @@ export default function DoctorManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Email <span className="text-red-500">*</span>
-                  </label>
+                  </span>
                   <input
                     type="email"
                     required
@@ -625,9 +626,9 @@ export default function DoctorManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Teléfono <span className="text-red-500">*</span>
-                  </label>
+                  </span>
                   <input
                     type="tel"
                     required
@@ -642,9 +643,9 @@ export default function DoctorManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Especialidad <span className="text-red-500">*</span>
-                  </label>
+                  </span>
                   <select
                     required
                     value={formData.specialty_id}
@@ -660,9 +661,9 @@ export default function DoctorManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Número de Licencia
-                  </label>
+                  </span>
                   <input
                     type="text"
                     value={formData.license_number}
@@ -674,9 +675,9 @@ export default function DoctorManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+                  <span className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Estado <span className="text-red-500">*</span>
-                  </label>
+                  </span>
                   <select
                     required
                     value={formData.status}
@@ -809,15 +810,15 @@ export default function DoctorManagement() {
 
               <div className="space-y-4 mb-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Doctor</label>
+                  <span className="block text-sm font-medium text-gray-500 mb-1">Doctor</span>
                   <p className="text-gray-900 font-semibold">{passwordData.name}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Email</label>
+                  <span className="block text-sm font-medium text-gray-500 mb-1">Email</span>
                   <p className="text-gray-900">{passwordData.email}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Contraseña Temporal</label>
+                  <span className="block text-sm font-medium text-gray-500 mb-1">Contraseña Temporal</span>
                   <div className="flex items-center gap-2">
                     <div className="flex-1 bg-gray-100 border-2 border-gray-300 rounded-lg px-4 py-3 font-mono text-lg text-gray-900 select-all">
                       {passwordData.password}
@@ -933,3 +934,8 @@ function StatsCard({ title, value, color }) {
     </div>
   );
 }
+StatsCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  color: PropTypes.string.isRequired,
+};

@@ -3,6 +3,7 @@
  * Reusable modal dialog with header, body and footer
  */
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 
 export default function Modal({ 
   isOpen, 
@@ -63,3 +64,15 @@ export default function Modal({
     </div>
   );
 }
+
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,             
+  onClose: PropTypes.func.isRequired,            
+  title: PropTypes.string.isRequired,            
+  subtitle: PropTypes.string,                    
+  icon: PropTypes.elementType,                   
+  children: PropTypes.node.isRequired,           
+  footer: PropTypes.node,                        
+  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+  headerGradient: PropTypes.string,              
+};

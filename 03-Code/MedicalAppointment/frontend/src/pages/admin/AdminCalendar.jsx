@@ -333,12 +333,12 @@ export default function AdminCalendar() {
         start.toLocaleDateString('es-EC'),
         start.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }),
         end.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }),
-        (a.patient_name || 'N/A').replace(/,/g, ';'),
-        (a.doctor_name || 'N/A').replace(/,/g, ';'),
-        (a.specialty_name || 'N/A').replace(/,/g, ';'),
+        (a.patient_name || 'N/A').replaceAll('-', ''),
+        (a.doctor_name || 'N/A').replaceAll('-', ''),
+        (a.specialty_name || 'N/A').replaceAll('-', ''),
         a.status_label || a.status_code || 'N/A',
-        (a.reason || '').replace(/,/g, ';'),
-        (a.room_name || 'Sin asignar').replace(/,/g, ';')
+        (a.reason || '').replaceAll('-', ''),
+        (a.room_name || 'Sin asignar').replaceAll(',', ';')
       ].join(',');
     }).join('\n');
 
@@ -506,7 +506,7 @@ export default function AdminCalendar() {
             <div className="p-3 sm:p-4 border-t border-gray-100 bg-gray-50">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 sm:mb-1.5">Doctor</label>
+                  <span className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 sm:mb-1.5">Doctor</span>
                   <select 
                     value={filters.doctor_id} 
                     onChange={(e) => setFilters((s) => ({ ...s, doctor_id: e.target.value }))} 
@@ -523,7 +523,7 @@ export default function AdminCalendar() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 sm:mb-1.5">Especialidad</label>
+                  <span className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 sm:mb-1.5">Especialidad</span>
                   <select 
                     value={filters.specialty_id} 
                     onChange={(e) => setFilters((s) => ({ ...s, specialty_id: e.target.value }))} 
@@ -538,7 +538,7 @@ export default function AdminCalendar() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 sm:mb-1.5">Estado</label>
+                  <span className="block text-xs sm:text-sm font-medium text-gray-600 mb-1 sm:mb-1.5">Estado</span>
                   <select 
                     value={filters.status} 
                     onChange={(e) => setFilters((s) => ({ ...s, status: e.target.value }))} 
@@ -636,9 +636,11 @@ export default function AdminCalendar() {
                 const isSelected = selectedDay && day.toDateString() === selectedDay.toDateString();
                 
                 return (
-                  <div 
-                    key={key} 
+                  <button
+                    key={key}
+                    type="button"
                     onClick={() => handleDayClick(day)}
+                    aria-label={`Seleccionar día ${day}`}
                     className={`p-1 sm:p-1.5 md:p-2 min-h-[50px] sm:min-h-[70px] md:min-h-[90px] border rounded-lg transition-all cursor-pointer ${
                       isCurrentMonth ? 'bg-white hover:bg-blue-50' : 'bg-gray-50/50 opacity-50'
                     } ${isToday ? 'ring-2 ring-blue-500 ring-offset-1' : 'border-gray-100'} ${
@@ -656,7 +658,7 @@ export default function AdminCalendar() {
                         {count} <span className="hidden sm:inline">{count === 1 ? 'cita' : 'citas'}</span>
                       </div>
                     )}
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -816,7 +818,7 @@ export default function AdminCalendar() {
                   ¿Está seguro que desea cancelar la cita de <strong className="break-words">{selectedAppointment.patient_name}</strong>?
                 </p>
                 <div className="mb-4 sm:mb-5">
-                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Motivo de cancelación</label>
+                  <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Motivo de cancelación</span>
                   <textarea
                     value={cancelReason}
                     onChange={(e) => setCancelReason(e.target.value)}
@@ -859,7 +861,7 @@ export default function AdminCalendar() {
               <div className="p-4 sm:p-6">
                 <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">Doctor actual: <strong className="break-words">{selectedAppointment.doctor_name}</strong></p>
                 <div className="mb-4 sm:mb-5">
-                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Nuevo doctor</label>
+                  <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Nuevo doctor</span>
                   <select
                     value={newDoctorId}
                     onChange={(e) => setNewDoctorId(e.target.value)}
@@ -909,7 +911,7 @@ export default function AdminCalendar() {
                   <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">Actual: <strong className="break-words">{selectedAppointment.room_name}</strong></p>
                 )}
                 <div className="mb-4 sm:mb-5">
-                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Seleccionar consultorio</label>
+                  <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Seleccionar consultorio</span>
                   <select
                     value={newRoomId}
                     onChange={(e) => setNewRoomId(e.target.value)}
@@ -963,7 +965,7 @@ export default function AdminCalendar() {
                 
                 <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-5">
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Nueva fecha</label>
+                    <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Nueva fecha</span>
                     <input
                       type="date"
                       value={rescheduleDate}
@@ -975,7 +977,7 @@ export default function AdminCalendar() {
                   </div>
                   
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Horario disponible</label>
+                    <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Horario disponible</span>
                     {loadingSlots ? (
                       <div className="flex items-center justify-center py-4">
                         <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-b-2 border-indigo-600"></div>
@@ -1010,7 +1012,7 @@ export default function AdminCalendar() {
                   </div>
                   
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Motivo (opcional)</label>
+                    <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Motivo (opcional)</span>
                     <textarea
                       value={rescheduleReason}
                       onChange={(e) => setRescheduleReason(e.target.value)}

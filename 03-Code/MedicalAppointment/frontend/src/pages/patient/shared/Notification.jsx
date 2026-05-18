@@ -3,6 +3,8 @@
  * Displays temporary notification messages
  */
 import { CheckCircleIcon, XCircleIcon, ExclamationCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
+
 
 const NOTIFICATION_CONFIG = {
   success: {
@@ -60,6 +62,18 @@ export default function Notification({ notification, onClose }) {
     </div>
   );
 }
+
+Notification.propTypes = {
+  notification: PropTypes.shape({
+    message: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['success', 'error', 'warning', 'info']),
+    action: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+    }),
+  }),
+  onClose: PropTypes.func,
+};
 
 // Hook for using notifications
 export function useNotification() {

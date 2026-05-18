@@ -1,6 +1,7 @@
 /**
  * Card for displaying medical record information
  */
+import PropTypes from 'prop-types';
 export function RecordCard({ icon, iconBgClass, title, children }) {
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
@@ -12,3 +13,10 @@ export function RecordCard({ icon, iconBgClass, title, children }) {
     </div>
   );
 }
+
+RecordCard.propTypes = {
+  icon: PropTypes.node.isRequired,          
+  iconBgClass: PropTypes.string.isRequired, 
+  title: PropTypes.string.isRequired,       
+  children: PropTypes.node.isRequired,      
+};

@@ -3,6 +3,7 @@
  * Modal for rescheduling an appointment with date and slot selection
  */
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { XMarkIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 export default function RescheduleModal({ appointment, onConfirm, onClose, loadAvailableSlots }) {
@@ -63,9 +64,9 @@ export default function RescheduleModal({ appointment, onConfirm, onClose, loadA
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <span className="block text-sm font-semibold text-gray-700 mb-2">
               Seleccione una nueva fecha
-            </label>
+            </span>
             <input
               type="date"
               value={rescheduleDate}
@@ -80,9 +81,9 @@ export default function RescheduleModal({ appointment, onConfirm, onClose, loadA
 
           {rescheduleDate && (
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <span className="block text-sm font-semibold text-gray-700 mb-2">
                 Horarios Disponibles
-              </label>
+              </span>
               {loadingSlots ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
@@ -141,3 +142,10 @@ export default function RescheduleModal({ appointment, onConfirm, onClose, loadA
     </div>
   );
 }
+
+RescheduleModal.propTypes = {
+  appointment: PropTypes.object.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  loadAvailableSlots: PropTypes.func.isRequired,
+};

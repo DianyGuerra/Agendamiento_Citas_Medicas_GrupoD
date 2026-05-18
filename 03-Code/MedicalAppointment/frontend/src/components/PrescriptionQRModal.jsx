@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { ArrowDownTrayIcon, CheckCircleIcon, XMarkIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 /**
@@ -143,5 +144,8 @@ export function PrescriptionQRModal({ prescription, onClose }) {
     </div>
   );
 }
-
+PrescriptionQRModal.propTypes = {
+  prescription: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 export default PrescriptionQRModal;

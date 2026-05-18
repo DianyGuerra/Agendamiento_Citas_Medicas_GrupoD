@@ -3,6 +3,7 @@
  * Confirmation modal for cancelling an appointment
  */
 import { Modal } from '../../shared';
+import PropTypes from 'prop-types';
 
 export default function CancelModal({ appointment, onConfirm, onClose }) {
   if (!appointment) return null;
@@ -34,9 +35,16 @@ export default function CancelModal({ appointment, onConfirm, onClose }) {
         ¿Está seguro que desea cancelar la cita con{' '}
         <strong>
           Dr. {appointment.doctor_first_name} {appointment.doctor_last_name}
-        </strong>
+        </strong>{' '}
         ?
       </p>
     </Modal>
   );
 }
+
+
+CancelModal.propTypes = {
+  appointment: PropTypes.object.isRequired, // genérico
+  onConfirm: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

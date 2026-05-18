@@ -6,6 +6,7 @@
  */
 
 import { SPECIALTIES } from '../constants';
+import PropTypes from 'prop-types';
 
 /**
  * Color mapping for Tailwind classes
@@ -92,3 +93,10 @@ function SpecialtyCard({ icon: Icon, title, color, description }) {
     </div>
   );
 }
+
+SpecialtyCard.propTypes = {
+  icon: PropTypes.elementType.isRequired,       
+  title: PropTypes.string.isRequired,           
+  color: PropTypes.string,                      
+  description: PropTypes.string.isRequired,     
+};

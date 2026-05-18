@@ -6,6 +6,7 @@
  */
 
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { CONTACT_INFO, BUSINESS_HOURS } from '../constants';
 
 /**
@@ -121,3 +122,8 @@ function Copyright({ year }) {
     </div>
   );
 }
+
+Copyright.propTypes = {
+  year: PropTypes.number.isRequired,   
+};
+

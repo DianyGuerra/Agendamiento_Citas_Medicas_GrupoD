@@ -3,6 +3,7 @@
  * Displays recent unread notifications
  */
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 
 const NOTIFICATION_COLORS = {
@@ -64,3 +65,6 @@ export default function NotificationsCard({ notifications }) {
     </div>
   );
 }
+NotificationsCard.propTypes = {
+  notifications: PropTypes.array.isRequired,
+};

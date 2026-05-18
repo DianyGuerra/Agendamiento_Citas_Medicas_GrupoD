@@ -1,6 +1,9 @@
 /**
  * Section for displaying detailed content with JSON parsing
  */
+import PropTypes from 'prop-types';
+
+
 export function DetailSection({ title, content }) {
   const parseContent = (rawContent) => {
     if (!rawContent) return null;
@@ -26,7 +29,7 @@ export function DetailSection({ title, content }) {
           .filter(([_, value]) => value && value !== '')
           .map(
             ([key, value]) =>
-              `${key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ')}: ${value}`
+              `${key.charAt(0).toUpperCase() + key.slice(1).replaceAll( '_', ' ')}: ${value}`
           )
           .join('\n');
       }
@@ -48,3 +51,8 @@ export function DetailSection({ title, content }) {
     </div>
   );
 }
+
+DetailSection.propTypes = {
+  title: PropTypes.string.isRequired,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
+};

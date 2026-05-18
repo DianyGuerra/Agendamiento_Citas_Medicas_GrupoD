@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import PropTypes from 'prop-types';
 import { NotificationModel, AppointmentModel, PrescriptionModel, ScheduleModel, DoctorRatingModel } from '../models';
 import {
   HomeIcon,
@@ -11,7 +12,7 @@ import {
   UserCircleIcon,
   BellIcon,
   ChartBarIcon,
-  ArrowRightOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
   BeakerIcon,
   Cog6ToothIcon,
   Bars3Icon,
@@ -140,7 +141,7 @@ export default function DoctorLayout({ children }) {
       // Fallback to localStorage value
       const storedCount = localStorage.getItem('doctor_unread_notifications_count');
       if (storedCount) {
-        setNotificationCount(parseInt(storedCount, 10) || 0);
+        setNotificationCount(Number.parseInt(storedCount, 10) || 0);
       }
     }
   }, [user]);
@@ -187,9 +188,11 @@ export default function DoctorLayout({ children }) {
     <div className="flex min-h-screen bg-gray-50">
       {/* Mobile Overlay */}
       {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+        <button
+          type="button"
           onClick={() => setSidebarOpen(false)}
+          aria-label="Cerrar sidebar"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
         />
       )}
 
@@ -258,7 +261,7 @@ export default function DoctorLayout({ children }) {
             onClick={handleLogout}
             className="flex items-center gap-3 w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-all"
           >
-            <ArrowRightOnRectangleIcon className="w-5 h-5" />
+            <ArrowRightStartOnRectangleIcon className="w-5 h-5" />
             <span className="font-medium text-sm">Cerrar Sesión</span>
           </button>
         </div>
@@ -301,3 +304,7 @@ export default function DoctorLayout({ children }) {
     </div>
   );
 }
+
+DoctorLayout.propTypes = {
+  children: PropTypes.node.isRequired
+};

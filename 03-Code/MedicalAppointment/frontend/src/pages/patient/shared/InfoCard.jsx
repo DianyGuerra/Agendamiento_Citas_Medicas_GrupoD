@@ -2,6 +2,7 @@
  * Info Card Component
  * Displays information with icon in a styled card
  */
+import PropTypes from 'prop-types';
 export default function InfoCard({ 
   icon: Icon, 
   title, 
@@ -24,3 +25,12 @@ export default function InfoCard({
     </div>
   );
 }
+
+InfoCard.propTypes = {
+  icon: PropTypes.elementType,                
+  title: PropTypes.string.isRequired,         
+  content: PropTypes.string,                  
+  colorClass: PropTypes.string,               
+  iconColorClass: PropTypes.string,           
+  fullWidth: PropTypes.bool,                  
+};

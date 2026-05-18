@@ -3,6 +3,7 @@
  * Displays patient health summary information
  */
 import { HeartIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 
 const HEALTH_ITEMS = [
   { key: 'blood_type', label: 'Tipo de Sangre', fallback: 'No registrado' },
@@ -45,3 +46,7 @@ export default function HealthSummaryCard({ healthSummary, stats }) {
     </div>
   );
 }
+HealthSummaryCard.propTypes = {
+  healthSummary: PropTypes.object.isRequired, 
+  stats: PropTypes.object.isRequired,         
+};

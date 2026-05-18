@@ -3,7 +3,7 @@
  * Displays helpful reminders for the patient
  */
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
-
+import PropTypes from 'prop-types';
 const DEFAULT_REMINDERS = [
   'Complete su perfil médico para un mejor servicio',
   'Recuerde llevar sus documentos a la próxima cita',
@@ -27,3 +27,7 @@ export default function RemindersCard({ reminders = DEFAULT_REMINDERS }) {
     </div>
   );
 }
+
+RemindersCard.propTypes ={
+reminders: PropTypes.array.isRequired,
+};

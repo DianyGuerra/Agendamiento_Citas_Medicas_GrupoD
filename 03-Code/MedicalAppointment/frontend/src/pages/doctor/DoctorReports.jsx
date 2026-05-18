@@ -214,7 +214,7 @@ export default function DoctorReports() {
           
           {/* Date Range Filter */}
           <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
-            <label className="text-xs sm:text-sm font-medium text-gray-600 whitespace-nowrap">Período:</label>
+            <span className="text-xs sm:text-sm font-medium text-gray-600 whitespace-nowrap">Período:</span>
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}

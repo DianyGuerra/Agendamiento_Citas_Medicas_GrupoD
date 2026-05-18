@@ -5,6 +5,7 @@ import {
   XMarkIcon,
   ArrowPathIcon,
 } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 
 const STATUS_CONFIG = {
   pending: { label: 'Pendiente', color: 'bg-yellow-100 border-yellow-300 text-yellow-800', icon: ClockIcon },
@@ -93,3 +94,9 @@ export default function RenewalCard({ renewal, formatDate, onCancel }) {
     </div>
   );
 }
+
+RenewalCard.propTypes = {
+  renewal: PropTypes.object.isRequired,     
+  formatDate: PropTypes.func.isRequired,    
+  onCancel: PropTypes.func.isRequired,      
+};

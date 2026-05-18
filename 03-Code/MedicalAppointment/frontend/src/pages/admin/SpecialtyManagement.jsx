@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
+import PropTypes from 'prop-types';
 import { SpecialtyModel } from '../../models';
 import { 
   PlusIcon, 
@@ -214,7 +215,7 @@ export default function SpecialtyManagement() {
                   {specialty.consultation_fee && (
                     <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded-full font-semibold text-xs flex-shrink-0 ml-2">
                       <CurrencyDollarIcon className="w-3 h-3" />
-                      {parseFloat(specialty.consultation_fee).toFixed(2)}
+                      {Number.parseFloat(specialty.consultation_fee).toFixed(2)}
                     </span>
                   )}
                 </div>
@@ -272,7 +273,7 @@ export default function SpecialtyManagement() {
                       {specialty.consultation_fee ? (
                         <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-full font-semibold">
                           <CurrencyDollarIcon className="w-4 h-4" />
-                          {parseFloat(specialty.consultation_fee).toFixed(2)}
+                          {Number.parseFloat(specialty.consultation_fee).toFixed(2)}
                         </span>
                       ) : (
                         <span className="text-gray-400 italic">No definido</span>
@@ -319,9 +320,9 @@ export default function SpecialtyManagement() {
 
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <span className="block text-sm font-semibold text-gray-700 mb-2">
                   Nombre de la Especialidad <span className="text-red-500">*</span>
-                </label>
+                </span>
                 <input
                   type="text"
                   required
@@ -333,9 +334,9 @@ export default function SpecialtyManagement() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <span className="block text-sm font-semibold text-gray-700 mb-2">
                   Descripción
-                </label>
+                </span>
                 <textarea
                   rows="3"
                   value={formData.description}
@@ -346,9 +347,9 @@ export default function SpecialtyManagement() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <span className="block text-sm font-semibold text-gray-700 mb-2">
                   Fee de Consulta ($)
-                </label>
+                </span>
                 <div className="relative">
                   <CurrencyDollarIcon className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
@@ -434,3 +435,8 @@ function StatsCard({ title, value, color }) {
     </div>
   );
 }
+StatsCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  color: PropTypes.oneOf(['blue', 'green', 'yellow', 'purple']).isRequired,
+};

@@ -653,11 +653,10 @@ export default function DoctorPatients() {
                     const config = statusConfig[status] || statusConfig.scheduled;
                     
                     return (
-                      <div 
-                        key={appointment.id || appointment.appointment_id || index} 
-                        className={`border border-gray-200 rounded-lg p-4 transition ${(status !== 'cancelled' && status !== 'no_show') ? 'hover:bg-gray-50 cursor-pointer' : 'cursor-default opacity-75'}`}
+                      <button
+                        key={appointment.id || appointment.appointment_id || index}
+                        type="button"
                         onClick={() => {
-                          // Don't navigate to cancelled or no_show appointments
                           if (status === 'cancelled' || status === 'no_show') return;
                           const appointmentId = appointment.id || appointment.appointment_id;
                           if (appointmentId) {
@@ -669,6 +668,12 @@ export default function DoctorPatients() {
                             });
                           }
                         }}
+                        aria-label="Abrir consulta"
+                        className={`border border-gray-200 rounded-lg p-4 transition ${
+                          (status !== 'cancelled' && status !== 'no_show') 
+                            ? 'hover:bg-gray-50 cursor-pointer' 
+                            : 'cursor-default opacity-75'
+                        }`}
                       >
                         <div className="flex justify-between items-start mb-2">
                           <div className="flex items-center gap-2">
@@ -747,7 +752,7 @@ export default function DoctorPatients() {
                             </span>
                           </div>
                         )}
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
@@ -802,9 +807,9 @@ export default function DoctorPatients() {
               <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)] space-y-5">
                 {/* Allergies */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Alergias
-                  </label>
+                  </span>
                   <textarea
                     value={medicalRecordData.allergies}
                     onChange={(e) => setMedicalRecordData(prev => ({ ...prev, allergies: e.target.value }))}
@@ -816,9 +821,9 @@ export default function DoctorPatients() {
 
                 {/* Diagnoses */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Diagnósticos
-                  </label>
+                  </span>
                   <textarea
                     value={medicalRecordData.diagnoses}
                     onChange={(e) => setMedicalRecordData(prev => ({ ...prev, diagnoses: e.target.value }))}
@@ -830,9 +835,9 @@ export default function DoctorPatients() {
 
                 {/* Treatments */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Tratamientos
-                  </label>
+                  </span>
                   <textarea
                     value={medicalRecordData.treatments}
                     onChange={(e) => setMedicalRecordData(prev => ({ ...prev, treatments: e.target.value }))}
@@ -844,9 +849,9 @@ export default function DoctorPatients() {
 
                 {/* Medical History */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Historial Médico / Antecedentes
-                  </label>
+                  </span>
                   <textarea
                     value={medicalRecordData.medical_history}
                     onChange={(e) => setMedicalRecordData(prev => ({ ...prev, medical_history: e.target.value }))}
@@ -858,9 +863,9 @@ export default function DoctorPatients() {
 
                 {/* Current Medications */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Medicamentos Actuales
-                  </label>
+                  </span>
                   <textarea
                     value={medicalRecordData.current_medications}
                     onChange={(e) => setMedicalRecordData(prev => ({ ...prev, current_medications: e.target.value }))}

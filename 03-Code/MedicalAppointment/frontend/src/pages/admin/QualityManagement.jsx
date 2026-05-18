@@ -481,23 +481,23 @@ export default function QualityManagement() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <label className="block text-xs text-gray-500">Doctor</label>
+                    <span className="block text-xs text-gray-500">Doctor</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">
                       Dr. {selectedItem.doctor?.first_name} {selectedItem.doctor?.last_name}
                     </p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Paciente</label>
+                    <span className="block text-xs text-gray-500">Paciente</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">
                       {selectedItem.patient?.first_name} {selectedItem.patient?.last_name}
                     </p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Fecha</label>
+                    <span className="block text-xs text-gray-500">Fecha</span>
                     <p className="font-medium text-gray-800 text-sm sm:text-base">{formatDate(selectedItem.created_at)}</p>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-500">Estado</label>
+                    <span className="block text-xs text-gray-500">Estado</span>
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       selectedItem.is_active 
                         ? 'bg-green-100 text-green-800' 
@@ -510,7 +510,7 @@ export default function QualityManagement() {
 
                 {selectedItem.comment && (
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1">Comentario</label>
+                    <span className="block text-xs text-gray-500 mb-1">Comentario</span>
                     <p className="p-3 bg-gray-50 rounded-lg text-gray-700 text-sm">
                       {selectedItem.comment}
                     </p>

@@ -625,7 +625,16 @@ export default function DoctorNotifications() {
               return (
                 <div
                   key={notification.id}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => markAsRead(notification.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      markAsRead(notification.id);
+                    }
+                  }}
+                  aria-label="Marcar notificación como leída"
                   className={`
                     relative flex items-start gap-2 sm:gap-4 p-3 sm:p-4 rounded-lg border cursor-pointer
                     transition-all duration-200 bg-white shadow-sm

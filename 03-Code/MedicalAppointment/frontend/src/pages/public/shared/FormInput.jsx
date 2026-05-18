@@ -17,6 +17,8 @@
  * @param {string} props.className - Additional classes
  * @returns {JSX.Element}
  */
+import PropTypes from 'prop-types';
+
 export default function FormInput({
   type = 'text',
   name,
@@ -50,3 +52,16 @@ export default function FormInput({
     />
   );
 }
+
+FormInput.propTypes = {
+  type: PropTypes.string,                  
+  name: PropTypes.string,       
+  value: PropTypes.oneOfType([             
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+  onChange: PropTypes.func.isRequired,     
+  placeholder: PropTypes.string,           
+  required: PropTypes.bool,                
+  className: PropTypes.string,             
+};

@@ -321,7 +321,7 @@ export default function PatientManagement() {
         <div className="bg-white rounded-lg shadow p-3 sm:p-4">
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-end">
             <div className="flex-1">
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Buscar</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Buscar</span>
               <div className="relative">
                 <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
                 <input
@@ -337,7 +337,7 @@ export default function PatientManagement() {
             </div>
             
             <div className="w-full sm:w-40">
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Estado</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Estado</span>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -534,7 +534,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Cédula *</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Cédula *</span>
                     <input
                       type="text"
                       maxLength={10}
@@ -546,7 +546,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombres *</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Nombres *</span>
                     <input
                       type="text"
                       value={formData.first_name}
@@ -557,7 +557,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Apellidos *</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Apellidos *</span>
                     <input
                       type="text"
                       value={formData.last_name}
@@ -568,7 +568,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Email *</span>
                     <input
                       type="email"
                       value={formData.email}
@@ -579,7 +579,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Teléfono</span>
                     <input
                       type="tel"
                       value={formData.phone_number}
@@ -589,7 +589,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</span>
                     <input
                       type="date"
                       value={formData.date_of_birth}
@@ -599,7 +599,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Género</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Género</span>
                     <select
                       value={formData.gender}
                       onChange={(e) => setFormData({...formData, gender: e.target.value})}
@@ -613,7 +613,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Sangre</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Tipo de Sangre</span>
                     <select
                       value={formData.blood_type}
                       onChange={(e) => setFormData({...formData, blood_type: e.target.value})}
@@ -632,7 +632,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div className="lg:col-span-3">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Dirección</span>
                     <input
                       type="text"
                       value={formData.address}
@@ -647,7 +647,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Nombre</span>
                     <input
                       type="text"
                       value={formData.emergency_contact}
@@ -657,7 +657,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Teléfono</span>
                     <input
                       type="tel"
                       value={formData.emergency_phone}
@@ -672,7 +672,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Proveedor</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Proveedor</span>
                     <select
                       value={formData.insurance_provider_id}
                       onChange={(e) => setFormData({...formData, insurance_provider_id: e.target.value})}
@@ -688,7 +688,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Número de Póliza</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Número de Póliza</span>
                     <input
                       type="text"
                       value={formData.insurance_policy_number}
@@ -703,7 +703,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Alergias</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Alergias</span>
                     <textarea
                       value={formData.allergies}
                       onChange={(e) => setFormData({...formData, allergies: e.target.value})}
@@ -713,7 +713,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Condiciones Crónicas</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Condiciones Crónicas</span>
                     <textarea
                       value={formData.chronic_conditions}
                       onChange={(e) => setFormData({...formData, chronic_conditions: e.target.value})}
@@ -723,7 +723,7 @@ export default function PatientManagement() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Medicamentos Actuales</label>
+                    <span className="block text-sm font-medium text-gray-700 mb-1">Medicamentos Actuales</span>
                     <textarea
                       value={formData.current_medications}
                       onChange={(e) => setFormData({...formData, current_medications: e.target.value})}
@@ -959,7 +959,7 @@ export default function PatientManagement() {
                                       {formatDate(billing.created_at)}
                                     </p>
                                     <p className="text-lg font-bold text-gray-800 mt-1">
-                                      ${parseFloat(billing.total_amount || billing.amount || 0).toFixed(2)}
+                                      ${Number.parseFloat(billing.total_amount || billing.amount || 0).toFixed(2)}
                                     </p>
                                   </div>
                                   <span className={`px-2 py-1 text-xs rounded-full ${

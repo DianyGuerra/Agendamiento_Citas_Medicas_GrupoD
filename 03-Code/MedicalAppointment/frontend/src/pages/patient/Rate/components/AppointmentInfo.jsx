@@ -3,6 +3,8 @@ import { UserIcon } from '@heroicons/react/24/outline';
 /**
  * Appointment info header for rating page
  */
+import PropTypes from 'prop-types';
+
 export function AppointmentInfo({ appointment, formatDate }) {
   if (!appointment) return null;
 
@@ -25,3 +27,8 @@ export function AppointmentInfo({ appointment, formatDate }) {
     </div>
   );
 }
+
+AppointmentInfo.propTypes = {
+  appointment: PropTypes.object.isRequired,   
+  formatDate: PropTypes.func.isRequired,      
+};

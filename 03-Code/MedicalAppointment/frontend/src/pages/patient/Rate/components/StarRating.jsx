@@ -1,6 +1,6 @@
 import { StarIcon } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
-
+import PropTypes from 'prop-types';
 /**
  * Star rating input component
  */
@@ -29,3 +29,9 @@ export function StarRating({ value, onChange, label, size = 'normal' }) {
     </div>
   );
 }
+StarRating.propTypes = {
+  value: PropTypes.number.isRequired,       
+  onChange: PropTypes.func.isRequired,      
+  label: PropTypes.string,                  
+  size: PropTypes.oneOf(['normal', 'large']), 
+};

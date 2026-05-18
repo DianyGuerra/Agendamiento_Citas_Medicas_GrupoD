@@ -1,6 +1,7 @@
 /**
  * Vital information display component
  */
+import PropTypes from 'prop-types';
 export function VitalInfo({ medicalRecord }) {
   return (
     <div className="space-y-3">
@@ -24,4 +25,8 @@ export function VitalInfo({ medicalRecord }) {
       </div>
     </div>
   );
+}
+
+VitalInfo.propTypes ={
+  medicalRecord: PropTypes.object.isRequired,
 }

@@ -34,11 +34,11 @@ export function useBilling() {
 
   const pendingTotal = billings
     .filter((b) => b.status === 'pending')
-    .reduce((sum, b) => sum + (parseFloat(b.total_amount) || 0), 0);
+    .reduce((sum, b) => sum + (Number.parseFloat(b.total_amount) || 0), 0);
 
   const paidTotal = billings
     .filter((b) => b.status === 'paid')
-    .reduce((sum, b) => sum + (parseFloat(b.total_amount) || 0), 0);
+    .reduce((sum, b) => sum + (Number.parseFloat(b.total_amount) || 0), 0);
 
   const openDetail = (billing) => {
     setSelectedBilling(billing);

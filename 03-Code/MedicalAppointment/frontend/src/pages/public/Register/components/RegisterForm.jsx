@@ -6,6 +6,7 @@
  */
 
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { 
   FormInput, 
   SubmitButton, 
@@ -63,6 +64,17 @@ export default function RegisterForm({
   );
 }
 
+RegisterForm.propTypes = {
+  form: PropTypes.object.isRequired,             
+  maxDob: PropTypes.string.isRequired,           
+  onChange: PropTypes.func.isRequired,           
+  onSubmit: PropTypes.func.isRequired,           
+  onGoogleRegister: PropTypes.func.isRequired,   
+  loading: PropTypes.bool,                       
+  error: PropTypes.string,                       
+  success: PropTypes.string,                     
+};
+
 /**
  * Form header
  */
@@ -104,6 +116,14 @@ function NameFields({ form, onChange }) {
   );
 }
 
+NameFields.propTypes = {
+  form: PropTypes.shape({
+    first_name: PropTypes.string.isRequired,   
+    last_name: PropTypes.string.isRequired,    
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,         
+};
+
 /**
  * Identification fields (cedula, phone)
  */
@@ -133,6 +153,15 @@ function IdentificationFields({ form, onChange }) {
   );
 }
 
+IdentificationFields.propTypes = {
+  form: PropTypes.shape({
+    cedula: PropTypes.string.isRequired,        
+    phone_number: PropTypes.string,             
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,          
+};
+
+
 /**
  * Date of birth field
  */
@@ -148,6 +177,13 @@ function DateField({ form, maxDob, onChange }) {
     />
   );
 }
+DateField.propTypes = {
+  form: PropTypes.shape({
+    date_of_birth: PropTypes.string.isRequired,   
+  }).isRequired,
+  maxDob: PropTypes.string.isRequired,            
+  onChange: PropTypes.func.isRequired,            
+};
 
 /**
  * Email field
@@ -165,6 +201,13 @@ function EmailField({ form, onChange }) {
     />
   );
 }
+
+EmailField.propTypes = {
+  form: PropTypes.shape({
+    email: PropTypes.string.isRequired,   
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,    
+};
 
 /**
  * Password input fields
@@ -193,6 +236,14 @@ function PasswordFields({ form, onChange }) {
     </div>
   );
 }
+
+PasswordFields.propTypes = {
+  form: PropTypes.shape({
+    password: PropTypes.string.isRequired,          
+    confirm_password: PropTypes.string.isRequired,  
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,              
+};
 
 /**
  * Login redirect link

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
 import { AppointmentModel } from '../../models';
+import PropTypes from 'prop-types';
 import { useAuth } from '../../context/AuthContext';
 import {
   Chart as ChartJS,
@@ -408,7 +409,7 @@ export default function AdminDashboard() {
                     labels: (advancedStats.doctorPerformance || []).slice(0, 5).map(d => d.doctorName),
                     datasets: [{
                       label: 'Score de Eficiencia',
-                      data: (advancedStats.doctorPerformance || []).slice(0, 5).map(d => parseFloat(d.efficiencyScore)),
+                      data: (advancedStats.doctorPerformance || []).slice(0, 5).map(d => Number.parseFloat(d.efficiencyScore)),
                       backgroundColor: 'rgba(153, 102, 255, 0.8)',
                       borderColor: 'rgba(153, 102, 255, 1)',
                       borderWidth: 2,
@@ -469,9 +470,9 @@ export default function AdminDashboard() {
                     labels: ['Completadas', 'Canceladas', 'No Show'],
                     datasets: [{
                       data: [
-                        parseFloat(advancedStats.completionRate || 0),
-                        parseFloat(advancedStats.cancellationRate || 0),
-                        parseFloat(advancedStats.noShowRate || 0),
+                        Number.parseFloat(advancedStats.completionRate || 0),
+                        Number.parseFloat(advancedStats.cancellationRate || 0),
+                        Number.parseFloat(advancedStats.noShowRate || 0),
                       ],
                       backgroundColor: [
                         'rgba(106, 165, 103, 0.8)',
@@ -638,8 +639,8 @@ export default function AdminDashboard() {
                         <td className="px-2 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm text-gray-500 hidden sm:table-cell">{doctor.completedAppointments}</td>
                         <td className="px-2 sm:px-4 py-3 sm:py-4">
                           <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            parseFloat(doctor.efficiencyScore) >= 80 ? 'bg-green-100 text-green-800' :
-                            parseFloat(doctor.efficiencyScore) >= 60 ? 'bg-yellow-100 text-yellow-800' :
+                            Number.parseFloat(doctor.efficiencyScore) >= 80 ? 'bg-green-100 text-green-800' :
+                            Number.parseFloat(doctor.efficiencyScore) >= 60 ? 'bg-yellow-100 text-yellow-800' :
                             'bg-red-100 text-red-800'
                           }`}>
                             {doctor.efficiencyScore}
@@ -757,6 +758,13 @@ function QuickStatCard({ title, value, total, icon: Icon, color }) {
     </div>
   );
 }
+QuickStatCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  total: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  icon: PropTypes.elementType.isRequired,
+  color: PropTypes.oneOf(['blue', 'green', 'yellow', 'purple']).isRequired,
+};
 
 function QuickActionButton({ icon: Icon, label, href }) {
   return (
@@ -771,3 +779,8 @@ function QuickActionButton({ icon: Icon, label, href }) {
     </a>
   );
 }
+QuickActionButton.propTypes = {
+  icon: PropTypes.elementType.isRequired, 
+  label: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
+};

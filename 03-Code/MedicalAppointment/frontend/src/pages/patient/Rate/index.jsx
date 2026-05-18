@@ -97,9 +97,9 @@ export default function RateAppointment() {
 
             {/* Comments */}
             <div className="pt-4 border-t">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <span className="block text-sm font-medium text-gray-700 mb-2">
                 Comentarios (opcional)
-              </label>
+              </span>
               <textarea
                 value={formData.comment}
                 onChange={(e) => updateFormData({ comment: e.target.value })}

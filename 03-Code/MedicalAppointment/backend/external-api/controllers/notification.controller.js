@@ -218,7 +218,7 @@ class NotificationController {
       userId,
       userRole,
       {
-        limit: parseInt(limit) || 50,
+        limit: Number.parseInt(limit) || 50,
         onlyUnread: onlyUnread === 'true'
       }
     );
@@ -273,7 +273,7 @@ class NotificationController {
     const { limit } = req.query;
 
     const broadcasts = await userNotificationService.getAllBroadcasts({
-      limit: parseInt(limit) || 100
+      limit: Number.parseInt(limit) || 100
     });
 
     return ResponseBuilder.success(res, broadcasts);

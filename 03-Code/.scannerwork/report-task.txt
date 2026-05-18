@@ -2,5 +2,5 @@ projectKey=Gestion_citas_refactor
 serverUrl=http://localhost:9000
 serverVersion=26.4.0.121862
 dashboardUrl=http://localhost:9000/dashboard?id=Gestion_citas_refactor
-ceTaskId=5b88d46f-c473-4a67-8180-58ebd46ee9ba
-ceTaskUrl=http://localhost:9000/api/ce/task?id=5b88d46f-c473-4a67-8180-58ebd46ee9ba
+ceTaskId=9ff8c587-5b28-4de1-8ea9-7b77021ddeef
+ceTaskUrl=http://localhost:9000/api/ce/task?id=9ff8c587-5b28-4de1-8ea9-7b77021ddeef

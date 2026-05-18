@@ -28,7 +28,7 @@ export default function CompleteProfile() {
       try {
         const binaryString = atob(oauthParam);
         const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) bytes[i] = binaryString.charCodeAt(i);
+        for (let i = 0; i < binaryString.length; i++) bytes[i] = binaryString.codePointAt(i);
         const decoder = new TextDecoder('utf-8');
         const jsonPayload = decoder.decode(bytes);
         const payload = JSON.parse(jsonPayload);

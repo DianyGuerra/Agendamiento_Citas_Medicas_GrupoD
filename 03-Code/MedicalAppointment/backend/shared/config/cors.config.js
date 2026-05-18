@@ -10,6 +10,7 @@ const allowedOrigins = [
   'http://127.0.0.1:5500',
   'http://localhost:5500',
   'http://localhost:5173',
+  'http://localhost:5174',
   // Production - Vercel (add all your Vercel URLs)
   'https://medical-appointment-frontend-ten.vercel.app',
   'https://t6-awd-medical-appointment-web-syst.vercel.app',
@@ -26,8 +27,12 @@ const corsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no origin (mobile apps, Postman, etc.)
     if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.includes(origin)) {
+    // Allow exact matches or any localhost/127.0.0.1 on any port (dev convenience)
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.startsWith('http://localhost') ||
+      origin.startsWith('http://127.0.0.1')
+    ) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -45,7 +50,14 @@ const corsOptions = {
 const preflightMiddleware = (req, res, next) => {
   const origin = req.headers.origin;
   
-  if (origin && allowedOrigins.includes(origin)) {
+  // Accept allowed origins or any localhost/127.0.0.1 variants
+  if (
+    origin && (
+      allowedOrigins.includes(origin) ||
+      origin.startsWith('http://localhost') ||
+      origin.startsWith('http://127.0.0.1')
+    )
+  ) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   

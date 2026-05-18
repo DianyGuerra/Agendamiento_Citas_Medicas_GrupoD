@@ -216,7 +216,7 @@ class ValidationService {
     const startMinutes = timeToMinutes(start_time);
     const endMinutes = timeToMinutes(end_time);
 
-    if (isNaN(startMinutes) || isNaN(endMinutes)) {
+    if (Number.isNaN(startMinutes) || Number.isNaN(endMinutes)) {
       errors.push({
         field: 'time',
         message: 'Formato de hora inválido. Use HH:MM'
@@ -331,7 +331,7 @@ class ValidationService {
     }
 
     // Validate duration
-    if (duration_days && (isNaN(duration_days) || duration_days < 1 || duration_days > 365)) {
+    if (duration_days && (Number.isNaN(duration_days) || duration_days < 1 || duration_days > 365)) {
       errors.push({
         field: 'duration_days',
         message: 'La duración debe ser entre 1 y 365 días'

@@ -6,6 +6,7 @@
  */
 
 import LoadingSpinner from './LoadingSpinner';
+import PropTypes from 'prop-types';
 
 /**
  * Styled submit button with loading state
@@ -44,3 +45,10 @@ export default function SubmitButton({
     </button>
   );
 }
+
+SubmitButton.propTypes = {
+  loading: PropTypes.bool,                  
+  text: PropTypes.string,                   
+  loadingText: PropTypes.string,            
+  className: PropTypes.string,              
+};

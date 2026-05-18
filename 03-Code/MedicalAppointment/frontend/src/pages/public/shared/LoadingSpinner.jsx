@@ -12,6 +12,8 @@
  * @param {string} props.size - Spinner size ('sm', 'md', 'lg')
  * @returns {JSX.Element}
  */
+import PropTypes from 'prop-types';
+
 export default function LoadingSpinner({ text = 'Cargando...', size = 'md' }) {
   const sizeClasses = {
     sm: 'h-4 w-4',
@@ -45,3 +47,8 @@ export default function LoadingSpinner({ text = 'Cargando...', size = 'md' }) {
     </span>
   );
 }
+
+LoadingSpinner.propTypes = {
+  text: PropTypes.string,                          
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),       
+};

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
+import PropTypes from 'prop-types';
 import SecurityModel from '../../models/Security.model';
 import {
   ShieldCheckIcon,
@@ -213,6 +214,13 @@ function StatCard({ title, value, subtitle, icon: Icon, color }) {
   );
 }
 
+StatCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  subtitle: PropTypes.string,
+  icon: PropTypes.elementType.isRequired, 
+  color: PropTypes.string.isRequired,
+};
 // ============================================================================
 // USERS TAB
 // ============================================================================
@@ -1007,6 +1015,11 @@ function UsersTab({ showNotification, onDataChange }) {
   );
 }
 
+UsersTab.propTypes = {
+  showNotification: PropTypes.func.isRequired, 
+  onDataChange: PropTypes.func.isRequired      
+};
+
 // ============================================================================
 // ROLES TAB
 // ============================================================================
@@ -1239,7 +1252,7 @@ function RolesTab({ showNotification, onDataChange }) {
         >
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nombre*</label>
+              <span className="block text-sm font-medium text-gray-700 mb-1">Nombre*</span>
               <input
                 type="text"
                 value={formData.name}
@@ -1250,7 +1263,7 @@ function RolesTab({ showNotification, onDataChange }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Código*</label>
+              <span className="block text-sm font-medium text-gray-700 mb-1">Código*</span>
               <input
                 type="text"
                 value={formData.code}
@@ -1265,7 +1278,7 @@ function RolesTab({ showNotification, onDataChange }) {
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Etiqueta</label>
+              <span className="block text-sm font-medium text-gray-700 mb-1">Etiqueta</span>
               <input
                 type="text"
                 value={formData.label}
@@ -1275,7 +1288,7 @@ function RolesTab({ showNotification, onDataChange }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+              <span className="block text-sm font-medium text-gray-700 mb-1">Descripción</span>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData(f => ({ ...f, description: e.target.value }))}
@@ -1380,6 +1393,10 @@ function RolesTab({ showNotification, onDataChange }) {
   );
 }
 
+RolesTab.propTypes = {
+  showNotification: PropTypes.func.isRequired, 
+  onDataChange: PropTypes.func.isRequired      
+};
 // ============================================================================
 // ADMINISTRATORS TAB
 // ============================================================================
@@ -1653,7 +1670,7 @@ function AdministratorsTab({ showNotification, onDataChange }) {
                       const permission = `${module}:${action}`;
                       const isChecked = editPermissions.includes(permission);
                       return (
-                        <label
+                        <span
                           key={permission}
                           className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded cursor-pointer"
                         >
@@ -1667,7 +1684,7 @@ function AdministratorsTab({ showNotification, onDataChange }) {
                             <span className="text-sm font-medium text-gray-700">{action}</span>
                             <p className="text-xs text-gray-500">{description}</p>
                           </div>
-                        </label>
+                        </span>
                       );
                     })}
                   </div>
@@ -1711,7 +1728,10 @@ function AdministratorsTab({ showNotification, onDataChange }) {
     </div>
   );
 }
-
+AdministratorsTab.propTypes = {
+  showNotification: PropTypes.func.isRequired, 
+  onDataChange: PropTypes.func.isRequired      
+};
 // ============================================================================
 // AUDIT TAB
 // ============================================================================
@@ -1803,7 +1823,7 @@ function AuditTab({ showNotification }) {
         <div className="bg-white p-3 sm:p-4 rounded-lg border space-y-3 sm:space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Acción</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Acción</span>
               <select
                 value={filters.action}
                 onChange={(e) => setFilters(f => ({ ...f, action: e.target.value }))}
@@ -1817,7 +1837,7 @@ function AuditTab({ showNotification }) {
               </select>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Tabla</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Tabla</span>
               <select
                 value={filters.table_name}
                 onChange={(e) => setFilters(f => ({ ...f, table_name: e.target.value }))}
@@ -1831,7 +1851,7 @@ function AuditTab({ showNotification }) {
               </select>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Desde</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Desde</span>
               <input
                 type="date"
                 value={filters.start_date}
@@ -1841,7 +1861,7 @@ function AuditTab({ showNotification }) {
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Hasta</label>
+              <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Hasta</span>
               <input
                 type="date"
                 value={filters.end_date}
@@ -2008,7 +2028,9 @@ function AuditTab({ showNotification }) {
     </div>
   );
 }
-
+AuditTab.propTypes = {
+  showNotification: PropTypes.func.isRequired  
+};
 // ============================================================================
 // HELPER COMPONENTS
 // ============================================================================
@@ -2024,7 +2046,7 @@ function Modal({ title, children, onClose, size = 'md' }) {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex min-h-full items-center justify-center p-2 sm:p-4">
-        <div className="fixed inset-0 bg-black/50" onClick={onClose} />
+        <button type="button" className="fixed inset-0 bg-black/50"  onClick={onClose} aria-label="Cerrar modal"></button>
         <div className={`relative bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]} p-4 sm:p-6 max-h-[90vh] overflow-y-auto`}>
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate pr-2">{title}</h3>
@@ -2039,6 +2061,13 @@ function Modal({ title, children, onClose, size = 'md' }) {
   );
 }
 
+Modal.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,       
+  onClose: PropTypes.func.isRequired,        
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+};
+
 function InfoField({ label, value }) {
   return (
     <div className="min-w-0">
@@ -2047,6 +2076,10 @@ function InfoField({ label, value }) {
     </div>
   );
 }
+InfoField.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, 
+};
 
 function ConfirmModal({ show, title, message, onConfirm, onCancel, type = 'warning' }) {
   if (!show) return null;
@@ -2078,7 +2111,7 @@ function ConfirmModal({ show, title, message, onConfirm, onCancel, type = 'warni
   return (
     <div className="fixed inset-0 z-[60] overflow-y-auto">
       <div className="flex min-h-full items-center justify-center p-3 sm:p-4">
-        <div className="fixed inset-0 bg-black/50" onClick={onCancel} />
+        <button type="button"  className="fixed inset-0 bg-black/50" onClick={onCancel} aria-label="Cerrar modal"></button>
         <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md p-4 sm:p-6">
           <div className="flex items-start gap-3 sm:gap-4">
             <div className={`p-2 rounded-full flex-shrink-0 ${style.iconBg}`}>
@@ -2108,3 +2141,12 @@ function ConfirmModal({ show, title, message, onConfirm, onCancel, type = 'warni
     </div>
   );
 }
+
+ConfirmModal.propTypes = {
+  show: PropTypes.bool.isRequired,            
+  title: PropTypes.string.isRequired,           
+  message: PropTypes.string.isRequired,         
+  onConfirm: PropTypes.func,         
+  onCancel: PropTypes.func.isRequired,          
+  type: PropTypes.oneOf(['warning', 'info', 'success', 'error']), 
+};

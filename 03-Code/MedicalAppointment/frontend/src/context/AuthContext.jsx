@@ -6,6 +6,7 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import PropType from 'prop-types';
 import AuthModel from '../models/Auth.model';
 import { STORAGE_KEYS, ROLES } from '../config/constants';
 
@@ -181,6 +182,9 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+AuthProvider.propTypes = {
+  children: PropType.node.isRequired,
 };
 
 export default AuthContext;

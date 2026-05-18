@@ -76,8 +76,8 @@ export default function BillingManagement() {
       total: data.length,
       pending: pending.length,
       paid: paid.length,
-      totalAmount: data.reduce((sum, b) => sum + (parseFloat(b.total_amount) || 0), 0),
-      pendingAmount: pending.reduce((sum, b) => sum + (parseFloat(b.total_amount) || 0), 0),
+      totalAmount: data.reduce((sum, b) => sum + (Number.parseFloat(b.total_amount) || 0), 0),
+      pendingAmount: pending.reduce((sum, b) => sum + (Number.parseFloat(b.total_amount) || 0), 0),
     });
   };
 
@@ -162,9 +162,9 @@ export default function BillingManagement() {
     };
     
     // Calculate correct amounts
-    const subtotal = parseFloat(billing.subtotal) || parseFloat(billing.base_amount) || parseFloat(billing.total_amount) || 0;
-    const discount = parseFloat(billing.insurance_discount_amount) || 0;
-    const total = parseFloat(billing.total_amount) || (subtotal - discount);
+    const subtotal = Number.parseFloat(billing.subtotal) || Number.parseFloat(billing.base_amount) || Number.parseFloat(billing.total_amount) || 0;
+    const discount = Number.parseFloat(billing.insurance_discount_amount) || 0;
+    const total = Number.parseFloat(billing.total_amount) || (subtotal - discount);
 
     // Colors
     const primaryColor = [59, 130, 246]; // blue-500
@@ -646,9 +646,9 @@ export default function BillingManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Método de Pago
-                  </label>
+                  </span>
                   <select
                     value={paymentData.payment_method}
                     onChange={(e) => setPaymentData({...paymentData, payment_method: e.target.value})}
@@ -663,9 +663,9 @@ export default function BillingManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Número de Referencia (opcional)
-                  </label>
+                  </span>
                   <input
                     type="text"
                     value={paymentData.reference_number}
@@ -677,9 +677,9 @@ export default function BillingManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Notas (opcional)
-                  </label>
+                  </span>
                   <textarea
                     value={paymentData.notes}
                     onChange={(e) => setPaymentData({...paymentData, notes: e.target.value})}
@@ -863,9 +863,9 @@ export default function BillingManagement() {
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="block text-sm font-medium text-gray-700 mb-2">
                       Seleccione una cita
-                    </label>
+                    </span>
                     <select
                       value={selectedAppointmentId}
                       onChange={(e) => setSelectedAppointmentId(e.target.value)}

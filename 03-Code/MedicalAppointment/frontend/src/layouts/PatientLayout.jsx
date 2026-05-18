@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import PropTypes from 'prop-types';
 import { NotificationModel, AppointmentModel, PrescriptionModel, MedicalRecordModel, BillingModel } from '../models';
 import {
   HomeIcon,
@@ -9,7 +10,7 @@ import {
   ClipboardDocumentListIcon,
   UserCircleIcon,
   BellIcon,
-  ArrowRightOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
   Bars3Icon,
   XMarkIcon,
   CurrencyDollarIcon,
@@ -134,7 +135,7 @@ export default function PatientLayout({ children }) {
       // Fallback to localStorage value
       const storedCount = localStorage.getItem('patient_unread_notifications_count');
       if (storedCount) {
-        setNotificationCount(parseInt(storedCount, 10) || 0);
+        setNotificationCount(Number.parseInt(storedCount, 10) || 0);
       }
     }
   }, []);
@@ -280,7 +281,7 @@ export default function PatientLayout({ children }) {
               onClick={handleLogout}
               className="group flex w-full items-center px-3 py-3 text-sm font-medium text-blue-100 rounded-xl hover:bg-red-500 hover:text-white transition-all duration-200"
             >
-              <ArrowRightOnRectangleIcon
+              <ArrowRightStartOnRectangleIcon
                 className="mr-3 flex-shrink-0 h-6 w-6"
                 aria-hidden="true"
               />
@@ -316,9 +317,11 @@ export default function PatientLayout({ children }) {
       {/* Mobile Sidebar */}
       {sidebarOpen && (
         <>
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          <button
+            type="button"
             onClick={() => setSidebarOpen(false)}
+            aria-label="Cerrar sidebar"
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
           />
           <aside className="fixed inset-y-0 left-0 flex w-64 flex-col z-50 lg:hidden">
             <div className="flex flex-col flex-grow bg-gradient-to-b from-blue-600 to-blue-700 pt-20 pb-4 overflow-y-auto">
@@ -390,7 +393,7 @@ export default function PatientLayout({ children }) {
                   onClick={handleLogout}
                   className="group flex w-full items-center px-3 py-3 text-sm font-medium text-blue-100 rounded-xl hover:bg-red-500 hover:text-white transition-all duration-200"
                 >
-                  <ArrowRightOnRectangleIcon
+                  <ArrowRightStartOnRectangleIcon
                     className="mr-3 flex-shrink-0 h-6 w-6"
                     aria-hidden="true"
                   />
@@ -422,3 +425,7 @@ export default function PatientLayout({ children }) {
     </div>
   );
 }
+
+PatientLayout.propTypes = {
+  children: PropTypes.node.isRequired
+};

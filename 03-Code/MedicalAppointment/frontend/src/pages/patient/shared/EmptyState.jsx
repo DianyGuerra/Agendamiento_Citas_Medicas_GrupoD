@@ -3,6 +3,7 @@
  * Displays when there's no data to show
  */
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function EmptyState({ 
   icon: Icon, 
@@ -59,3 +60,21 @@ export default function EmptyState({
     </div>
   );
 }
+
+EmptyState.propTypes = {
+  icon: PropTypes.elementType,                 
+  title: PropTypes.string.isRequired,          
+  description: PropTypes.string,               
+  action: PropTypes.oneOfType([                
+    PropTypes.shape({
+      icon: PropTypes.elementType,             
+      label: PropTypes.string.isRequired,      
+      to: PropTypes.string,                    
+      onClick: PropTypes.func,                 
+      className: PropTypes.string,             
+    }),
+    PropTypes.node,
+  ]),
+  className: PropTypes.string,                 
+};
+

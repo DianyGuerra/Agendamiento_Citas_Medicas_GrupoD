@@ -1,6 +1,7 @@
 /**
  * Information card for displaying medical record data
  */
+import PropTypes from 'prop-types';
 export function InfoCard({ icon, title, content, colorClass, iconColorClass, fullWidth = false }) {
   return (
     <div className={`${colorClass} ${fullWidth ? 'md:col-span-2 lg:col-span-3' : ''} border rounded-xl p-4`}>
@@ -16,3 +17,11 @@ export function InfoCard({ icon, title, content, colorClass, iconColorClass, ful
     </div>
   );
 }
+InfoCard.propTypes = {
+  icon: PropTypes.node.isRequired,          
+  title: PropTypes.string.isRequired,       
+  content: PropTypes.node,                  
+  colorClass: PropTypes.string.isRequired,  
+  iconColorClass: PropTypes.string.isRequired, 
+  fullWidth: PropTypes.bool,               
+};

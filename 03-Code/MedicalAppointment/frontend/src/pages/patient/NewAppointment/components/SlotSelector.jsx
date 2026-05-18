@@ -3,11 +3,12 @@
  * Displays available time slots for selection
  */
 import { CalendarIcon, ClockIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 
 function formatTime(time) {
   if (!time) return '';
   const [hours, minutes] = time.split(':');
-  const hour = parseInt(hours);
+  const hour = Number.parseInt(hours);
   const period = hour >= 12 ? 'p. m.' : 'a. m.';
   const displayHour = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
   return `${displayHour.toString().padStart(2, '0')}:${minutes} ${period}`;
@@ -15,7 +16,7 @@ function formatTime(time) {
 
 function formatDate(dateString) {
   const [year, month, day] = dateString.split('-');
-  const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  const date = new Date(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day));
   return date.toLocaleDateString('es-EC', {
     weekday: 'long',
     year: 'numeric',
@@ -23,6 +24,8 @@ function formatDate(dateString) {
     day: 'numeric',
   });
 }
+
+
 
 export default function SlotSelector({ slots, date, onSelect, loading }) {
   if (loading) {
@@ -75,3 +78,10 @@ export default function SlotSelector({ slots, date, onSelect, loading }) {
     </div>
   );
 }
+
+SlotSelector.propTypes = {
+  slots: PropTypes.array.isRequired,
+  date: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};

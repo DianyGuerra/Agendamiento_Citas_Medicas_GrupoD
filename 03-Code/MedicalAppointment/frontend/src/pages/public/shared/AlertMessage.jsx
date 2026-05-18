@@ -12,6 +12,7 @@
  * @param {string} props.message - Message to display
  * @returns {JSX.Element|null}
  */
+import PropTypes from 'prop-types';
 export default function AlertMessage({ type = 'error', message }) {
   if (!message) return null;
 
@@ -29,3 +30,8 @@ export default function AlertMessage({ type = 'error', message }) {
     </div>
   );
 }
+
+AlertMessage.propTypes = {
+  type: PropTypes.oneOf(['error', 'success']),  
+  message: PropTypes.string,                    
+};

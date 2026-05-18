@@ -56,7 +56,7 @@ class ConsultationController {
 
     const summary = await consultationService.getPatientConsultationSummary(
       patientUserId,
-      parseInt(limit) || 10
+      Number.parseInt(limit) || 10
     );
 
     return ResponseBuilder.success(res, summary);

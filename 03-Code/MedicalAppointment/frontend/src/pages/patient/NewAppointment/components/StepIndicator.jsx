@@ -2,6 +2,7 @@
  * StepIndicator Component
  * Shows the current step in the appointment wizard
  */
+import PropTypes from 'prop-types';
 export default function StepIndicator({ currentStep, totalSteps = 2 }) {
   return (
     <div className="flex items-center justify-center mb-8">
@@ -30,3 +31,8 @@ export default function StepIndicator({ currentStep, totalSteps = 2 }) {
     </div>
   );
 }
+
+StepIndicator.propTypes = {
+  currentStep: PropTypes.number.isRequired,   
+  totalSteps: PropTypes.number,               
+};

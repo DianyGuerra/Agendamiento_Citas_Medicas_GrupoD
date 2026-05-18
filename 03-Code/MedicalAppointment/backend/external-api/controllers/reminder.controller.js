@@ -73,10 +73,10 @@ class ReminderController {
   getDueReminders = asyncHandler(async (req, res) => {
     const { hours } = req.params;
 
-    const appointments = await reminderService.getAppointmentsForReminder(parseInt(hours) || 24);
+    const appointments = await reminderService.getAppointmentsForReminder(Number.parseInt(hours) || 24);
 
     return ResponseBuilder.success(res, {
-      hoursAhead: parseInt(hours) || 24,
+      hoursAhead: Number.parseInt(hours) || 24,
       count: appointments.length,
       appointments
     });

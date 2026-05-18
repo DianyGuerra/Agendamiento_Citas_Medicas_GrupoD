@@ -66,7 +66,7 @@ class SpecialtyController {
     const specialty = await specialtyRepository.create({
       name,
       description,
-      consultation_fee: consultation_fee ? parseFloat(consultation_fee) : null
+      consultation_fee: consultation_fee ? Number.parseFloat(consultation_fee) : null
     });
 
     return ResponseBuilder.created(res, specialty, 'Especialidad creada exitosamente');
@@ -96,7 +96,7 @@ class SpecialtyController {
     const updated = await specialtyRepository.update(id, {
       name,
       description,
-      consultation_fee: consultation_fee !== undefined ? (consultation_fee ? parseFloat(consultation_fee) : null) : undefined
+      consultation_fee: consultation_fee !== undefined ? (consultation_fee ? Number.parseFloat(consultation_fee) : null) : undefined
     });
 
     return ResponseBuilder.success(res, updated, 200, 'Especialidad actualizada exitosamente');

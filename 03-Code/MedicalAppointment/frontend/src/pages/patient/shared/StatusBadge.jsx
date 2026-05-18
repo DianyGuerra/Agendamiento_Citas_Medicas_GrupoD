@@ -2,6 +2,8 @@
  * Status Badge Component
  * Displays a colored badge with icon for status indication
  */
+import PropTypes from 'prop-types';
+
 export default function StatusBadge({ 
   status, 
   config = {}, 
@@ -17,3 +19,13 @@ export default function StatusBadge({
     </span>
   );
 }
+
+StatusBadge.propTypes = {
+  status: PropTypes.string.isRequired,          
+  config: PropTypes.shape({
+    label: PropTypes.string,                    
+    color: PropTypes.string,                    
+  }),
+  icon: PropTypes.elementType,                  
+  className: PropTypes.string,                  
+};

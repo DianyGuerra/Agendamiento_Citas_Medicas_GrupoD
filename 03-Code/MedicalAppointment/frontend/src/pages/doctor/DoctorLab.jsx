@@ -599,9 +599,9 @@ export default function DoctorLab() {
 
                 {/* Interpretation */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-2">
                     Interpretación / Nota del Médico
-                  </label>
+                  </span>
                   <textarea
                     value={uploadData.interpretation}
                     onChange={(e) => setUploadData({ ...uploadData, interpretation: e.target.value })}
@@ -613,9 +613,9 @@ export default function DoctorLab() {
 
                 {/* Status */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="block text-sm font-medium text-gray-700 mb-2">
                     Estado del Examen
-                  </label>
+                  </span>
                   <div className="flex gap-4">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input

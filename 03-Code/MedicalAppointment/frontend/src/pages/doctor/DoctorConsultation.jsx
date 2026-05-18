@@ -359,8 +359,8 @@ export default function DoctorConsultation() {
 
   // Calculate BMI
   const calculateBMI = () => {
-    const weight = parseFloat(vitalSigns.weight);
-    const height = parseFloat(vitalSigns.height) / 100; // cm to m
+    const weight = Number.parseFloat(vitalSigns.weight);
+    const height = Number.parseFloat(vitalSigns.height) / 100; // cm to m
     if (weight > 0 && height > 0) {
       return (weight / (height * height)).toFixed(1);
     }
@@ -370,7 +370,7 @@ export default function DoctorConsultation() {
   // Get BMI classification
   const getBMIClassification = (bmi) => {
     if (!bmi) return null;
-    const value = parseFloat(bmi);
+    const value = Number.parseFloat(bmi);
     if (value < 18.5) return { text: 'Bajo peso', color: 'text-blue-600' };
     if (value < 25) return { text: 'Normal', color: 'text-green-600' };
     if (value < 30) return { text: 'Sobrepeso', color: 'text-yellow-600' };
@@ -755,7 +755,7 @@ export default function DoctorConsultation() {
       // Normalize time format (ensure HH:MM format)
       const timeStr = followUpData.time.includes(':') ? followUpData.time : '09:00';
       const [hours, minutes] = timeStr.split(':');
-      const endHour = (parseInt(hours) + 1).toString().padStart(2, '0');
+      const endHour = (Number.parseInt(hours) + 1).toString().padStart(2, '0');
       
       // Create follow-up appointment
       const followUpAppointment = {
@@ -807,7 +807,7 @@ export default function DoctorConsultation() {
             onClick={handleGoBack}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
-            {fromPatientHistory ? 'Volver al historial del paciente' : fromAgenda ? 'Volver a Mi Agenda' : fromDashboard ? 'Volver al Dashboard' : 'Volver al Dashboard'}
+            {fromPatientHistory  ? 'Volver al historial del paciente'  : fromAgenda  ? 'Volver a Mi Agenda'  : fromDashboard  ? 'Volver al Dashboard Principal'  : 'Volver al Dashboard'}
           </button>
         </div>
       </DoctorLayout>
@@ -984,7 +984,7 @@ export default function DoctorConsultation() {
               <button
                 onClick={handleGoBack}
                 className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition"
-                title={fromPatientHistory ? 'Volver al historial del paciente' : fromAgenda ? 'Volver a Mi Agenda' : fromDashboard ? 'Volver al Dashboard' : 'Volver al Dashboard'}
+                title={fromPatientHistory ? 'Volver al historial del paciente': fromAgenda ? 'Volver a Mi Agenda' : fromDashboard ? 'Volver al Dashboard Principal' : 'Volver al Dashboard'}
               >
                 <ArrowLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
               </button>
@@ -1239,9 +1239,9 @@ export default function DoctorConsultation() {
                   <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                     {/* Blood Pressure - Systolic */}
                     <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                         P. Sistólica <span className="hidden sm:inline">(mmHg)</span>
-                      </label>
+                      </span>
                       <input
                         type="number"
                         value={vitalSigns.blood_pressure_systolic}
@@ -1255,9 +1255,9 @@ export default function DoctorConsultation() {
 
                     {/* Blood Pressure - Diastolic */}
                     <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                         P. Diastólica <span className="hidden sm:inline">(mmHg)</span>
-                      </label>
+                      </span>
                       <input
                         type="number"
                         value={vitalSigns.blood_pressure_diastolic}
@@ -1271,9 +1271,9 @@ export default function DoctorConsultation() {
 
                     {/* Heart Rate */}
                     <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                         F. Cardíaca <span className="hidden sm:inline">(bpm)</span>
-                      </label>
+                      </span>
                       <input
                         type="number"
                         value={vitalSigns.heart_rate}
@@ -1287,9 +1287,9 @@ export default function DoctorConsultation() {
 
                     {/* Temperature */}
                     <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                         Temp. <span className="hidden sm:inline">(°C)</span>
-                      </label>
+                      </span>
                       <input
                         type="number"
                         step="0.1"
@@ -1304,9 +1304,9 @@ export default function DoctorConsultation() {
 
                     {/* Respiratory Rate */}
                     <div>
-                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                         F. Resp. <span className="hidden sm:inline">(rpm)</span>
-                      </label>
+                      </span>
                       <input
                         type="number"
                         value={vitalSigns.respiratory_rate}
@@ -1319,9 +1319,9 @@ export default function DoctorConsultation() {
 
                     {/* Oxygen Saturation */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-sm font-medium text-gray-700 mb-1">
                         Saturación O₂ (%)
-                      </label>
+                      </span>
                       <input
                         type="number"
                         value={vitalSigns.oxygen_saturation}
@@ -1334,9 +1334,9 @@ export default function DoctorConsultation() {
 
                     {/* Weight */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-sm font-medium text-gray-700 mb-1">
                         Peso (kg)
-                      </label>
+                      </span>
                       <input
                         type="number"
                         step="0.1"
@@ -1350,9 +1350,9 @@ export default function DoctorConsultation() {
 
                     {/* Height */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <span className="block text-sm font-medium text-gray-700 mb-1">
                         Altura (cm)
-                      </label>
+                      </span>
                       <input
                         type="number"
                         value={vitalSigns.height}
@@ -1394,9 +1394,9 @@ export default function DoctorConsultation() {
                   
                   {/* Subjective */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    <span className="block text-sm font-semibold text-gray-700 mb-1">
                       S - Subjetivo (Motivo de consulta)
-                    </label>
+                    </span>
                     <textarea
                       value={consultationData.subjective}
                       onChange={(e) => !isCompleted && setConsultationData({...consultationData, subjective: e.target.value})}
@@ -1409,9 +1409,9 @@ export default function DoctorConsultation() {
 
                   {/* Objective */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    <span className="block text-sm font-semibold text-gray-700 mb-1">
                       O - Objetivo (Examen físico)
-                    </label>
+                    </span>
                     <textarea
                       value={consultationData.objective}
                       onChange={(e) => !isCompleted && setConsultationData({...consultationData, objective: e.target.value})}
@@ -1424,9 +1424,9 @@ export default function DoctorConsultation() {
 
                   {/* Assessment */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    <span className="block text-sm font-semibold text-gray-700 mb-1">
                       A - Evaluación (Diagnóstico) *
-                    </label>
+                    </span>
                     <textarea
                       value={consultationData.assessment}
                       onChange={(e) => !isCompleted && setConsultationData({...consultationData, assessment: e.target.value})}
@@ -1440,9 +1440,9 @@ export default function DoctorConsultation() {
 
                   {/* Plan */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    <span className="block text-sm font-semibold text-gray-700 mb-1">
                       P - Plan (Tratamiento)
-                    </label>
+                    </span>
                     <textarea
                       value={consultationData.plan}
                       onChange={(e) => !isCompleted && setConsultationData({...consultationData, plan: e.target.value})}
@@ -1455,9 +1455,9 @@ export default function DoctorConsultation() {
 
                   {/* Additional Notes */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    <span className="block text-sm font-semibold text-gray-700 mb-1">
                       Notas Adicionales
-                    </label>
+                    </span>
                     <textarea
                       value={consultationData.notes}
                       onChange={(e) => !isCompleted && setConsultationData({...consultationData, notes: e.target.value})}
@@ -1485,7 +1485,7 @@ export default function DoctorConsultation() {
                       <div className="flex flex-col gap-3 flex-1">
                         <div className="flex flex-wrap gap-2 items-center">
                           <div className="flex flex-col">
-                            <label className="text-xs text-gray-500 mb-1">Fecha</label>
+                            <span className="text-xs text-gray-500 mb-1">Fecha</span>
                             <input
                               type="date"
                               value={consultationData.follow_up_date}
@@ -1496,7 +1496,7 @@ export default function DoctorConsultation() {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <label className="text-xs text-gray-500 mb-1">Horario disponible</label>
+                            <span className="text-xs text-gray-500 mb-1">Horario disponible</span>
                             {loadingSlots ? (
                               <div className="px-3 py-2 border rounded-lg bg-gray-100 text-gray-500 flex items-center gap-2">
                                 <svg className="animate-spin h-4 w-4 text-blue-500" viewBox="0 0 24 24">
@@ -1660,9 +1660,9 @@ export default function DoctorConsultation() {
                       <h5 className="font-semibold text-blue-900 mb-4">Nuevo Medicamento</h5>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="col-span-1 sm:col-span-2">
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <span className="block text-sm font-medium text-gray-700 mb-1">
                             Medicamento *
-                          </label>
+                          </span>
                           <input
                             type="text"
                             value={newPrescription.medication}
@@ -1672,9 +1672,9 @@ export default function DoctorConsultation() {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <span className="block text-sm font-medium text-gray-700 mb-1">
                             Dosis *
-                          </label>
+                          </span>
                           <input
                             type="text"
                             value={newPrescription.dosage}
@@ -1684,9 +1684,9 @@ export default function DoctorConsultation() {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <span className="block text-sm font-medium text-gray-700 mb-1">
                             Frecuencia
-                          </label>
+                          </span>
                           <input
                             type="text"
                             value={newPrescription.frequency}
@@ -1696,9 +1696,9 @@ export default function DoctorConsultation() {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <span className="block text-sm font-medium text-gray-700 mb-1">
                             Duración
-                          </label>
+                          </span>
                           <input
                             type="text"
                             value={newPrescription.duration}
@@ -1708,9 +1708,9 @@ export default function DoctorConsultation() {
                           />
                         </div>
                         <div className="col-span-1 sm:col-span-2">
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <span className="block text-sm font-medium text-gray-700 mb-1">
                             Instrucciones
-                          </label>
+                          </span>
                           <input
                             type="text"
                             value={newPrescription.instructions}
@@ -1812,9 +1812,9 @@ export default function DoctorConsultation() {
                       <h5 className="font-semibold text-teal-900 mb-4">Nueva Orden de Laboratorio</h5>
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <span className="block text-sm font-medium text-gray-700 mb-1">
                             Examen *
-                          </label>
+                          </span>
                           <select
                             value={newLabOrder.test_name}
                             onChange={(e) => setNewLabOrder({...newLabOrder, test_name: e.target.value})}
@@ -1840,9 +1840,9 @@ export default function DoctorConsultation() {
                         )}
                         
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <span className="block text-sm font-medium text-gray-700 mb-1">
                             Prioridad
-                          </label>
+                          </span>
                           <div className="flex gap-4">
                             <label className="flex items-center gap-2 cursor-pointer">
                               <input
@@ -1870,9 +1870,9 @@ export default function DoctorConsultation() {
                         </div>
                         
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <span className="block text-sm font-medium text-gray-700 mb-1">
                             Notas/Indicaciones
-                          </label>
+                          </span>
                           <input
                             type="text"
                             value={newLabOrder.notes}
@@ -1956,18 +1956,18 @@ export default function DoctorConsultation() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Paciente
-                  </label>
+                  </span>
                   <p className="px-3 py-2 bg-gray-50 rounded-lg text-gray-800">
                     {patient?.first_name || patient?.user?.first_name} {patient?.last_name || patient?.user?.last_name}
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Fecha de seguimiento *
-                  </label>
+                  </span>
                   <input
                     type="date"
                     value={followUpData.date}
@@ -1981,9 +1981,9 @@ export default function DoctorConsultation() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Horario disponible *
-                  </label>
+                  </span>
                   {loadingModalSlots ? (
                     <div className="w-full px-3 py-2 border rounded-lg bg-gray-100 text-gray-500 flex items-center gap-2">
                       <svg className="animate-spin h-4 w-4 text-blue-500" viewBox="0 0 24 24">
@@ -2020,9 +2020,9 @@ export default function DoctorConsultation() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
                     Motivo del seguimiento
-                  </label>
+                  </span>
                   <textarea
                     value={followUpData.reason}
                     onChange={(e) => setFollowUpData({...followUpData, reason: e.target.value})}

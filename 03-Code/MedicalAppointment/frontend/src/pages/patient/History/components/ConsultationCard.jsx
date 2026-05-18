@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CalendarIcon, UserIcon, DocumentTextIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { DetailSection } from './DetailSection';
+import PropTypes from 'prop-types';
 
 /**
  * Card for displaying consultation history item
@@ -82,3 +83,10 @@ export function ConsultationCard({ note, index, formatDate, onViewPDF }) {
     </div>
   );
 }
+
+ConsultationCard.propTypes = {
+  note: PropTypes.object.isRequired,       
+  index: PropTypes.number.isRequired,      
+  formatDate: PropTypes.func.isRequired,   
+  onViewPDF: PropTypes.func.isRequired,    
+};
