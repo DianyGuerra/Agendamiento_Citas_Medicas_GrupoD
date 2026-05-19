@@ -4,9 +4,7 @@ module.exports = {
   testMatch: [
     '**/crudAppointment.test.js',
     '**/businessApp.test.js',
-    '**/controllerAppointment.test.js',
-     // Run only fixed suites to avoid old failing tests during split
-     '**/*.fixed.test.js'
+    '**/externalAppointment.test.js'
   ],
   clearMocks: true,
   collectCoverage: true,

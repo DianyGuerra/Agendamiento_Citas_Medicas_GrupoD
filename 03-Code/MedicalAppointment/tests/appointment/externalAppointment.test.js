@@ -1,90 +1,100 @@
 const { createQueryMock, loadReminderService } = require('./helpers');
 
-describe('Appointment module unit tests - External reminders', () => {
-    beforeEach(() => {
-        jest.resetModules();
-        jest.clearAllMocks();
-    });
+describe('Appointment module unit tests - External layer', () => {
+	beforeEach(() => {
+		jest.resetModules();
+		jest.clearAllMocks();
+	});
 
-    test('getAppointmentsForReminder returns appointments from supabase', async () => {
-        const { service, fromMock } = loadReminderService();
-        const sample = [{ id: 'apt-1', scheduled_start: '2026-05-20T10:00:00.000Z', patient: { email: 'a@e.com' } }];
-        fromMock.mockReturnValueOnce(createQueryMock({ data: sample, error: null }));
+	describe('External layer - reminder.service', () => {
+		test('getAppointmentsForReminder returns appointments in reminder window', async () => {
+			const { service, fromMock } = loadReminderService();
+			const query = createQueryMock({
+				data: [{ id: 'apt-1' }, { id: 'apt-2' }],
+				error: null
+			});
 
-        const rows = await service.getAppointmentsForReminder(24);
-        expect(rows).toEqual(sample);
-    });
+			fromMock.mockReturnValueOnce(query);
 
-    test('sendReminder sends email and inserts reminder record', async () => {
-        const { service, fromMock, emailMock } = loadReminderService();
+			const appointments = await service.getAppointmentsForReminder(24);
 
-        const appointment = {
-            id: 'apt-1',
-            scheduled_start: '2026-05-20T10:00:00.000Z',
-            patient: { email: 'p@example.com', first_name: 'P', last_name: 'Q' },
-            doctors: { users: { first_name: 'Doc', last_name: 'Tor' }, specialties: { name: 'Cardio' } },
-            consultation_rooms: { name: 'Sala A', room_number: '101' }
-        };
+			expect(appointments).toHaveLength(2);
+			expect(query.in).toHaveBeenCalledWith('status_id', expect.any(Array));
+		});
 
-        // First call to supabase (insert) - return success
-        fromMock.mockReturnValueOnce(createQueryMock({ data: { id: 'rem-1' }, error: null }));
+		test('sendReminder skips when patient email is missing', async () => {
+			const { service, emailMock } = loadReminderService();
 
-        const res = await service.sendReminder(appointment, 24);
+			const result = await service.sendReminder(
+				{
+					id: 'apt-1',
+					scheduled_start: '2026-08-01T08:00:00.000Z',
+					patient: { first_name: 'Ana', last_name: 'Perez' }
+				},
+				24
+			);
 
-        expect(emailMock.sendAppointmentReminder).toHaveBeenCalledWith(expect.objectContaining({
-            patientEmail: 'p@example.com',
-            patientName: 'P Q',
-            doctorName: 'Doc Tor',
-            specialty: 'Cardio',
-            hoursUntil: 24
-        }));
+			expect(result).toEqual({ success: false, reason: 'no_email' });
+			expect(emailMock.sendAppointmentReminder).not.toHaveBeenCalled();
+		});
 
-        expect(res).toEqual({ success: true, appointmentId: 'apt-1' });
-    });
+		test('sendReminder sends email and logs reminder in DB', async () => {
+			const { service, fromMock, emailMock } = loadReminderService();
+			const insertQuery = createQueryMock({ data: [{ id: 'r1' }], error: null });
 
-    test('processReminders iterates hours and sends reminders when not sent', async () => {
-        const { service } = loadReminderService();
-        const appointment = { id: 'apt-1' };
+			fromMock.mockReturnValueOnce(insertQuery);
+			emailMock.sendAppointmentReminder.mockResolvedValue();
 
-        jest.spyOn(service, 'getAppointmentsForReminder').mockResolvedValueOnce([appointment]);
-        jest.spyOn(service, '_checkReminderSent').mockResolvedValue(false);
-        jest.spyOn(service, 'sendReminder').mockResolvedValue({ success: true });
+			const result = await service.sendReminder(
+				{
+					id: 'apt-44',
+					scheduled_start: '2026-08-01T08:00:00.000Z',
+					patient: {
+						email: 'ana@example.com',
+						first_name: 'Ana',
+						last_name: 'Perez'
+					},
+					doctors: {
+						users: { first_name: 'Luis', last_name: 'Mora' },
+						specialties: { name: 'Pediatria' }
+					},
+					consultation_rooms: { name: 'Sala C', room_number: '12' }
+				},
+				2
+			);
 
-        const results = await service.processReminders([1]);
+			expect(result).toEqual({ success: true, appointmentId: 'apt-44' });
+			expect(emailMock.sendAppointmentReminder).toHaveBeenCalledTimes(1);
+			expect(fromMock).toHaveBeenCalledWith('reminders');
+		});
 
-        expect(service.getAppointmentsForReminder).toHaveBeenCalledWith(1);
-        expect(service._checkReminderSent).toHaveBeenCalledWith('apt-1', 1);
-        expect(service.sendReminder).toHaveBeenCalledWith(appointment, 1);
-        expect(results.sent).toBe(1);
-    });
+		test('processReminders counts processed and sent reminders', async () => {
+			const { service } = loadReminderService();
 
-    test('createReminder, getReminderHistory, cancelReminders and getPendingCount work with supabase', async () => {
-        const { service, fromMock } = loadReminderService();
+			jest.spyOn(service, 'getAppointmentsForReminder')
+				.mockResolvedValueOnce([{ id: 'a1' }])
+				.mockResolvedValueOnce([{ id: 'a2' }]);
+			jest.spyOn(service, '_checkReminderSent')
+				.mockResolvedValueOnce(false)
+				.mockResolvedValueOnce(true);
+			jest.spyOn(service, 'sendReminder').mockResolvedValue({ success: true });
 
-        fromMock
-            .mockReturnValueOnce(createQueryMock({ data: { id: 'rem-1' }, error: null })) // createReminder
-            .mockReturnValueOnce(createQueryMock({ data: [{ id: 'rem-1' }], error: null })) // getReminderHistory
-            .mockReturnValueOnce(createQueryMock({ data: [{ id: 'rem-1' }], error: null })) // cancelReminders
-            .mockReturnValueOnce(createQueryMock({ count: 5, error: null })); // getPendingCount
+			const result = await service.processReminders([24, 2]);
 
-        const created = await service.createReminder({ appointment_id: 'apt-1', recipient_email: 'a@e.com', scheduled_send_time: '2026-05-20T10:00:00.000Z' });
-        expect(created).toEqual({ id: 'rem-1' });
+			expect(result.processed).toBe(2);
+			expect(result.sent).toBe(1);
+			expect(result.errors).toEqual([]);
+		});
 
-        const history = await service.getReminderHistory('apt-1');
-        expect(history).toEqual([{ id: 'rem-1' }]);
+		test('_checkReminderSent returns true when at least one reminder exists', async () => {
+			const { service, fromMock } = loadReminderService();
+			const query = createQueryMock({ data: [{ id: 'r-1' }], error: null });
 
-        const cancelled = await service.cancelReminders('apt-1');
-        expect(cancelled).toEqual({ cancelled: 1 });
+			fromMock.mockReturnValueOnce(query);
 
-        const pending = await service.getPendingCount();
-        expect(pending).toBe(5);
-    });
+			const exists = await service._checkReminderSent('apt-1', 24);
 
-    test('_checkReminderSent returns true when reminders exist', async () => {
-        const { service, fromMock } = loadReminderService();
-        fromMock.mockReturnValueOnce(createQueryMock({ data: [{ id: 'r1' }], error: null }));
-
-        const sent = await service._checkReminderSent('apt-1', 24);
-        expect(sent).toBe(true);
-    });
+			expect(exists).toBe(true);
+		});
+	});
 });

@@ -373,7 +373,7 @@ class AppointmentRepository extends BaseRepository {
 
     (data || []).forEach(apt => {
       const code = apt.appointment_status?.code;
-      if (code && counts.hasOwnProperty(code)) {
+      if (code && Object.prototype.hasOwnProperty.call(counts, code)) { //Correccion de error de ESLint: no-prototype-builtins, usar Object.prototype.hasOwnProperty para evitar problemas con objetos sin prototipo
         counts[code]++;
       }
     });
