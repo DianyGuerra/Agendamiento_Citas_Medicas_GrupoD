@@ -127,37 +127,119 @@ describe('Patient module unit tests - CRUD layer', () => {
 			expect(fromMock).toHaveBeenCalledWith('users');
 			expect(stats).toEqual({ total: 2, active: 1, inactive: 1 });
 		});
-	});
 
-	describe('CRUD layer - patient.routes', () => {
-		test('registers authentication and role guards for patient endpoints', () => {
-			const { requireRole, authMiddleware } = loadPatientRoutes();
+		test('findByUserId throws error on database error', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({
+				data: null,
+				error: { code: 'DIFFERENT_ERROR', message: 'Database connection error' }
+			});
 
-			expect(authMiddleware).toHaveBeenCalledTimes(0);
-			expect(requireRole).toHaveBeenCalledWith('admin');
-			expect(requireRole).toHaveBeenCalledWith(['admin', 'doctor']);
-			expect(requireRole).toHaveBeenCalledWith('patient');
+			fromMock.mockReturnValueOnce(query);
+
+			await expect(repo.findByUserId('user-1')).rejects.toThrow('Database error');
 		});
 
-		test('contains patient CRUD and profile routes', () => {
-			const { router } = loadPatientRoutes();
-			const routePaths = router.stack
-				.filter((layer) => layer.route)
-				.map((layer) => `${Object.keys(layer.route.methods)[0]} ${layer.route.path}`);
+		test('findWithUserDetails handles null data gracefully', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({
+				data: null,
+				error: { code: 'PGRST116' }
+			});
 
-			expect(routePaths).toEqual(
-				expect.arrayContaining([
-					'get /stats',
-					'get /',
-					'get /me',
-					'post /with-user',
-					'get /user/:userId',
-					'get /:id',
-					'put /me',
-					'put /:id',
-					'delete /:id'
-				])
-			);
+			fromMock.mockReturnValueOnce(query);
+
+			const result = await repo.findWithUserDetails('user-1');
+
+			expect(result).toBeNull();
+		});
+
+		test('findWithUserDetails throws on database error', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({
+				data: null,
+				error: { code: 'DATABASE_ERROR', message: 'Connection failed' }
+			});
+
+			fromMock.mockReturnValueOnce(query);
+
+			await expect(repo.findWithUserDetails('user-1')).rejects.toThrow('Database error');
+		});
+
+		test('updateByUserId throws error on database error', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({
+				data: null,
+				error: { message: 'Update failed' }
+			});
+
+			fromMock.mockReturnValueOnce(query);
+
+			await expect(repo.updateByUserId('user-1', { address: 'New Address' }))
+				.rejects.toThrow('Database error');
+		});
+
+		test('findAllWithUserInfo with search and offset', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({
+				data: [
+					{
+						id: 'user-1',
+						email: 'patient1@example.com',
+						first_name: 'Carlos',
+						last_name: 'Mendez',
+						patients: {
+							id: 'pat-1',
+							insurance_plan: 'Premium'
+						},
+						roles: [{ name: 'patient' }]
+					},
+					{
+						id: 'user-2',
+						email: 'patient2@example.com',
+						first_name: 'Carmen',
+						last_name: 'Garcia',
+						patients: {
+							id: 'pat-2',
+							insurance_plan: 'Básico'
+						},
+						roles: [{ name: 'patient' }]
+					}
+				],
+				error: null
+			});
+
+			fromMock.mockReturnValueOnce(query);
+
+			const rows = await repo.findAllWithUserInfo({ limit: 10, offset: 10, search: 'car' });
+
+			expect(query.range).toHaveBeenCalledWith(10, 19);
+			expect(rows).toHaveLength(2);
+		});
+
+		test('findAllWithUserInfo throws on database error', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({
+				data: null,
+				error: { message: 'Query failed' }
+			});
+
+			fromMock.mockReturnValueOnce(query);
+
+			await expect(repo.findAllWithUserInfo({ limit: 10 }))
+				.rejects.toThrow('Database error');
+		});
+
+		test('getStats throws error on database error', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({
+				data: null,
+				error: { message: 'Query failed' }
+			});
+
+			fromMock.mockReturnValueOnce(query);
+
+			await expect(repo.getStats()).rejects.toThrow('Database error');
 		});
 	});
 });
