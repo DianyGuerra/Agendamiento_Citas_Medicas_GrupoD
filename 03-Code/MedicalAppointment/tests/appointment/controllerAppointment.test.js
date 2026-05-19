@@ -232,6 +232,11 @@ describe('Appointment module unit tests - CRUD controller', () => {
 				consultation_room_id: 'consult-1'
 			});
 			expect(appointmentRepository.update).toHaveBeenNthCalledWith(2, 'apt-1', {
+				doctor_id: 'doc-2',
+				consultation_room_id: 'room-2',
+				room_id: 'room-9'
+			});
+			expect(appointmentRepository.update).toHaveBeenNthCalledWith(3, 'apt-1', {
 				checked_in_at: expect.any(String)
 			});
 			expect(appointmentRepository.updateStatus).toHaveBeenCalledWith('apt-1', AppointmentStatus.CONFIRMED);

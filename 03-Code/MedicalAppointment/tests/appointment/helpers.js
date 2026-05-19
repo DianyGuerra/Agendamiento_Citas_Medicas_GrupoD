@@ -189,6 +189,110 @@ const loadAppointmentRoutes = () => {
 	return state;
 };
 
+const loadAppointmentController = () => {
+	const state = {};
+
+	jest.isolateModules(() => {
+		const fromMock = jest.fn();
+		const appointmentRepository = {
+			findAll: jest.fn(),
+			count: jest.fn(),
+			findWithDetails: jest.fn(),
+			findByPatient: jest.fn(),
+			findByDoctor: jest.fn(),
+			findById: jest.fn(),
+			create: jest.fn(),
+			update: jest.fn(),
+			updateStatus: jest.fn(),
+			softDelete: jest.fn()
+		};
+
+		const doctorRepository = {
+			findById: jest.fn(),
+			findByUserId: jest.fn()
+		};
+
+		const consultationRoomRepository = {
+			findById: jest.fn()
+		};
+
+		const responseBuilderMock = {
+			paginated: jest.fn(),
+			success: jest.fn(),
+			created: jest.fn()
+		};
+
+		const parsePaginationQuery = jest.fn(() => ({ page: 1, limit: 10, offset: 0 }));
+		const createPagination = jest.fn((total, page, limit) => ({
+			total,
+			page,
+			limit,
+			pages: Math.max(1, Math.ceil(total / limit))
+		}));
+
+		const asyncHandlerMock = (fn) => async (req, res, next) => {
+			try {
+				await fn(req, res, next);
+			} catch (error) {
+				next(error);
+			}
+		};
+
+		const createAuditLog = jest.fn();
+		const emailServiceMock = {
+			sendAppointmentConfirmation: jest.fn(),
+			sendAppointmentCancellation: jest.fn()
+		};
+
+		const generateBillingRecord = jest.fn();
+		const BillingCalculationService = jest.fn().mockImplementation(() => ({
+			generateBillingRecord
+		}));
+
+		jest.doMock('../../backend/crud-api/repositories/appointment.repository', () => appointmentRepository);
+		jest.doMock('../../backend/crud-api/repositories/doctor.repository', () => doctorRepository);
+		jest.doMock('../../backend/crud-api/repositories/consultationRoom.repository', () => consultationRoomRepository);
+		jest.doMock('../../backend/shared/utils/responseBuilder.utils', () => responseBuilderMock);
+		jest.doMock('../../backend/shared/utils/helpers.utils', () => ({
+			parsePaginationQuery,
+			createPagination
+		}));
+		jest.doMock('../../backend/shared/middleware/errorHandler.middleware', () => ({
+			asyncHandler: asyncHandlerMock
+		}));
+		jest.doMock('../../backend/shared/utils/audit.utils', () => ({
+			createAuditLog,
+			AuditActions: {
+				APPOINTMENT_CREATED: 'APPOINTMENT_CREATED',
+				APPOINTMENT_UPDATED: 'APPOINTMENT_UPDATED',
+				APPOINTMENT_STATUS_CHANGED: 'APPOINTMENT_STATUS_CHANGED',
+				APPOINTMENT_CANCELLED: 'APPOINTMENT_CANCELLED'
+			}
+		}));
+		jest.doMock('../../backend/external-api/services/email.service', () => emailServiceMock);
+		jest.doMock('../../backend/shared/config/database.config', () => ({
+			supabase: { from: fromMock }
+		}));
+		jest.doMock('../../backend/business-api/services/billingCalculation.service', () => BillingCalculationService);
+
+		state.controller = require('../../backend/crud-api/controllers/appointment.controller');
+		state.appointmentRepository = appointmentRepository;
+		state.doctorRepository = doctorRepository;
+		state.consultationRoomRepository = consultationRoomRepository;
+		state.responseBuilderMock = responseBuilderMock;
+		state.parsePaginationQuery = parsePaginationQuery;
+		state.createPagination = createPagination;
+		state.createAuditLog = createAuditLog;
+		state.fromMock = fromMock;
+		state.emailServiceMock = emailServiceMock;
+		state.generateBillingRecord = generateBillingRecord;
+		state.BillingCalculationService = BillingCalculationService;
+		state.AppointmentStatus = require('../../backend/shared/constants/app.constants').AppointmentStatus;
+	});
+
+	return state;
+};
+
 const invokeHandler = async (handler, req, res = {}) => {
 	const next = jest.fn();
 	await handler(req, res, next);
@@ -201,6 +305,7 @@ module.exports = {
 	loadSchedulingService,
 	loadReminderService,
 	loadSchedulingController,
+	loadAppointmentController,
 	loadAppointmentRoutes,
 	invokeHandler
 };
