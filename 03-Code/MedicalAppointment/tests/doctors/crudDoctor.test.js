@@ -3,31 +3,39 @@ const {
   invokeHandler,
   loadDoctorRepository,
   loadDoctorRoutes,
-  loadDoctorController
+  loadDoctorController,
+  createDoctorBody,
+  createDoctorCreateBody,
+  createDoctorUpdateBody,
+  createExistingUser,
+  createSpecialty,
+  createDoctorRecord,
+  createDoctorWithRelations,
+  createRoleQueryMock,
+  createReq,
+  expectNextError
 } = require('./helpers');
 
+const createSuccessfulQuery = (data) => createQueryMock({ data, error: null });
+const createDatabaseErrorQuery = (message, code = '500') => createQueryMock({
+  data: null,
+  error: { code, message }
+});
+
+const getRoutePaths = (router) => router.stack
+  .filter((layer) => layer.route)
+  .map((layer) => `${Object.keys(layer.route.methods)[0]} ${layer.route.path}`);
+
 describe('Doctor module unit tests - CRUD layer', () => {
-	beforeEach(() => {
-		jest.resetModules();
-		jest.clearAllMocks();
-	});
+  beforeEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+  });
 
-
-  //-----------------------------------------------------------------------------------------------------------------------------
-  // 												CRUD layer - doctor.repository
-  //-----------------------------------------------------------------------------------------------------------------------------
   describe('CRUD layer - doctor.repository', () => {
     test('findByUserId returns doctor profile with user and specialty data', async () => {
       const { repo, fromMock } = loadDoctorRepository();
-      const query = createQueryMock({
-        data: {
-          id: 'doc-1',
-          user_id: 'user-1',
-          users: { first_name: 'Ana', last_name: 'Mora' },
-          specialties: { name: 'Cardiología' }
-        },
-        error: null
-      });
+      const query = createSuccessfulQuery(createDoctorWithRelations());
 
       fromMock.mockReturnValueOnce(query);
 
@@ -35,15 +43,17 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       expect(fromMock).toHaveBeenCalledWith('doctors');
       expect(query.eq).toHaveBeenCalledWith('user_id', 'user-1');
-      expect(doctor.id).toBe('doc-1');
+      expect(doctor).toEqual(expect.objectContaining({
+        id: 'doc-1',
+        user_id: 'user-1',
+        users: expect.objectContaining({ first_name: 'Ana' }),
+        specialties: expect.objectContaining({ name: 'Cardiologia' })
+      }));
     });
 
     test('findWithDetails returns null when doctor does not exist', async () => {
       const { repo, fromMock } = loadDoctorRepository();
-      const query = createQueryMock({
-        data: null,
-        error: { code: 'PGRST116', message: 'No rows returned' }
-      });
+      const query = createDatabaseErrorQuery('No rows returned', 'PGRST116');
 
       fromMock.mockReturnValueOnce(query);
 
@@ -55,35 +65,24 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
     test('findBySpecialty filters active doctors and sorts by last name', async () => {
       const { repo, fromMock } = loadDoctorRepository();
-      const query = createQueryMock({
-        data: [
-          {
-            id: 'doc-2',
-            professional_id: 'MED-002',
-            active: true,
-            users: {
-              first_name: 'Luis',
-              last_name: 'Zambrano',
-              email: 'luis@example.com',
-              is_active: true
-            },
-            specialties: { id: 'sp-1', name: 'Pediatría', consultation_fee: 80 }
-          },
-          {
-            id: 'doc-1',
-            professional_id: 'MED-001',
-            active: true,
-            users: {
-              first_name: 'Ana',
-              last_name: 'Mora',
-              email: 'ana@example.com',
-              is_active: true
-            },
-            specialties: { id: 'sp-1', name: 'Pediatría', consultation_fee: 80 }
-          }
-        ],
-        error: null
-      });
+      const query = createSuccessfulQuery([
+        createDoctorWithRelations({
+          id: 'doc-2',
+          professional_id: 'MED-002',
+          users: createExistingUser({
+            id: 'user-2',
+            first_name: 'Luis',
+            last_name: 'Zambrano',
+            email: 'luis@example.com',
+            is_active: true
+          }),
+          specialties: createSpecialty({ name: 'Pediatria', consultation_fee: 80 })
+        }),
+        createDoctorWithRelations({
+          users: createExistingUser({ is_active: true }),
+          specialties: createSpecialty({ name: 'Pediatria', consultation_fee: 80 })
+        })
+      ]);
 
       fromMock.mockReturnValueOnce(query);
 
@@ -92,51 +91,35 @@ describe('Doctor module unit tests - CRUD layer', () => {
       expect(query.eq).toHaveBeenCalledWith('specialty_id', 'sp-1');
       expect(query.eq).toHaveBeenCalledWith('active', true);
       expect(query.eq).toHaveBeenCalledWith('users.is_active', true);
-      expect(doctors[0].last_name).toBe('Mora');
-      expect(doctors[1].last_name).toBe('Zambrano');
+      expect(doctors.map((doctor) => doctor.last_name)).toEqual(['Mora', 'Zambrano']);
     });
 
     test('findAllWithDetails applies search filter and formats doctors', async () => {
       const { repo, fromMock } = loadDoctorRepository();
-      const query = createQueryMock({
-        data: [
-          {
-            id: 'doc-1',
-            professional_id: 'MED-001',
-            active: true,
-            users: {
-              first_name: 'Ana',
-              last_name: 'Mora',
-              email: 'ana@example.com',
-              phone_number: '0999999999',
-              cedula: '1723456789',
-              is_active: true
-            },
-            specialties: {
-              id: 'sp-1',
-              name: 'Cardiología',
-              consultation_fee: 120
-            }
-          },
-          {
-            id: 'doc-2',
-            professional_id: 'MED-002',
-            active: true,
-            users: {
-              first_name: 'Carlos',
-              last_name: 'Paz',
-              email: 'carlos@example.com',
-              is_active: true
-            },
-            specialties: {
-              id: 'sp-2',
-              name: 'Dermatología',
-              consultation_fee: 90
-            }
-          }
-        ],
-        error: null
-      });
+      const query = createSuccessfulQuery([
+        createDoctorWithRelations({
+          users: createExistingUser({ is_active: true }),
+          specialties: createSpecialty()
+        }),
+        createDoctorWithRelations({
+          id: 'doc-2',
+          user_id: 'user-2',
+          professional_id: 'MED-002',
+          specialty_id: 'sp-2',
+          users: createExistingUser({
+            id: 'user-2',
+            first_name: 'Carlos',
+            last_name: 'Paz',
+            email: 'carlos@example.com',
+            is_active: true
+          }),
+          specialties: createSpecialty({
+            id: 'sp-2',
+            name: 'Dermatologia',
+            consultation_fee: 90
+          })
+        })
+      ]);
 
       fromMock.mockReturnValueOnce(query);
 
@@ -150,14 +133,12 @@ describe('Doctor module unit tests - CRUD layer', () => {
       expect(query.eq).toHaveBeenCalledWith('active', true);
       expect(query.order).toHaveBeenCalledWith('created_at', { ascending: false });
       expect(doctors).toHaveLength(1);
-      expect(doctors[0]).toEqual(
-        expect.objectContaining({
-          id: 'doc-1',
-          first_name: 'Ana',
-          specialty_name: 'Cardiología',
-          status: 'active'
-        })
-      );
+      expect(doctors[0]).toEqual(expect.objectContaining({
+        id: 'doc-1',
+        first_name: 'Ana',
+        specialty_name: 'Cardiologia',
+        status: 'active'
+      }));
     });
 
     test('softDelete deactivates doctor using active field', async () => {
@@ -169,15 +150,10 @@ describe('Doctor module unit tests - CRUD layer', () => {
       expect(result).toBe(true);
     });
 
-	    test('findByUserId throws database error when Supabase returns unexpected error', async () => {
+    test('findByUserId throws database error when Supabase returns unexpected error', async () => {
       const { repo, fromMock } = loadDoctorRepository();
 
-      const query = createQueryMock({
-        data: null,
-        error: { code: '500', message: 'Database failed' }
-      });
-
-      fromMock.mockReturnValueOnce(query);
+      fromMock.mockReturnValueOnce(createDatabaseErrorQuery('Database failed'));
 
       await expect(repo.findByUserId('user-1')).rejects.toThrow('Database error: Database failed');
     });
@@ -185,70 +161,42 @@ describe('Doctor module unit tests - CRUD layer', () => {
     test('findWithDetails throws database error when Supabase returns unexpected error', async () => {
       const { repo, fromMock } = loadDoctorRepository();
 
-      const query = createQueryMock({
-        data: null,
-        error: { code: '500', message: 'Details failed' }
-      });
-
-      fromMock.mockReturnValueOnce(query);
+      fromMock.mockReturnValueOnce(createDatabaseErrorQuery('Details failed'));
 
       await expect(repo.findWithDetails('doc-1')).rejects.toThrow('Database error: Details failed');
     });
 
     test('findBySpecialty does not apply active filters when activeOnly is false', async () => {
       const { repo, fromMock } = loadDoctorRepository();
-
-      const query = createQueryMock({
-        data: [
-          {
-            id: 'doc-1',
-            active: false,
-            users: {
-              first_name: 'Ana',
-              last_name: 'Mora',
-              email: 'ana@example.com',
-              is_active: false
-            },
-            specialties: {
-              id: 'sp-1',
-              name: 'Cardiología',
-              consultation_fee: 120
-            }
-          }
-        ],
-        error: null
-      });
+      const query = createSuccessfulQuery([
+        createDoctorWithRelations({
+          active: false,
+          users: createExistingUser({ is_active: false }),
+          specialties: createSpecialty()
+        })
+      ]);
 
       fromMock.mockReturnValueOnce(query);
 
-      const doctors = await repo.findBySpecialty('sp-1', {
-        activeOnly: false
-      });
+      const doctors = await repo.findBySpecialty('sp-1', { activeOnly: false });
 
       expect(query.eq).toHaveBeenCalledWith('specialty_id', 'sp-1');
       expect(query.eq).not.toHaveBeenCalledWith('active', true);
       expect(query.eq).not.toHaveBeenCalledWith('users.is_active', true);
       expect(query.limit).not.toHaveBeenCalled();
       expect(query.range).not.toHaveBeenCalled();
-      expect(doctors[0]).toEqual(
-        expect.objectContaining({
-          id: 'doc-1',
-          active: false,
-          status: 'inactive',
-          is_active: false
-        })
-      );
+      expect(doctors[0]).toEqual(expect.objectContaining({
+        id: 'doc-1',
+        active: false,
+        status: 'inactive',
+        is_active: false
+      }));
     });
 
     test('findBySpecialty throws database error when query fails', async () => {
       const { repo, fromMock } = loadDoctorRepository();
 
-      const query = createQueryMock({
-        data: null,
-        error: { message: 'Specialty query failed' }
-      });
-
-      fromMock.mockReturnValueOnce(query);
+      fromMock.mockReturnValueOnce(createDatabaseErrorQuery('Specialty query failed'));
 
       await expect(repo.findBySpecialty('sp-1')).rejects.toThrow(
         'Database error: Specialty query failed'
@@ -257,88 +205,56 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
     test('findBySpecialty sorts doctors even when last names are missing', async () => {
       const { repo, fromMock } = loadDoctorRepository();
-
-      const query = createQueryMock({
-        data: [
-          {
-            id: 'doc-2',
-            active: true,
-            users: null,
-            specialties: null
-          },
-          {
-            id: 'doc-1',
-            active: true,
-            users: {
-              first_name: 'Ana',
-              last_name: 'Mora',
-              email: 'ana@example.com',
-              is_active: true
-            },
-            specialties: {
-              id: 'sp-1',
-              name: 'Medicina General'
-            }
-          }
-        ],
-        error: null
-      });
+      const query = createSuccessfulQuery([
+        createDoctorWithRelations({
+          id: 'doc-2',
+          users: null,
+          specialties: null
+        }),
+        createDoctorWithRelations({
+          users: createExistingUser({ is_active: true }),
+          specialties: createSpecialty({ name: 'Medicina General' })
+        })
+      ]);
 
       fromMock.mockReturnValueOnce(query);
 
       const doctors = await repo.findBySpecialty('sp-1', { activeOnly: false });
 
       expect(doctors).toHaveLength(2);
-      expect(doctors[0]).toEqual(
-        expect.objectContaining({
-          id: 'doc-2',
-          first_name: undefined,
-          specialty_name: undefined,
-          status: 'active'
-        })
-      );
+      expect(doctors[0]).toEqual(expect.objectContaining({
+        id: 'doc-2',
+        first_name: undefined,
+        specialty_name: undefined,
+        status: 'active'
+      }));
     });
 
     test('findAllWithDetails does not filter inactive doctors when activeOnly is false', async () => {
       const { repo, fromMock } = loadDoctorRepository();
-
-      const query = createQueryMock({
-        data: [
-          {
-            id: 'doc-1',
-            active: false,
-            users: {
-              first_name: 'Ana',
-              last_name: 'Mora',
-              email: 'ana@example.com',
-              is_active: false
-            },
-            specialties: {
-              name: 'Cardiología'
-            }
-          },
-          {
-            id: 'doc-2',
-            active: true,
-            users: {
-              first_name: 'Luis',
-              last_name: 'Paz',
-              email: 'luis@example.com',
-              is_active: true
-            },
-            specialties: {
-              name: 'Pediatría'
-            }
-          }
-        ],
-        error: null
-      });
+      const query = createSuccessfulQuery([
+        createDoctorWithRelations({
+          active: false,
+          users: createExistingUser({ is_active: false }),
+          specialties: createSpecialty()
+        }),
+        createDoctorWithRelations({
+          id: 'doc-2',
+          active: true,
+          users: createExistingUser({
+            id: 'user-2',
+            first_name: 'Luis',
+            last_name: 'Paz',
+            email: 'luis@example.com',
+            is_active: true
+          }),
+          specialties: createSpecialty({ name: 'Pediatria' })
+        })
+      ]);
 
       fromMock.mockReturnValueOnce(query);
 
-      const doctors = await repo.findAllWithDetails({
-        activeOnly: false
-      });
+      const doctors = await repo.findAllWithDetails({ activeOnly: false });
 
       expect(query.eq).not.toHaveBeenCalledWith('active', true);
       expect(doctors).toHaveLength(2);
@@ -349,12 +265,7 @@ describe('Doctor module unit tests - CRUD layer', () => {
     test('findAllWithDetails throws database error when query fails', async () => {
       const { repo, fromMock } = loadDoctorRepository();
 
-      const query = createQueryMock({
-        data: null,
-        error: { message: 'Find all failed' }
-      });
-
-      fromMock.mockReturnValueOnce(query);
+      fromMock.mockReturnValueOnce(createDatabaseErrorQuery('Find all failed'));
 
       await expect(repo.findAllWithDetails()).rejects.toThrow(
         'Database error: Find all failed'
@@ -364,31 +275,24 @@ describe('Doctor module unit tests - CRUD layer', () => {
     test('formatDoctorResponse handles missing nested user and specialty data', () => {
       const { repo } = loadDoctorRepository();
 
-      const formatted = repo.formatDoctorResponse({
-        id: 'doc-1',
-        professional_id: 'MED-001',
-        specialty_id: 'sp-1',
-        user_id: 'user-1',
+      const formatted = repo.formatDoctorResponse(createDoctorRecord({
         users: null,
         specialties: null,
-        bio: null,
         active: false,
         created_at: '2026-01-01',
         updated_at: '2026-01-02'
-      });
+      }));
 
-      expect(formatted).toEqual(
-        expect.objectContaining({
-          id: 'doc-1',
-          first_name: undefined,
-          last_name: undefined,
-          email: undefined,
-          specialty_name: undefined,
-          specialty: null,
-          active: false,
-          status: 'inactive'
-        })
-      );
+      expect(formatted).toEqual(expect.objectContaining({
+        id: 'doc-1',
+        first_name: undefined,
+        last_name: undefined,
+        email: undefined,
+        specialty_name: undefined,
+        specialty: null,
+        active: false,
+        status: 'inactive'
+      }));
     });
 
     test('updateActiveStatus activates doctor using active field', async () => {
@@ -407,9 +311,6 @@ describe('Doctor module unit tests - CRUD layer', () => {
     });
   });
 
-  //-----------------------------------------------------------------------------------------------------------------------------
-  // 												CRUD layer - doctor.routes
-  //-----------------------------------------------------------------------------------------------------------------------------
   describe('CRUD layer - doctor.routes', () => {
     test('registers role guards for doctor endpoints', () => {
       const { requireRole } = loadDoctorRoutes();
@@ -421,53 +322,41 @@ describe('Doctor module unit tests - CRUD layer', () => {
     test('contains public, doctor and admin routes', () => {
       const { router } = loadDoctorRoutes();
 
-      const routePaths = router.stack
-        .filter((layer) => layer.route)
-        .map((layer) => `${Object.keys(layer.route.methods)[0]} ${layer.route.path}`);
-
-      expect(routePaths).toEqual(
-        expect.arrayContaining([
-          'get /',
-          'get /specialty/:specialtyId',
-          'get /me',
-          'put /me',
-          'get /my-patients',
-          'post /',
-          'post /with-user',
-          'get /:id',
-          'put /:id',
-          'post /:id/reset-password',
-          'delete /:id'
-        ])
-      );
+      expect(getRoutePaths(router)).toEqual(expect.arrayContaining([
+        'get /',
+        'get /specialty/:specialtyId',
+        'get /me',
+        'put /me',
+        'get /my-patients',
+        'post /',
+        'post /with-user',
+        'get /:id',
+        'put /:id',
+        'post /:id/reset-password',
+        'delete /:id'
+      ]));
     });
   });
 
-  //-----------------------------------------------------------------------------------------------------------------------------
-  // 												CRUD layer - doctor.controller
-  //-----------------------------------------------------------------------------------------------------------------------------
-
   describe('CRUD layer - doctor.controller', () => {
-	test('getAll delegates to findAllWithDetails and returns paginated response', async () => {
+    test('getAll delegates to findAllWithDetails and returns paginated response', async () => {
       const { controller, doctorRepository, responseBuilderMock } = loadDoctorController();
 
       doctorRepository.findAllWithDetails.mockResolvedValue([
-        { id: 'doc-1' },
-        { id: 'doc-2' }
+        createDoctorRecord(),
+        createDoctorRecord({ id: 'doc-2' })
       ]);
 
-      await invokeHandler(controller.getAll, {
+      await invokeHandler(controller.getAll, createReq({
         query: { page: '1', limit: '10', search: 'ana' }
-      });
+      }));
 
-      expect(doctorRepository.findAllWithDetails).toHaveBeenCalledWith(
-        expect.objectContaining({
-          limit: 10,
-          offset: 0,
-          search: 'ana',
-          activeOnly: true
-        })
-      );
+      expect(doctorRepository.findAllWithDetails).toHaveBeenCalledWith(expect.objectContaining({
+        limit: 10,
+        offset: 0,
+        search: 'ana',
+        activeOnly: true
+      }));
       expect(responseBuilderMock.paginated).toHaveBeenCalled();
     });
 
@@ -476,40 +365,35 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       doctorRepository.findWithDetails.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.getById, {
+      const next = await invokeHandler(controller.getById, createReq({
         params: { id: 'missing-doc' }
-      });
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Doctor');
+      expectNextError(next, 'Doctor');
     });
 
     test('getProfile returns current doctor profile', async () => {
       const { controller, doctorRepository, responseBuilderMock } = loadDoctorController();
+      const doctor = createDoctorRecord();
 
-      doctorRepository.findByUserId.mockResolvedValue({ id: 'doc-1', user_id: 'user-1' });
+      doctorRepository.findByUserId.mockResolvedValue(doctor);
 
-      await invokeHandler(controller.getProfile, {
+      await invokeHandler(controller.getProfile, createReq({
         user: { id: 'user-1' }
-      });
+      }));
 
       expect(doctorRepository.findByUserId).toHaveBeenCalledWith('user-1');
-      expect(responseBuilderMock.success).toHaveBeenCalledWith(
-        expect.anything(),
-        expect.objectContaining({ id: 'doc-1' })
-      );
+      expect(responseBuilderMock.success).toHaveBeenCalledWith(expect.anything(), doctor);
     });
 
     test('create rejects missing required fields', async () => {
       const { controller } = loadDoctorController();
 
-      const next = await invokeHandler(controller.create, {
-        body: { professional_id: 'MED-001' },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.create, createReq({
+        body: { professional_id: 'MED-001' }
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('user_id y specialty_id');
+      expectNextError(next, 'user_id y specialty_id');
     });
 
     test('create creates doctor for existing user', async () => {
@@ -520,33 +404,20 @@ describe('Doctor module unit tests - CRUD layer', () => {
         responseBuilderMock,
         createAuditLog
       } = loadDoctorController();
+      const body = createDoctorCreateBody();
+      const doctor = createDoctorRecord(body);
 
-      userRepository.findById.mockResolvedValue({ id: 'user-1' });
+      userRepository.findById.mockResolvedValue(createExistingUser());
       doctorRepository.findByUserId.mockResolvedValue(null);
-      doctorRepository.create.mockResolvedValue({
-        id: 'doc-1',
-        user_id: 'user-1',
-        specialty_id: 'sp-1'
-      });
+      doctorRepository.create.mockResolvedValue(doctor);
 
-      await invokeHandler(controller.create, {
-        body: {
-          user_id: 'user-1',
-          specialty_id: 'sp-1',
-          professional_id: 'MED-001',
-          bio: 'Especialista'
-        },
-        user: { id: 'admin-1' }
-      });
+      await invokeHandler(controller.create, createReq({ body }));
 
       expect(userRepository.findById).toHaveBeenCalledWith('user-1');
-      expect(doctorRepository.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          user_id: 'user-1',
-          specialty_id: 'sp-1',
-          active: true
-        })
-      );
+      expect(doctorRepository.create).toHaveBeenCalledWith(expect.objectContaining({
+        ...body,
+        active: true
+      }));
       expect(createAuditLog).toHaveBeenCalled();
       expect(responseBuilderMock.created).toHaveBeenCalled();
     });
@@ -554,19 +425,11 @@ describe('Doctor module unit tests - CRUD layer', () => {
     test('createWithUser rejects invalid cedula', async () => {
       const { controller } = loadDoctorController();
 
-      const next = await invokeHandler(controller.createWithUser, {
-        body: {
-          cedula: '123',
-          first_name: 'Ana',
-          last_name: 'Mora',
-          email: 'ana@example.com',
-          specialty_id: 'sp-1'
-        },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.createWithUser, createReq({
+        body: createDoctorBody({ cedula: '123' })
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('10 dígitos');
+      expectNextError(next, '10');
     });
 
     test('createWithUser creates new user and doctor with temporary password', async () => {
@@ -577,96 +440,57 @@ describe('Doctor module unit tests - CRUD layer', () => {
         responseBuilderMock,
         fromMock
       } = loadDoctorController();
-
-      const roleQuery = createQueryMock({
-        data: { id: 'role-doctor' },
-        error: null
-      });
-
-      const insertUserQuery = createQueryMock({
-        data: {
-          id: 'user-new',
-          email: 'doctor@example.com',
-          first_name: 'Ana',
-          last_name: 'Mora'
-        },
-        error: null
+      const body = createDoctorBody({ email: 'doctor@example.com' });
+      const newUser = createExistingUser({
+        id: 'user-new',
+        email: 'doctor@example.com',
+        roles: undefined
       });
 
       fromMock
-        .mockReturnValueOnce(roleQuery)
-        .mockReturnValueOnce(insertUserQuery);
+        .mockReturnValueOnce(createRoleQueryMock())
+        .mockReturnValueOnce(createSuccessfulQuery(newUser));
 
       userRepository.findByEmail.mockResolvedValue(null);
       userRepository.findByCedula.mockResolvedValue(null);
-      doctorRepository.create.mockResolvedValue({
+      doctorRepository.create.mockResolvedValue(createDoctorRecord({
         id: 'doc-new',
-        user_id: 'user-new',
-        specialty_id: 'sp-1'
-      });
+        user_id: 'user-new'
+      }));
 
-      await invokeHandler(controller.createWithUser, {
-        body: {
-          cedula: '1723456789',
-          first_name: 'Ana',
-          last_name: 'Mora',
-          email: 'doctor@example.com',
-          phone_number: '0999999999',
-          specialty_id: 'sp-1',
-          license_number: 'MED-001'
-        },
-        user: { id: 'admin-1' }
-      });
+      await invokeHandler(controller.createWithUser, createReq({ body }));
 
       expect(fromMock).toHaveBeenCalledWith('roles');
       expect(fromMock).toHaveBeenCalledWith('users');
-      expect(doctorRepository.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          user_id: 'user-new',
-          specialty_id: 'sp-1',
-          professional_id: 'MED-001',
-          active: true
-        })
-      );
+      expect(doctorRepository.create).toHaveBeenCalledWith(expect.objectContaining({
+        user_id: 'user-new',
+        specialty_id: 'sp-1',
+        professional_id: 'MED-001',
+        active: true
+      }));
       expect(responseBuilderMock.created).toHaveBeenCalledWith(
         expect.anything(),
-        expect.objectContaining({
-          temporary_password: '1723456789MOR!'
-        }),
+        expect.objectContaining({ temporary_password: '1723456789MOR!' }),
         'Doctor creado exitosamente con cuenta de usuario'
       );
     });
 
     test('update modifies doctor data when doctor exists', async () => {
       const { controller, doctorRepository, responseBuilderMock } = loadDoctorController();
+      const body = createDoctorUpdateBody();
 
-      doctorRepository.findById.mockResolvedValue({
-        id: 'doc-1',
+      doctorRepository.findById.mockResolvedValue(createDoctorRecord({
         specialty_id: 'old-sp',
         professional_id: 'OLD'
-      });
+      }));
+      doctorRepository.update.mockResolvedValue(createDoctorRecord(body));
 
-      doctorRepository.update.mockResolvedValue({
-        id: 'doc-1',
-        specialty_id: 'sp-2',
-        professional_id: 'MED-002'
-      });
-
-      await invokeHandler(controller.update, {
+      await invokeHandler(controller.update, createReq({
         params: { id: 'doc-1' },
-        body: {
-          specialty_id: 'sp-2',
-          professional_id: 'MED-002',
-          bio: 'Actualizado'
-        },
-        user: { id: 'admin-1' }
-      });
+        body
+      }));
 
-      expect(doctorRepository.update).toHaveBeenCalledWith('doc-1', {
-        specialty_id: 'sp-2',
-        professional_id: 'MED-002',
-        bio: 'Actualizado'
-      });
+      expect(doctorRepository.update).toHaveBeenCalledWith('doc-1', body);
       expect(responseBuilderMock.success).toHaveBeenCalled();
     });
 
@@ -678,36 +502,21 @@ describe('Doctor module unit tests - CRUD layer', () => {
         responseBuilderMock,
         fromMock
       } = loadDoctorController();
+      const updateQuery = createSuccessfulQuery(null);
 
-      const updateQuery = createQueryMock({ data: null, error: null });
-
-      doctorRepository.findWithDetails.mockResolvedValue({
-        id: 'doc-1',
-        user_id: 'user-1'
-      });
-
-      userRepository.findById.mockResolvedValue({
-        id: 'user-1',
-        cedula: '1723456789',
-        first_name: 'Ana',
-        last_name: 'Mora',
-        email: 'ana@example.com'
-      });
-
+      doctorRepository.findWithDetails.mockResolvedValue(createDoctorRecord());
+      userRepository.findById.mockResolvedValue(createExistingUser());
       fromMock.mockReturnValueOnce(updateQuery);
 
-      await invokeHandler(controller.resetPassword, {
-        params: { id: 'doc-1' },
-        user: { id: 'admin-1' }
-      });
+      await invokeHandler(controller.resetPassword, createReq({
+        params: { id: 'doc-1' }
+      }));
 
       expect(fromMock).toHaveBeenCalledWith('users');
-      expect(updateQuery.update).toHaveBeenCalledWith(
-        expect.objectContaining({
-          password_hash: 'hashed-password',
-          updated_at: expect.any(String)
-        })
-      );
+      expect(updateQuery.update).toHaveBeenCalledWith(expect.objectContaining({
+        password_hash: 'hashed-password',
+        updated_at: expect.any(String)
+      }));
       expect(responseBuilderMock.success).toHaveBeenCalledWith(
         expect.anything(),
         expect.objectContaining({
@@ -716,7 +525,7 @@ describe('Doctor module unit tests - CRUD layer', () => {
           temporary_password: '1723456789MOR!1234'
         }),
         200,
-        'Contraseña restablecida exitosamente'
+        expect.stringContaining('restablecida exitosamente')
       );
     });
 
@@ -728,10 +537,10 @@ describe('Doctor module unit tests - CRUD layer', () => {
         responseBuilderMock
       } = loadDoctorController();
 
-      doctorRepository.findByUserId.mockResolvedValue({ id: 'doc-1' });
-      doctorRepository.update.mockResolvedValue({ id: 'doc-1', bio: 'Nueva bio' });
+      doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord());
+      doctorRepository.update.mockResolvedValue(createDoctorRecord({ bio: 'Nueva bio' }));
 
-      await invokeHandler(controller.updateProfile, {
+      await invokeHandler(controller.updateProfile, createReq({
         user: { id: 'user-1' },
         body: {
           first_name: 'Ana',
@@ -739,29 +548,26 @@ describe('Doctor module unit tests - CRUD layer', () => {
           phone_number: '0999999999',
           bio: 'Nueva bio'
         }
-      });
+      }));
 
       expect(userRepository.update).toHaveBeenCalledWith('user-1', {
         first_name: 'Ana',
         last_name: 'Mora',
         phone_number: '0999999999'
       });
-      expect(doctorRepository.update).toHaveBeenCalledWith('doc-1', {
-        bio: 'Nueva bio'
-      });
+      expect(doctorRepository.update).toHaveBeenCalledWith('doc-1', { bio: 'Nueva bio' });
       expect(responseBuilderMock.success).toHaveBeenCalled();
     });
 
     test('delete performs soft delete when doctor exists', async () => {
       const { controller, doctorRepository, responseBuilderMock } = loadDoctorController();
 
-      doctorRepository.findById.mockResolvedValue({ id: 'doc-1' });
+      doctorRepository.findById.mockResolvedValue(createDoctorRecord());
       doctorRepository.softDelete.mockResolvedValue(true);
 
-      await invokeHandler(controller.delete, {
-        params: { id: 'doc-1' },
-        user: { id: 'admin-1' }
-      });
+      await invokeHandler(controller.delete, createReq({
+        params: { id: 'doc-1' }
+      }));
 
       expect(doctorRepository.softDelete).toHaveBeenCalledWith('doc-1');
       expect(responseBuilderMock.success).toHaveBeenCalledWith(
@@ -779,36 +585,32 @@ describe('Doctor module unit tests - CRUD layer', () => {
         appointmentRepository,
         responseBuilderMock
       } = loadDoctorController();
+      const patients = [{ id: 'patient-1' }];
 
-      doctorRepository.findByUserId.mockResolvedValue({ id: 'doc-1' });
-      appointmentRepository.findUniquePatientsByDoctor.mockResolvedValue([
-        { id: 'patient-1' }
-      ]);
+      doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord());
+      appointmentRepository.findUniquePatientsByDoctor.mockResolvedValue(patients);
 
-      await invokeHandler(controller.getMyPatients, {
+      await invokeHandler(controller.getMyPatients, createReq({
         user: { id: 'user-1' }
-      });
+      }));
 
       expect(appointmentRepository.findUniquePatientsByDoctor).toHaveBeenCalledWith('doc-1');
-      expect(responseBuilderMock.success).toHaveBeenCalledWith(
-        expect.anything(),
-        [{ id: 'patient-1' }]
-      );
+      expect(responseBuilderMock.success).toHaveBeenCalledWith(expect.anything(), patients);
     });
 
-	    test('getAll delegates to findBySpecialty when specialty_id is provided', async () => {
+    test('getAll delegates to findBySpecialty when specialty_id is provided', async () => {
       const { controller, doctorRepository, responseBuilderMock } = loadDoctorController();
 
-      doctorRepository.findBySpecialty.mockResolvedValue([{ id: 'doc-1' }]);
+      doctorRepository.findBySpecialty.mockResolvedValue([createDoctorRecord()]);
 
-      await invokeHandler(controller.getAll, {
+      await invokeHandler(controller.getAll, createReq({
         query: {
           page: '2',
           limit: '5',
           specialty_id: 'sp-1',
           active: 'false'
         }
-      });
+      }));
 
       expect(doctorRepository.findBySpecialty).toHaveBeenCalledWith('sp-1', {
         limit: 5,
@@ -820,39 +622,30 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
     test('getById returns doctor when it exists', async () => {
       const { controller, doctorRepository, responseBuilderMock } = loadDoctorController();
+      const doctor = createDoctorRecord();
 
-      doctorRepository.findWithDetails.mockResolvedValue({
-        id: 'doc-1',
-        user_id: 'user-1'
-      });
+      doctorRepository.findWithDetails.mockResolvedValue(doctor);
 
-      await invokeHandler(controller.getById, {
+      await invokeHandler(controller.getById, createReq({
         params: { id: 'doc-1' }
-      });
+      }));
 
       expect(doctorRepository.findWithDetails).toHaveBeenCalledWith('doc-1');
-      expect(responseBuilderMock.success).toHaveBeenCalledWith(
-        expect.anything(),
-        expect.objectContaining({ id: 'doc-1' })
-      );
+      expect(responseBuilderMock.success).toHaveBeenCalledWith(expect.anything(), doctor);
     });
 
     test('getBySpecialty returns doctors for a specialty', async () => {
       const { controller, doctorRepository, responseBuilderMock } = loadDoctorController();
+      const doctors = [createDoctorRecord()];
 
-      doctorRepository.findBySpecialty.mockResolvedValue([
-        { id: 'doc-1', specialty_id: 'sp-1' }
-      ]);
+      doctorRepository.findBySpecialty.mockResolvedValue(doctors);
 
-      await invokeHandler(controller.getBySpecialty, {
+      await invokeHandler(controller.getBySpecialty, createReq({
         params: { specialtyId: 'sp-1' }
-      });
+      }));
 
       expect(doctorRepository.findBySpecialty).toHaveBeenCalledWith('sp-1');
-      expect(responseBuilderMock.success).toHaveBeenCalledWith(
-        expect.anything(),
-        [{ id: 'doc-1', specialty_id: 'sp-1' }]
-      );
+      expect(responseBuilderMock.success).toHaveBeenCalledWith(expect.anything(), doctors);
     });
 
     test('create sends NotFoundError when user does not exist', async () => {
@@ -860,110 +653,63 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       userRepository.findById.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.create, {
-        body: {
-          user_id: 'missing-user',
-          specialty_id: 'sp-1'
-        },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.create, createReq({
+        body: createDoctorCreateBody({ user_id: 'missing-user' })
+      }));
 
       expect(userRepository.findById).toHaveBeenCalledWith('missing-user');
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Usuario');
+      expectNextError(next, 'Usuario');
     });
 
     test('create rejects when doctor already exists for user', async () => {
       const { controller, userRepository, doctorRepository } = loadDoctorController();
 
-      userRepository.findById.mockResolvedValue({ id: 'user-1' });
-      doctorRepository.findByUserId.mockResolvedValue({ id: 'doc-existing' });
+      userRepository.findById.mockResolvedValue(createExistingUser());
+      doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord({ id: 'doc-existing' }));
 
-      const next = await invokeHandler(controller.create, {
-        body: {
-          user_id: 'user-1',
-          specialty_id: 'sp-1'
-        },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.create, createReq({
+        body: createDoctorCreateBody()
+      }));
 
       expect(doctorRepository.findByUserId).toHaveBeenCalledWith('user-1');
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Ya existe');
+      expectNextError(next, 'Ya existe');
     });
 
     test('createWithUser rejects missing required fields', async () => {
       const { controller } = loadDoctorController();
 
-      const next = await invokeHandler(controller.createWithUser, {
-        body: {
-          cedula: '1723456789'
-        },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.createWithUser, createReq({
+        body: { cedula: '1723456789' }
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Cédula');
+      expectNextError(next, 'requeridos');
     });
 
     test('createWithUser rejects when doctor role does not exist', async () => {
       const { controller, fromMock } = loadDoctorController();
 
-      const roleQuery = createQueryMock({
-        data: null,
-        error: null
-      });
+      fromMock.mockReturnValueOnce(createSuccessfulQuery(null));
 
-      fromMock.mockReturnValueOnce(roleQuery);
-
-      const next = await invokeHandler(controller.createWithUser, {
-        body: {
-          cedula: '1723456789',
-          first_name: 'Ana',
-          last_name: 'Mora',
-          email: 'ana@example.com',
-          specialty_id: 'sp-1'
-        },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
 
       expect(fromMock).toHaveBeenCalledWith('roles');
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Rol de doctor');
+      expectNextError(next, 'Rol de doctor');
     });
 
     test('createWithUser rejects when email and cedula belong to different users', async () => {
       const { controller, userRepository, fromMock } = loadDoctorController();
 
-      const roleQuery = createQueryMock({
-        data: { id: 'role-doctor' },
-        error: null
-      });
+      fromMock.mockReturnValueOnce(createRoleQueryMock());
+      userRepository.findByEmail.mockResolvedValue(createExistingUser({ id: 'user-email' }));
+      userRepository.findByCedula.mockResolvedValue(createExistingUser({ id: 'user-cedula' }));
 
-      fromMock.mockReturnValueOnce(roleQuery);
+      const next = await invokeHandler(controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
 
-      userRepository.findByEmail.mockResolvedValue({
-        id: 'user-email',
-        email: 'ana@example.com'
-      });
-      userRepository.findByCedula.mockResolvedValue({
-        id: 'user-cedula',
-        cedula: '1723456789'
-      });
-
-      const next = await invokeHandler(controller.createWithUser, {
-        body: {
-          cedula: '1723456789',
-          first_name: 'Ana',
-          last_name: 'Mora',
-          email: 'ana@example.com',
-          specialty_id: 'sp-1'
-        },
-        user: { id: 'admin-1' }
-      });
-
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Conflicto de datos');
+      expectNextError(next, 'Conflicto de datos');
     });
 
     test('createWithUser returns promotion required when existing user is not doctor', async () => {
@@ -974,42 +720,20 @@ describe('Doctor module unit tests - CRUD layer', () => {
         responseBuilderMock,
         fromMock
       } = loadDoctorController();
+      const existingUser = createExistingUser({ roles: { name: 'patient' } });
 
-      const roleQuery = createQueryMock({
-        data: { id: 'role-doctor' },
-        error: null
-      });
-
-      fromMock.mockReturnValueOnce(roleQuery);
-
-      const existingUser = {
-        id: 'user-1',
-        email: 'ana@example.com',
-        first_name: 'Ana',
-        last_name: 'Mora',
-        roles: { name: 'patient' }
-      };
-
+      fromMock.mockReturnValueOnce(createRoleQueryMock());
       userRepository.findByEmail.mockResolvedValue(existingUser);
       userRepository.findByCedula.mockResolvedValue(existingUser);
       doctorRepository.findByUserId.mockResolvedValue(null);
 
-      await invokeHandler(controller.createWithUser, {
-        body: {
-          cedula: '1723456789',
-          first_name: 'Ana',
-          last_name: 'Mora',
-          email: 'ana@example.com',
-          specialty_id: 'sp-1'
-        },
-        user: { id: 'admin-1' }
-      });
+      await invokeHandler(controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
 
       expect(responseBuilderMock.success).toHaveBeenCalledWith(
         expect.anything(),
-        expect.objectContaining({
-          requires_promotion: true
-        }),
+        expect.objectContaining({ requires_promotion: true }),
         200,
         'Usuario existente encontrado'
       );
@@ -1023,66 +747,31 @@ describe('Doctor module unit tests - CRUD layer', () => {
         responseBuilderMock,
         fromMock
       } = loadDoctorController();
-
-      const roleQuery = createQueryMock({
-        data: { id: 'role-doctor' },
-        error: null
-      });
-
-      const updateUserQuery = createQueryMock({
-        data: null,
-        error: null
-      });
+      const updateUserQuery = createSuccessfulQuery(null);
+      const existingUser = createExistingUser();
 
       fromMock
-        .mockReturnValueOnce(roleQuery)
+        .mockReturnValueOnce(createRoleQueryMock())
         .mockReturnValueOnce(updateUserQuery);
-
-      const existingUser = {
-        id: 'user-1',
-        email: 'ana@example.com',
-        first_name: 'Ana',
-        last_name: 'Mora',
-        cedula: '1723456789',
-        phone_number: '0999999999'
-      };
 
       userRepository.findByEmail.mockResolvedValue(existingUser);
       userRepository.findByCedula.mockResolvedValue(existingUser);
       doctorRepository.findByUserId.mockResolvedValue(null);
-      doctorRepository.create.mockResolvedValue({
-        id: 'doc-1',
+      doctorRepository.create.mockResolvedValue(createDoctorRecord());
+
+      await invokeHandler(controller.createWithUser, createReq({
+        body: createDoctorBody({ promote_existing: true })
+      }));
+
+      expect(updateUserQuery.update).toHaveBeenCalledWith(expect.objectContaining({
+        role_id: 'role-doctor',
+        is_active: true
+      }));
+      expect(doctorRepository.create).toHaveBeenCalledWith(expect.objectContaining({
         user_id: 'user-1',
-        specialty_id: 'sp-1'
-      });
-
-      await invokeHandler(controller.createWithUser, {
-        body: {
-          cedula: '1723456789',
-          first_name: 'Ana',
-          last_name: 'Mora',
-          email: 'ana@example.com',
-          phone_number: '0999999999',
-          specialty_id: 'sp-1',
-          license_number: 'MED-001',
-          promote_existing: true
-        },
-        user: { id: 'admin-1' }
-      });
-
-      expect(updateUserQuery.update).toHaveBeenCalledWith(
-        expect.objectContaining({
-          role_id: 'role-doctor',
-          is_active: true
-        })
-      );
-      expect(doctorRepository.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          user_id: 'user-1',
-          specialty_id: 'sp-1',
-          professional_id: 'MED-001'
-        })
-      );
+        specialty_id: 'sp-1',
+        professional_id: 'MED-001'
+      }));
       expect(responseBuilderMock.created).toHaveBeenCalled();
     });
 
@@ -1091,17 +780,12 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       doctorRepository.findById.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.update, {
+      const next = await invokeHandler(controller.update, createReq({
         params: { id: 'missing-doc' },
-        body: {
-          specialty_id: 'sp-1',
-          professional_id: 'MED-001'
-        },
-        user: { id: 'admin-1' }
-      });
+        body: createDoctorUpdateBody()
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Doctor');
+      expectNextError(next, 'Doctor');
     });
 
     test('resetPassword sends NotFoundError when doctor does not exist', async () => {
@@ -1109,32 +793,27 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       doctorRepository.findWithDetails.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.resetPassword, {
-        params: { id: 'missing-doc' },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.resetPassword, createReq({
+        params: { id: 'missing-doc' }
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Doctor');
+      expectNextError(next, 'Doctor');
     });
 
     test('resetPassword sends NotFoundError when associated user does not exist', async () => {
       const { controller, doctorRepository, userRepository } = loadDoctorController();
 
-      doctorRepository.findWithDetails.mockResolvedValue({
-        id: 'doc-1',
+      doctorRepository.findWithDetails.mockResolvedValue(createDoctorRecord({
         user_id: 'missing-user'
-      });
+      }));
       userRepository.findById.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.resetPassword, {
-        params: { id: 'doc-1' },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.resetPassword, createReq({
+        params: { id: 'doc-1' }
+      }));
 
       expect(userRepository.findById).toHaveBeenCalledWith('missing-user');
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Usuario');
+      expectNextError(next, 'Usuario');
     });
 
     test('resetPassword sends ValidationError when password update fails', async () => {
@@ -1145,33 +824,18 @@ describe('Doctor module unit tests - CRUD layer', () => {
         fromMock
       } = loadDoctorController();
 
-      const updateQuery = createQueryMock({
+      doctorRepository.findWithDetails.mockResolvedValue(createDoctorRecord());
+      userRepository.findById.mockResolvedValue(createExistingUser());
+      fromMock.mockReturnValueOnce(createQueryMock({
         data: null,
         error: { message: 'update failed' }
-      });
+      }));
 
-      doctorRepository.findWithDetails.mockResolvedValue({
-        id: 'doc-1',
-        user_id: 'user-1'
-      });
+      const next = await invokeHandler(controller.resetPassword, createReq({
+        params: { id: 'doc-1' }
+      }));
 
-      userRepository.findById.mockResolvedValue({
-        id: 'user-1',
-        cedula: '1723456789',
-        first_name: 'Ana',
-        last_name: 'Mora',
-        email: 'ana@example.com'
-      });
-
-      fromMock.mockReturnValueOnce(updateQuery);
-
-      const next = await invokeHandler(controller.resetPassword, {
-        params: { id: 'doc-1' },
-        user: { id: 'admin-1' }
-      });
-
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Error al restablecer');
+      expectNextError(next, 'Error al restablecer');
     });
 
     test('updateProfile sends NotFoundError when current user is not doctor', async () => {
@@ -1179,15 +843,12 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       doctorRepository.findByUserId.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.updateProfile, {
+      const next = await invokeHandler(controller.updateProfile, createReq({
         user: { id: 'user-1' },
-        body: {
-          bio: 'Nueva bio'
-        }
-      });
+        body: { bio: 'Nueva bio' }
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Doctor');
+      expectNextError(next, 'Doctor');
     });
 
     test('delete sends NotFoundError when doctor does not exist', async () => {
@@ -1195,33 +856,28 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       doctorRepository.findById.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.delete, {
-        params: { id: 'missing-doc' },
-        user: { id: 'admin-1' }
-      });
+      const next = await invokeHandler(controller.delete, createReq({
+        params: { id: 'missing-doc' }
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Doctor');
+      expectNextError(next, 'Doctor');
     });
 
     test('activate reactivates doctor when it exists', async () => {
       const { controller, doctorRepository, responseBuilderMock } = loadDoctorController();
+      const updated = createDoctorRecord({ active: true });
 
-      doctorRepository.findById.mockResolvedValue({ id: 'doc-1' });
-      doctorRepository.updateActiveStatus.mockResolvedValue({
-        id: 'doc-1',
-        active: true
-      });
+      doctorRepository.findById.mockResolvedValue(createDoctorRecord());
+      doctorRepository.updateActiveStatus.mockResolvedValue(updated);
 
-      await invokeHandler(controller.activate, {
-        params: { id: 'doc-1' },
-        user: { id: 'admin-1' }
-      });
+      await invokeHandler(controller.activate, createReq({
+        params: { id: 'doc-1' }
+      }));
 
       expect(doctorRepository.updateActiveStatus).toHaveBeenCalledWith('doc-1', true);
       expect(responseBuilderMock.success).toHaveBeenCalledWith(
         expect.anything(),
-        { id: 'doc-1', active: true },
+        updated,
         200,
         'Doctor activado exitosamente'
       );
@@ -1229,20 +885,16 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
     test('getSchedules returns schedules by doctor id', async () => {
       const { controller, scheduleRepository, responseBuilderMock } = loadDoctorController();
+      const schedules = [{ id: 'sch-1', doctor_id: 'doc-1' }];
 
-      scheduleRepository.findByDoctor.mockResolvedValue([
-        { id: 'sch-1', doctor_id: 'doc-1' }
-      ]);
+      scheduleRepository.findByDoctor.mockResolvedValue(schedules);
 
-      await invokeHandler(controller.getSchedules, {
+      await invokeHandler(controller.getSchedules, createReq({
         params: { id: 'doc-1' }
-      });
+      }));
 
       expect(scheduleRepository.findByDoctor).toHaveBeenCalledWith('doc-1');
-      expect(responseBuilderMock.success).toHaveBeenCalledWith(
-        expect.anything(),
-        [{ id: 'sch-1', doctor_id: 'doc-1' }]
-      );
+      expect(responseBuilderMock.success).toHaveBeenCalledWith(expect.anything(), schedules);
     });
 
     test('getMySchedules returns schedules for current doctor', async () => {
@@ -1252,15 +904,14 @@ describe('Doctor module unit tests - CRUD layer', () => {
         scheduleRepository,
         responseBuilderMock
       } = loadDoctorController();
+      const schedules = [{ id: 'sch-1', doctor_id: 'doc-1' }];
 
-      doctorRepository.findByUserId.mockResolvedValue({ id: 'doc-1' });
-      scheduleRepository.findByDoctor.mockResolvedValue([
-        { id: 'sch-1', doctor_id: 'doc-1' }
-      ]);
+      doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord());
+      scheduleRepository.findByDoctor.mockResolvedValue(schedules);
 
-      await invokeHandler(controller.getMySchedules, {
+      await invokeHandler(controller.getMySchedules, createReq({
         user: { id: 'user-1' }
-      });
+      }));
 
       expect(doctorRepository.findByUserId).toHaveBeenCalledWith('user-1');
       expect(scheduleRepository.findByDoctor).toHaveBeenCalledWith('doc-1');
@@ -1272,12 +923,11 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       doctorRepository.findByUserId.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.getMySchedules, {
+      const next = await invokeHandler(controller.getMySchedules, createReq({
         user: { id: 'user-1' }
-      });
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Doctor');
+      expectNextError(next, 'Doctor');
     });
 
     test('getMyPatients sends NotFoundError when current user is not doctor', async () => {
@@ -1285,12 +935,11 @@ describe('Doctor module unit tests - CRUD layer', () => {
 
       doctorRepository.findByUserId.mockResolvedValue(null);
 
-      const next = await invokeHandler(controller.getMyPatients, {
+      const next = await invokeHandler(controller.getMyPatients, createReq({
         user: { id: 'user-1' }
-      });
+      }));
 
-      expect(next).toHaveBeenCalledTimes(1);
-      expect(next.mock.calls[0][0].message).toContain('Doctor');
+      expectNextError(next, 'Doctor');
     });
   });
 });

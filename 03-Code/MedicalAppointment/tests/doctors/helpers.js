@@ -264,6 +264,140 @@ const loadAvailabilityRoutes = () => {
   return state;
 };
 
+const createDoctorBody = (overrides = {}) => ({
+  cedula: '1723456789',
+  first_name: 'Ana',
+  last_name: 'Mora',
+  email: 'ana@example.com',
+  phone_number: '0999999999',
+  specialty_id: 'sp-1',
+  license_number: 'MED-001',
+  status: 'active',
+  ...overrides
+});
+
+const createDoctorCreateBody = (overrides = {}) => ({
+  user_id: 'user-1',
+  specialty_id: 'sp-1',
+  professional_id: 'MED-001',
+  bio: 'Especialista',
+  ...overrides
+});
+
+const createDoctorUpdateBody = (overrides = {}) => ({
+  specialty_id: 'sp-2',
+  professional_id: 'MED-002',
+  bio: 'Actualizado',
+  ...overrides
+});
+
+const createExistingUser = (overrides = {}) => ({
+  id: 'user-1',
+  email: 'ana@example.com',
+  first_name: 'Ana',
+  last_name: 'Mora',
+  cedula: '1723456789',
+  phone_number: '0999999999',
+  roles: { name: 'patient' },
+  ...overrides
+});
+
+const createSpecialty = (overrides = {}) => ({
+  id: 'sp-1',
+  name: 'Cardiologia',
+  description: 'Especialidad medica',
+  consultation_fee: 120,
+  ...overrides
+});
+
+const createDoctorRecord = (overrides = {}) => ({
+  id: 'doc-1',
+  user_id: 'user-1',
+  specialty_id: 'sp-1',
+  professional_id: 'MED-001',
+  bio: 'Especialista',
+  active: true,
+  ...overrides
+});
+
+const createDoctorWithRelations = (overrides = {}) => {
+  const {
+    users = createExistingUser({ roles: undefined, is_active: true }),
+    specialties = createSpecialty(),
+    ...doctorOverrides
+  } = overrides;
+
+  return {
+    ...createDoctorRecord({
+      created_at: '2026-01-01T00:00:00.000Z',
+      updated_at: '2026-01-02T00:00:00.000Z'
+    }),
+    users,
+    specialties,
+    ...doctorOverrides
+  };
+};
+
+const createAvailabilitySlot = (overrides = {}) => ({
+  time: '09:00',
+  available: true,
+  duration: 30,
+  ...overrides
+});
+
+const createSchedule = (overrides = {}) => ({
+  start_time: '09:00',
+  end_time: '11:00',
+  break_start_time: null,
+  break_end_time: null,
+  is_working_day: true,
+  ...overrides
+});
+
+const createScheduleException = (overrides = {}) => ({
+  id: 'exception-1',
+  exception_type: 'vacation',
+  exception_start_time: null,
+  exception_end_time: null,
+  ...overrides
+});
+
+const createBookedAppointment = (overrides = {}) => ({
+  scheduled_start: '2099-01-05T09:30:00',
+  appointment_status: { code: 'scheduled' },
+  ...overrides
+});
+
+const createAvailabilityParams = (overrides = {}) => ({
+  doctorId: 'doc-1',
+  date: '2099-01-05',
+  ...overrides
+});
+
+const createSlotCheckBody = (overrides = {}) => ({
+  doctorId: 'doc-1',
+  date: '2099-01-05',
+  time: '09:00',
+  ...overrides
+});
+
+const createRoleQueryMock = () => createQueryMock({
+  data: { id: 'role-doctor' },
+  error: null
+});
+
+const createReq = ({ params = {}, query = {}, body = {}, user = { id: 'admin-1' } } = {}) => ({
+  params,
+  query,
+  body,
+  user
+});
+
+const expectNextError = (next, expectedMessage) => {
+  expect(next).toHaveBeenCalledTimes(1);
+  expect(next.mock.calls[0][0].message).toContain(expectedMessage);
+};
+
 module.exports = {
   createQueryMock,
   invokeHandler,
@@ -272,5 +406,21 @@ module.exports = {
   loadDoctorController,
   loadAvailabilityService,
   loadAvailabilityController,
-  loadAvailabilityRoutes
+  loadAvailabilityRoutes,
+  createDoctorBody,
+  createDoctorCreateBody,
+  createDoctorUpdateBody,
+  createExistingUser,
+  createSpecialty,
+  createDoctorRecord,
+  createDoctorWithRelations,
+  createAvailabilitySlot,
+  createSchedule,
+  createScheduleException,
+  createBookedAppointment,
+  createAvailabilityParams,
+  createSlotCheckBody,
+  createRoleQueryMock,
+  createReq,
+  expectNextError
 };
