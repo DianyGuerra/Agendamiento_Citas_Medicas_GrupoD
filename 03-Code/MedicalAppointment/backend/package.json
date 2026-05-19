@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:appointment": "jest --config ./jest.appointment.config.cjs",
     "test:appointment:crud": "jest --config ./jest.appointment.config.cjs --runTestsByPath ../tests/appointment/crudAppointment.test.js",
-    "test:appointment:business": "jest --config ./jest.appointment.config.cjs --runTestsByPath ../tests/appointment/bussinessApp.test.js",
+    "test:appointment:business": "jest --config ./jest.appointment.config.cjs --runTestsByPath ../tests/appointment/businessApp.test.js",
     "test:appointment:external": "jest --config ./jest.appointment.config.cjs --runTestsByPath ../tests/appointment/externalAppointment.test.js",
     "start": "node server.js",
     "start:crud": "node crud-api/server.js",
@@ -48,7 +48,8 @@
     "winston": "^3.14.2"
   },
   "devDependencies": {
-     "concurrently": "^9.1.2",
+    "concurrently": "^9.1.2",
+    "jest": "^30.4.2",
     "nodemon": "^3.1.4"
   }
 }
