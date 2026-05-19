@@ -1,4 +1,5 @@
-const createQueryMock = (result = { data: [], error: null, count: 0 }) => {
+const createQueryMock = (result) => {
+  result = result ?? { data: [], error: null, count: 0 };
   const query = {};
 
   const chainMethods = [
