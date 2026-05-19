@@ -3,7 +3,7 @@ module.exports = {
   roots: ['<rootDir>/../tests/appointment'],
   testMatch: [
     '**/crudAppointment.test.js',
-    '**/bussinessApp.test.js',
+    '**/businessApp.test.js',
     '**/externalAppointment.test.js'
   ],
   clearMocks: true,
