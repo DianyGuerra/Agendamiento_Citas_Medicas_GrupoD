@@ -65,6 +65,24 @@ describe('Business layer unit tests - Patient-related business-api', () => {
 				])
 			);
 		});
+
+		test('validateScheduleConfiguration rejects invalid schedule times', () => {
+			const { service } = loadValidationService();
+
+			const result = service.validateScheduleConfiguration({
+				day_of_week: 'funday',
+				start_time: '09:00',
+				end_time: '08:00'
+			});
+
+			expect(result.isValid).toBe(false);
+			expect(result.errors).toEqual(
+				expect.arrayContaining([
+					expect.objectContaining({ field: 'day_of_week' }),
+					expect.objectContaining({ field: 'end_time' })
+				])
+			);
+		});
 	});
 
 	describe('billingCalculation.service', () => {
@@ -122,6 +140,44 @@ describe('Business layer unit tests - Patient-related business-api', () => {
 			expect(result.breakdown.subtotal).toBe(120);
 			expect(result.breakdown.insuranceDiscountPercentage).toBe(20);
 			expect(result.breakdown.totalAmount).toBe(96);
+		});
+
+		test('calculateBilling uses default pricing and no insurance when patient has no plan', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const appointmentQuery = createQueryMock({
+				data: {
+					id: 'apt-2',
+					patient_user_id: 'patient-2',
+					doctors: {
+						id: 'doctor-2',
+						specialties: null
+					},
+					scheduled_start: '2026-08-01T09:00:00.000Z',
+					scheduled_end: '2026-08-01T11:00:00.000Z'
+				},
+				error: null
+			});
+
+			const patientQuery = createQueryMock({
+				data: {
+					insurance_plan: null,
+					insurance_number: null
+				},
+				error: null
+			});
+
+			fromMock.mockReturnValueOnce(appointmentQuery);
+			fromMock.mockReturnValueOnce(patientQuery);
+
+			const result = await service.calculateBilling('apt-2');
+
+			expect(result.hasInsurance).toBe(false);
+			expect(result.breakdown.baseAmount).toBe(50);
+			expect(result.breakdown.durationMinutes).toBe(120);
+			expect(result.breakdown.durationMultiplier).toBe(1.5);
+			expect(result.breakdown.insuranceDiscountPercentage).toBe(0);
+			expect(result.breakdown.totalAmount).toBe(75);
 		});
 
 		test('getPatientBillings maps billing rows for patient view', async () => {
