@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for crud-api/repositories/patient.repository.js</title>
+    <title>Code coverage report for backend/shared/repositories/BaseRepository.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">crud-api/repositories</a> patient.repository.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">backend/shared/repositories</a> BaseRepository.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.72% </span>
+                <span class="strong">10% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/44</span>
+                <span class='fraction'>6/60</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.12% </span>
+                <span class="strong">1.92% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>25/32</span>
+                <span class='fraction'>1/52</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">7.69% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/9</span>
+                <span class='fraction'>1/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.56% </span>
+                <span class="strong">10% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>40/41</span>
+                <span class='fraction'>6/60</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -281,46 +281,81 @@
 <a name='L216'></a><a href='#L216'>216</a>
 <a name='L217'></a><a href='#L217'>217</a>
 <a name='L218'></a><a href='#L218'>218</a>
-<a name='L219'></a><a href='#L219'>219</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -329,7 +364,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -351,31 +390,64 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -395,10 +467,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -406,34 +480,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -442,6 +519,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -450,29 +528,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -481,242 +557,262 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * Patient Repository
- * Data access layer for Patient entity
+ * Base Repository Interface
+ * Abstract class defining common repository operations
+ * Implements Repository Pattern for data access abstraction
  * 
- * @module crud-api/repositories/PatientRepository
+ * @module shared/repositories/BaseRepository
  */
 &nbsp;
-const BaseRepository = require('../../shared/repositories/BaseRepository');
+const { supabase } = require('../config/database.config');
+const { NotFoundError } = require('../errors');
 &nbsp;
-class PatientRepository extends BaseRepository {
-  constructor() {
-    super('patients');
+class BaseRepository {
+  /**
+   * @param {string} tableName - Database table name
+   */
+  constructor(tableName) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (new.target === BaseRepository) {
+<span class="cstat-no" title="statement not covered" >      throw new Error('BaseRepository is abstract and cannot be instantiated directly');</span>
+    }
+    this.tableName = tableName;
+    this.db = supabase;
   }
 &nbsp;
   /**
-   * Find patient by user ID
-   * @param {string} userId - User ID
+   * Find a record by ID
+   * @param {string} id - Record ID
+   * @param {string} [select='*'] - Fields to select
    * @returns {Promise&lt;Object|null&gt;}
    */
-  async findByUserId(userId) {
-    const { data, error } = await this.db
+<span class="fstat-no" title="function not covered" >  as</span>ync findById(id, select = <span class="branch-0 cbranch-no" title="branch not covered" >'*')</span> {
+    const { data, error } = <span class="cstat-no" title="statement not covered" >await this.db</span>
       .from(this.tableName)
-      .select('*')
-      .eq('user_id', userId)
+      .select(select)
+      .eq('id', id)
       .single();
 &nbsp;
-    if (error &amp;&amp; error.code !== 'PGRST116') {
-      throw new Error(`Database error: ${error.message}`);
+<span class="cstat-no" title="statement not covered" >    if (error &amp;&amp; error.code !== 'PGRST116') {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(`Database error: ${error.message}`);</span>
     }
 &nbsp;
-    return data;
+<span class="cstat-no" title="statement not covered" >    return data;</span>
   }
 &nbsp;
   /**
-   * Find patient with user details
-   * @param {string} userId - User ID
-   * @returns {Promise&lt;Object|null&gt;}
-   */
-  async findWithUserDetails(userId) {
-    const { data, error } = await this.db
-      .from('users')
-      .select(`
-        id,
-        email,
-        first_name,
-        last_name,
-        cedula,
-        phone_number,
-        is_active,
-        patients!inner (
-          id,
-          user_id,
-          date_of_birth,
-          gender,
-          address,
-          city,
-          state,
-          postal_code,
-          country,
-          insurance_provider_id,
-          insurance_plan,
-          insurance_number,
-          emergency_contact_name,
-          emergency_contact_phone,
-          emergency_contact_relation,
-          allergies,
-          medical_conditions,
-          current_medications,
-          blood_type,
-          height,
-          weight,
-          home_phone,
-          insurance_providers (
-            id,
-            name,
-            code,
-            discount_percentage
-          )
-        )
-      `)
-      .eq('id', userId)
-      .single();
-&nbsp;
-    if (error &amp;&amp; error.code !== 'PGRST116') {
-      throw new Error(`Database error: ${error.message}`);
-    }
-&nbsp;
-    if (data) {
-      // Flatten the response
-      const patient = data.patients;
-      delete data.patients;
-      return { ...data, ...patient };
-    }
-&nbsp;
-    return data;
-  }
-&nbsp;
-  /**
-   * Create patient record for user
-   * @param {string} userId - User ID
-   * @param {Object} patientData - Patient data
+   * Find a record by ID or throw NotFoundError
+   * @param {string} id - Record ID
+   * @param {string} [select='*'] - Fields to select
    * @returns {Promise&lt;Object&gt;}
+   * @throws {NotFoundError}
    */
-<span class="fstat-no" title="function not covered" >  as</span>ync createForUser(userId, patientData = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> {
-<span class="cstat-no" title="statement not covered" >    return this.create({</span>
-      user_id: userId,
-      ...patientData
+<span class="fstat-no" title="function not covered" >  as</span>ync findByIdOrFail(id, select = <span class="branch-0 cbranch-no" title="branch not covered" >'*')</span> {
+    const record = <span class="cstat-no" title="statement not covered" >await this.findById(id, select);</span>
+<span class="cstat-no" title="statement not covered" >    if (!record) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new NotFoundError(this.tableName, id);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return record;</span>
+  }
+&nbsp;
+  /**
+   * Find all records with optional filters
+   * @param {Object} [options={}] - Query options
+   * @param {Object} [options.filters] - Filter conditions
+   * @param {string} [options.select='*'] - Fields to select
+   * @param {string} [options.orderBy='created_at'] - Order by field
+   * @param {boolean} [options.ascending=false] - Ascending order
+   * @param {number} [options.limit] - Limit results
+   * @param {number} [options.offset] - Offset for pagination
+   * @returns {Promise&lt;Array&gt;}
+   */
+<span class="fstat-no" title="function not covered" >  as</span>ync findAll(options = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> {
+    const {
+      filters = <span class="branch-0 cbranch-no" title="branch not covered" >{},</span>
+      select = <span class="branch-0 cbranch-no" title="branch not covered" >'*',</span>
+      orderBy = <span class="branch-0 cbranch-no" title="branch not covered" >'created_at',</span>
+      ascending = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
+      limit,
+      offset
+    } = <span class="cstat-no" title="statement not covered" >options;</span>
+&nbsp;
+    let query = <span class="cstat-no" title="statement not covered" >this.db.from(this.tableName).select(select);</span>
+&nbsp;
+    // Apply filters
+<span class="cstat-no" title="statement not covered" >    Object.entries(filters).forEach(<span class="fstat-no" title="function not covered" >([</span>key, value]) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (value !== undefined &amp;&amp; value !== null) {</span>
+<span class="cstat-no" title="statement not covered" >        query = query.eq(key, value);</span>
+      }
     });
+&nbsp;
+    // Apply soft delete filter by default
+<span class="cstat-no" title="statement not covered" >    if (this.hasSoftDelete()) {</span>
+<span class="cstat-no" title="statement not covered" >      query = query.eq('is_deleted', false);</span>
+    }
+&nbsp;
+    // Apply ordering
+<span class="cstat-no" title="statement not covered" >    query = query.order(orderBy, { ascending });</span>
+&nbsp;
+    // Apply pagination
+<span class="cstat-no" title="statement not covered" >    if (limit) {</span>
+<span class="cstat-no" title="statement not covered" >      query = query.limit(limit);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (offset) {</span>
+<span class="cstat-no" title="statement not covered" >      query = query.range(offset, offset + (limit || 20) - 1);</span>
+    }
+&nbsp;
+    const { data, error } = <span class="cstat-no" title="statement not covered" >await query;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (error) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(`Database error: ${error.message}`);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return data || [];</span>
   }
 &nbsp;
   /**
-   * Update patient by user ID
-   * @param {string} userId - User ID
-   * @param {Object} data - Update data
+   * Create a new record
+   * @param {Object} data - Record data
+   * @param {string} [select='*'] - Fields to return
    * @returns {Promise&lt;Object&gt;}
    */
-  async updateByUserId(userId, data) {
-    const { data: updated, error } = await this.db
+<span class="fstat-no" title="function not covered" >  as</span>ync create(data, select = <span class="branch-0 cbranch-no" title="branch not covered" >'*')</span> {
+    const { data: created, error } = <span class="cstat-no" title="statement not covered" >await this.db</span>
+      .from(this.tableName)
+      .insert([{
+        ...data,
+        created_at: new Date().toISOString()
+      }])
+      .select(select)
+      .single();
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (error) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(`Database error: ${error.message}`);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return created;</span>
+  }
+&nbsp;
+  /**
+   * Update a record by ID
+   * @param {string} id - Record ID
+   * @param {Object} data - Update data
+   * @param {string} [select='*'] - Fields to return
+   * @returns {Promise&lt;Object&gt;}
+   */
+<span class="fstat-no" title="function not covered" >  as</span>ync update(id, data, select = <span class="branch-0 cbranch-no" title="branch not covered" >'*')</span> {
+    const { data: updated, error } = <span class="cstat-no" title="statement not covered" >await this.db</span>
       .from(this.tableName)
       .update({
         ...data,
         updated_at: new Date().toISOString()
       })
-      .eq('user_id', userId)
-      .select()
+      .eq('id', id)
+      .select(select)
       .single();
 &nbsp;
-    if (error) {
-      throw new Error(`Database error: ${error.message}`);
+<span class="cstat-no" title="statement not covered" >    if (error) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(`Database error: ${error.message}`);</span>
     }
 &nbsp;
-    return updated;
+<span class="cstat-no" title="statement not covered" >    return updated;</span>
   }
 &nbsp;
   /**
-   * Find all patients with user info
-   * @param {Object} options - Query options
-   * @returns {Promise&lt;Array&gt;}
+   * Soft delete a record by ID
+   * @param {string} id - Record ID
+   * @returns {Promise&lt;boolean&gt;}
    */
-  async findAllWithUserInfo(options = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> {
-    const { limit, offset, search } = options;
+<span class="fstat-no" title="function not covered" >  as</span>ync softDelete(id) {
+    const { error } = <span class="cstat-no" title="statement not covered" >await this.db</span>
+      .from(this.tableName)
+      .update({
+        is_deleted: true,
+        deleted_at: new Date().toISOString()
+      })
+      .eq('id', id);
 &nbsp;
-    let query = this.db
-      .from('users')
-      .select(`
-        id,
-        email,
-        first_name,
-        last_name,
-        cedula,
-        phone_number,
-        is_active,
-        created_at,
-        patients (
-          id,
-          date_of_birth,
-          gender,
-          insurance_provider_id,
-          insurance_plan,
-          insurance_number,
-          insurance_providers (
-            id,
-            name,
-            code,
-            discount_percentage
-          )
-        ),
-        roles!inner (name)
-      `)
-      .eq('roles.name', 'patient')
-      .eq('is_active', true)
-      .order('created_at', { ascending: false });
-&nbsp;
-    if (search) {
-      query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%,email.ilike.%${search}%`);
+<span class="cstat-no" title="statement not covered" >    if (error) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(`Database error: ${error.message}`);</span>
     }
 &nbsp;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (limit) query = query.limit(limit);
-    if (offset) query = query.range(offset, offset + (limit || <span class="branch-1 cbranch-no" title="branch not covered" >20)</span> - 1);
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+  }
 &nbsp;
-    const { data, error } = await query;
+  /**
+   * Hard delete a record by ID (use with caution)
+   * @param {string} id - Record ID
+   * @returns {Promise&lt;boolean&gt;}
+   */
+<span class="fstat-no" title="function not covered" >  as</span>ync hardDelete(id) {
+    const { error } = <span class="cstat-no" title="statement not covered" >await this.db</span>
+      .from(this.tableName)
+      .delete()
+      .eq('id', id);
 &nbsp;
-    if (error) {
-      throw new Error(`Database error: ${error.message}`);
+<span class="cstat-no" title="statement not covered" >    if (error) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(`Database error: ${error.message}`);</span>
     }
 &nbsp;
-    return (data || <span class="branch-1 cbranch-no" title="branch not covered" >[])</span>.map(user =&gt; {
-      const patient = user.patients;
-      delete user.patients;
-      delete user.roles;
-      return { ...user, ...patient };
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+  }
+&nbsp;
+  /**
+   * Check if table supports soft delete
+   * Override in child classes
+   * @returns {boolean}
+   */
+<span class="fstat-no" title="function not covered" >  ha</span>sSoftDelete() {
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+  /**
+   * Count records with optional filters
+   * @param {Object} [filters={}] - Filter conditions
+   * @returns {Promise&lt;number&gt;}
+   */
+<span class="fstat-no" title="function not covered" >  as</span>ync count(filters = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> {
+    let query = <span class="cstat-no" title="statement not covered" >this.db</span>
+      .from(this.tableName)
+      .select('*', { count: 'exact', head: true });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Object.entries(filters).forEach(<span class="fstat-no" title="function not covered" >([</span>key, value]) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (value !== undefined &amp;&amp; value !== null) {</span>
+<span class="cstat-no" title="statement not covered" >        query = query.eq(key, value);</span>
+      }
     });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.hasSoftDelete()) {</span>
+<span class="cstat-no" title="statement not covered" >      query = query.eq('is_deleted', false);</span>
+    }
+&nbsp;
+    const { count, error } = <span class="cstat-no" title="statement not covered" >await query;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (error) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(`Database error: ${error.message}`);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return count || 0;</span>
   }
 &nbsp;
   /**
-   * Get patient statistics
-   * @returns {Promise&lt;{total: number, active: number, inactive: number}&gt;}
+   * Check if a record exists
+   * @param {Object} filters - Filter conditions
+   * @returns {Promise&lt;boolean&gt;}
    */
-  async getStats() {
-    // Simple approach - count from roles join
-    const { data: allPatients, error: countError } = await this.db
-      .from('users')
-      .select('id, is_active, roles!inner(name)')
-      .eq('roles.name', 'patient');
-&nbsp;
-    if (countError) {
-      throw new Error(`Database error: ${countError.message}`);
-    }
-&nbsp;
-    const total = allPatients?.length || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
-    const active = allPatients?.filter(p =&gt; p.is_active).length || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
-    const inactive = total - active;
-&nbsp;
-    return { total, active, inactive };
+<span class="fstat-no" title="function not covered" >  as</span>ync exists(filters) {
+    const count = <span class="cstat-no" title="statement not covered" >await this.count(filters);</span>
+<span class="cstat-no" title="statement not covered" >    return count &gt; 0;</span>
   }
 }
 &nbsp;
-module.exports = new PatientRepository();
+module.exports = BaseRepository;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -724,16 +820,16 @@ module.exports = new PatientRepository();
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-19T12:33:22.066Z
+                at 2026-05-19T12:26:18.899Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
     </body>
 </html>
     
