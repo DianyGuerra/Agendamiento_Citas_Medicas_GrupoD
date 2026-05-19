@@ -550,7 +550,7 @@ class ConsultationService {
     if (prescriptions && prescriptions.length > 0) {
       const rx = prescriptions[0];
       // Parse medications if stored as JSON string
-      let medications = [];
+      let medications;  // Correccion de error de ESLint: no-unused-vars, esta variable se usa en el return
       try {
         console.log('[Prescription GET] Raw medications from DB:', rx.medications);
         medications = typeof rx.medications === 'string' ? JSON.parse(rx.medications) : rx.medications;

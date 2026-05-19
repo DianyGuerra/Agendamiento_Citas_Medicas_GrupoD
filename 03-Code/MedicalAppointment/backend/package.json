@@ -5,20 +5,16 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "test:appointment": "jest --config ./jest.appointment.config.cjs",
     "test:appointment:crud": "jest --config ./jest.appointment.config.cjs --runTestsByPath ../tests/appointment/crudAppointment.test.js",
     "test:appointment:business": "jest --config ./jest.appointment.config.cjs --runTestsByPath ../tests/appointment/businessApp.test.js",
     "test:appointment:external": "jest --config ./jest.appointment.config.cjs --runTestsByPath ../tests/appointment/externalAppointment.test.js",
-
     "test:patients": "jest --config ./jest.patient.config.cjs",
     "test:patients:crud": "jest --config ./jest.patient.config.cjs --runTestsByPath ../tests/patients/crudPatient.test.js",
     "test:patients:business": "jest --config ./jest.patient.config.cjs --runTestsByPath ../tests/patients/businessPatient.test.js",
-
-    "test:doctor":"jest --config ./jest.doctor.config.cjs",
-    "test:doctor:crud":"jest --config ./jest.doctor.config.cjs --runTestsByPath ../tests/doctors/crudDoctor.test.js",
-    "test:doctor:business":"jest --config ./jest.doctor.config.cjs --runTestsByPath ../tests/doctors/businessDoctor.test.js",
-
+    "test:doctor": "jest --config ./jest.doctor.config.cjs",
+    "test:doctor:crud": "jest --config ./jest.doctor.config.cjs --runTestsByPath ../tests/doctors/crudDoctor.test.js",
+    "test:doctor:business": "jest --config ./jest.doctor.config.cjs --runTestsByPath ../tests/doctors/businessDoctor.test.js",
     "start": "node server.js",
     "start:crud": "node crud-api/server.js",
     "start:business": "node business-api/server.js",
@@ -26,7 +22,9 @@
     "start:all": "concurrently -n CRUD,BUSINESS,EXTERNAL -c blue,green,magenta \"node crud-api/server.js\" \"node business-api/server.js\" \"node external-api/server.js\"",
     "dev:crud": "nodemon crud-api/server.js",
     "dev:business": "nodemon business-api/server.js",
-    "dev:external": "nodemon external-api/server.js"
+    "dev:external": "nodemon external-api/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [
     "medical",
@@ -58,7 +56,10 @@
     "winston": "^3.14.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "concurrently": "^9.1.2",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
     "jest": "^30.4.2",
     "nodemon": "^3.1.4"
   }
