@@ -920,10 +920,11 @@ class ReportService {
     const date = new Date(dateStr);
     switch (groupBy) {
       case 'day': return date.toISOString().split('T')[0];
-      case 'week':
+      case 'week': {  //Correccion de ESLint: incluir llaves para bloque de código
         const weekStart = new Date(date);
         weekStart.setDate(date.getDate() - date.getDay());
         return `Semana ${weekStart.toISOString().split('T')[0]}`;
+      }
       case 'month': return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long' });
       case 'year': return date.getFullYear().toString();
       default: return date.toISOString().split('T')[0];

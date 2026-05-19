@@ -152,10 +152,11 @@ class MedicalRecordController {
       .single();
 
     // Find or create medical record
-    let existing = await medicalRecordRepository.findByPatient(patientId);
+    const existing = await medicalRecordRepository.findByPatient(patientId);  /// Correccion de error de ESLint: no-unused-vars, esta variable se usa para decidir si crear o no el registro
+
     if (!existing) {
       // Create if doesn't exist
-      existing = await medicalRecordRepository.create({
+      await medicalRecordRepository.create({
         patient_user_id: patientId,
         last_updated_by_doctor_id: doctor?.id
       });
