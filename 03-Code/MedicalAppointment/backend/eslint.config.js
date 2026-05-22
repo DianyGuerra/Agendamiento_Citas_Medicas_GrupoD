@@ -42,22 +42,22 @@ module.exports = [
       // 2. Detecta variables usadas sin haber sido declaradas.
       'no-undef': 'error',
 
-      // 4. Evita declarar dos veces la misma variable en el mismo alcance.
+      // 3. Evita declarar dos veces la misma variable en el mismo alcance.
       'no-redeclare': 'error',
 
-      // 5. Evita código que nunca se ejecutará.
+      // 4. Evita código que nunca se ejecutará.
       'no-unreachable': 'error',
 
-      // 7. Recomienda usar === 
+      // 5. Recomienda usar === 
       'eqeqeq': ['warn', 'always'],
 
-      // 8. Evita bloques catch vacíos.
+      // 6. Evita bloques catch vacíos.
       'no-empty': 'warn',
 
-      // 10. Evita múltiples espacios innecesarios.
+      // 7. Evita múltiples espacios innecesarios.
       'no-multi-spaces': ['warn', {ignoreEOLComments: true}],
 
-      // 12. Exige punto y coma al final de las sentencias.
+      // 8. Exige punto y coma al final de las sentencias.
       'semi': ['warn', 'always'],
     }
   }
