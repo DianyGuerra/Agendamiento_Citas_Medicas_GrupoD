@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Sistema de Agendamiento de Citas Médicas - Endpoints Principales",
-    "description": "Documentación Swagger filtrada para módulos principales con servidor asignado por endpoint.",
+    "description": "Documentación Swagger filtrada para módulos principales con servidores configurados mediante variables.",
     "version": "1.0.0"
   },
   "servers": [
@@ -27,15 +27,7 @@
         ],
         "summary": "Obtener estadisticas de pacientes",
         "description": "Devuelve las cantidades total, activa e inactiva de usuarios con rol de paciente.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Estadisticas de pacientes."
@@ -74,13 +66,6 @@
         "summary": "Listar pacientes",
         "description": "Devuelve pacientes activos con sus datos de usuario, paginacion y busqueda opcional.",
         "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "search",
             "in": "query",
@@ -126,15 +111,7 @@
         ],
         "summary": "Obtener mi perfil de paciente",
         "description": "Devuelve el perfil del paciente autenticado y crea el registro base si todavia no existe.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Perfil del paciente autenticado."
@@ -170,15 +147,7 @@
         ],
         "summary": "Actualizar mi perfil de paciente",
         "description": "Actualiza los campos de usuario y del perfil clinico del paciente autenticado.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Perfil actualizado."
@@ -346,15 +315,7 @@
         ],
         "summary": "Crear paciente con cuenta de usuario",
         "description": "Crea una cuenta y su perfil de paciente, o agrega el perfil a un usuario existente cuando promote_existing es true.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Usuario existente localizado; se requiere confirmacion de promocion."
@@ -509,14 +470,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{userId}}"
           }
         ],
         "responses": {
@@ -563,14 +518,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -618,14 +567,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -770,14 +713,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -867,15 +804,7 @@
         ],
         "summary": "Crear perfil de doctor",
         "description": "Crea un perfil de doctor para un usuario existente.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Perfil de doctor creado."
@@ -960,7 +889,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "{{specialtyId}}"
           }
         ],
         "responses": {
@@ -989,15 +919,7 @@
         ],
         "summary": "Obtener mi perfil de doctor",
         "description": "Devuelve el perfil de doctor asociado al usuario autenticado.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Perfil del doctor autenticado."
@@ -1036,15 +958,7 @@
         ],
         "summary": "Actualizar mi perfil de doctor",
         "description": "Actualiza datos personales del usuario y la biografia del perfil de doctor autenticado.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Perfil actualizado."
@@ -1116,15 +1030,7 @@
         ],
         "summary": "Listar mis pacientes",
         "description": "Devuelve los pacientes unicos que tienen citas no canceladas con el doctor autenticado.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Pacientes del doctor autenticado."
@@ -1165,15 +1071,7 @@
         ],
         "summary": "Crear doctor con cuenta de usuario",
         "description": "Crea una cuenta y su perfil de doctor, o promueve un usuario existente cuando promote_existing es true.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Usuario existente localizado; se requiere confirmacion de promocion."
@@ -1282,7 +1180,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -1319,14 +1218,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -1402,14 +1295,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -1459,14 +1346,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -1512,15 +1393,7 @@
         ],
         "summary": "Listar citas",
         "description": "Lista las citas con paginacion y filtros opcionales por estado, doctor o paciente.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Listado paginado de citas."
@@ -1553,15 +1426,7 @@
         ],
         "summary": "Crear cita",
         "description": "Crea una cita para el paciente autenticado y calcula su hora de finalizacion.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Cita creada."
@@ -1644,15 +1509,7 @@
         ],
         "summary": "Listar citas completadas sin facturar",
         "description": "Devuelve las citas completadas que todavia no tienen un registro de facturacion.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Listado de citas sin facturar."
@@ -1690,15 +1547,7 @@
         ],
         "summary": "Listar mis citas como paciente",
         "description": "Devuelve las citas del paciente autenticado con filtros opcionales por estado y proximidad.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Citas del paciente autenticado."
@@ -1743,14 +1592,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{patientUserId}}"
           }
         ],
         "responses": {
@@ -1790,15 +1633,7 @@
         ],
         "summary": "Listar mis citas como doctor",
         "description": "Devuelve las citas asignadas al doctor autenticado con filtros opcionales de fecha y estado.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Citas del doctor autenticado."
@@ -1846,14 +1681,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -1898,14 +1727,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -1979,14 +1802,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2064,14 +1881,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2137,14 +1948,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2216,14 +2021,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2276,14 +2075,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2336,14 +2129,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2430,15 +2217,7 @@
         ],
         "summary": "Crear especialidad",
         "description": "Crea una especialidad con nombre unico, descripcion y tarifa opcionales.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Especialidad creada."
@@ -2541,7 +2320,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2578,14 +2358,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2661,14 +2435,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{id}}"
           }
         ],
         "responses": {
@@ -2718,7 +2486,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "{{doctorId}}"
           },
           {
             "name": "date",
@@ -2726,7 +2495,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "{{scheduledDate}}"
           }
         ],
         "responses": {
@@ -2768,7 +2538,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "{{doctorId}}"
           }
         ],
         "responses": {
@@ -2807,7 +2578,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "{{doctorId}}"
           },
           {
             "name": "daysAhead",
@@ -2917,7 +2689,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "{{appointmentId}}"
           }
         ],
         "responses": {
@@ -2955,15 +2728,7 @@
         ],
         "summary": "Agendar una cita",
         "description": "Agenda una cita para el paciente autenticado, valida al doctor y comprueba conflictos y disponibilidad.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Cita agendada."
@@ -3047,14 +2812,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{appointmentId}}"
           }
         ],
         "responses": {
@@ -3130,14 +2889,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{appointmentId}}"
           }
         ],
         "responses": {
@@ -3203,14 +2956,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{appointmentId}}"
           }
         ],
         "responses": {
@@ -3277,14 +3024,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{appointmentId}}"
           }
         ],
         "responses": {
@@ -3354,14 +3095,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{appointmentId}}"
           }
         ],
         "responses": {
@@ -3414,14 +3149,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{appointmentId}}"
           },
           {
             "name": "startDate",
@@ -3488,14 +3217,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "{{doctorId}}"
           }
         ],
         "responses": {
@@ -3541,15 +3264,7 @@
         ],
         "summary": "Actualizar citas pasadas sin atencion",
         "description": "Marca como no_show las citas programadas o confirmadas cuyo horario ya finalizo.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Cantidad de citas actualizadas."
@@ -3905,15 +3620,7 @@
         ],
         "summary": "Cambiar password autenticado",
         "description": "Comprueba el password actual y lo reemplaza por uno nuevo para el usuario autenticado.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Password cambiado."
@@ -4030,15 +3737,7 @@
         ],
         "summary": "Cerrar sesion",
         "description": "Cierra la sesion del usuario autenticado y elimina la sesion indicada cuando se envia sessionId.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Sesion cerrada."
@@ -4089,15 +3788,7 @@
         ],
         "summary": "Obtener usuario autenticado",
         "description": "Devuelve los datos del usuario cargados por el middleware de autenticacion.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Usuario autenticado."
@@ -4127,14 +3818,15 @@
     },
     "/health": {
       "get": {
-        "description": "",
+        "tags": [
+          "Health"
+        ],
+        "summary": "Verificar estado de las APIs",
+        "description": "Permite comprobar si los servicios CRUD API, Business API y External API están activos.",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "204": {
-            "description": "No Content"
+            "description": "Servicio activo."
           }
         },
         "servers": [

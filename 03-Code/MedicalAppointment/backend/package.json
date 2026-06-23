@@ -26,7 +26,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "swagger": "node swagger/swagger.js",
-    "swagger:principal": "node swagger/filter-principal.js"
+    "swagger:principal": "node swagger/filter-principal.js",
+    "swagger:servers": "node swagger/filter-servers.js"
   },
   "keywords": [
     "medical",
