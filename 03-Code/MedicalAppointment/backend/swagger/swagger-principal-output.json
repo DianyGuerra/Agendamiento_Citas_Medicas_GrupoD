@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Sistema de Agendamiento de Citas Médicas - Endpoints Principales",
-    "description": "Documentación Swagger filtrada para módulos principales con servidores configurados mediante variables.",
+    "description": "Documentación Swagger filtrada para módulos principales con servidor asignado por endpoint, variables Postman estandarizadas y metadatos para scripts de colección.",
     "version": "1.0.0"
   },
   "servers": [
@@ -50,6 +50,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -70,8 +73,11 @@
             "name": "search",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{search}}"
+            },
+            "example": "{{search}}",
+            "description": "Variable Postman sugerida: {{search}}"
           }
         ],
         "responses": {
@@ -96,6 +102,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -134,6 +143,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -296,10 +308,43 @@
                     "example": "022345678"
                   }
                 }
+              },
+              "example": {
+                "first_name": "valor-prueba",
+                "last_name": "valor-prueba",
+                "phone_number": "0999999999",
+                "cedula": "valor-prueba",
+                "email": "test@example.com",
+                "date_of_birth": "valor-prueba",
+                "gender": "valor-prueba",
+                "address": "valor-prueba",
+                "city": "valor-prueba",
+                "state": "valor-prueba",
+                "province": "valor-prueba",
+                "postal_code": "valor-prueba",
+                "country": "valor-prueba",
+                "insurance_provider_id": "valor-prueba",
+                "insurance_plan": "valor-prueba",
+                "insurance_number": "valor-prueba",
+                "emergency_contact_name": "valor-prueba",
+                "emergency_contact_phone": "0999999999",
+                "emergency_contact_relation": "valor-prueba",
+                "allergies": "valor-prueba",
+                "medical_conditions": "valor-prueba",
+                "chronic_conditions": "valor-prueba",
+                "current_medications": "valor-prueba",
+                "blood_type": "valor-prueba",
+                "height": 1,
+                "weight": 1,
+                "home_phone": "0999999999",
+                "landline": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -444,10 +489,36 @@
                     "example": false
                   }
                 }
+              },
+              "example": {
+                "email": "test@example.com",
+                "first_name": "valor-prueba",
+                "last_name": "valor-prueba",
+                "cedula": "valor-prueba",
+                "phone_number": "0999999999",
+                "date_of_birth": "valor-prueba",
+                "gender": "valor-prueba",
+                "blood_type": "valor-prueba",
+                "address": "valor-prueba",
+                "city": "valor-prueba",
+                "state": "valor-prueba",
+                "emergency_contact_name": "valor-prueba",
+                "emergency_contact_phone": "0999999999",
+                "emergency_contact_relation": "valor-prueba",
+                "insurance_plan": "valor-prueba",
+                "insurance_number": "valor-prueba",
+                "allergies": "valor-prueba",
+                "medical_conditions": "valor-prueba",
+                "current_medications": "valor-prueba",
+                "status": "{{status}}",
+                "promote_existing": true
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -469,9 +540,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{userId}}"
             },
-            "example": "{{userId}}"
+            "example": "{{userId}}",
+            "description": "Variable Postman sugerida: {{userId}}"
           }
         ],
         "responses": {
@@ -496,6 +569,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -517,9 +593,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{patientId}}"
             },
-            "example": "{{id}}"
+            "example": "{{patientId}}",
+            "description": "Variable Postman sugerida: {{patientId}}"
           }
         ],
         "responses": {
@@ -547,6 +625,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -566,9 +647,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{patientId}}"
             },
-            "example": "{{id}}"
+            "example": "{{patientId}}",
+            "description": "Variable Postman sugerida: {{patientId}}"
           }
         ],
         "responses": {
@@ -689,10 +772,35 @@
                     "example": "022345678"
                   }
                 }
+              },
+              "example": {
+                "date_of_birth": "valor-prueba",
+                "gender": "valor-prueba",
+                "address": "valor-prueba",
+                "city": "valor-prueba",
+                "state": "valor-prueba",
+                "postal_code": "valor-prueba",
+                "country": "valor-prueba",
+                "insurance_provider_id": "valor-prueba",
+                "insurance_plan": "valor-prueba",
+                "insurance_number": "valor-prueba",
+                "emergency_contact_name": "valor-prueba",
+                "emergency_contact_phone": "0999999999",
+                "emergency_contact_relation": "valor-prueba",
+                "allergies": "valor-prueba",
+                "medical_conditions": "valor-prueba",
+                "current_medications": "valor-prueba",
+                "blood_type": "valor-prueba",
+                "height": 1,
+                "weight": 1,
+                "home_phone": "0999999999"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -712,9 +820,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{patientId}}"
             },
-            "example": "{{id}}"
+            "example": "{{patientId}}",
+            "description": "Variable Postman sugerida: {{patientId}}"
           }
         ],
         "responses": {
@@ -742,6 +852,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -762,22 +875,31 @@
             "name": "specialty_id",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{specialtyId}}"
+            },
+            "example": "{{specialtyId}}",
+            "description": "Variable Postman sugerida: {{specialtyId}}"
           },
           {
             "name": "search",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{search}}"
+            },
+            "example": "{{search}}",
+            "description": "Variable Postman sugerida: {{search}}"
           },
           {
             "name": "active",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{active}}"
+            },
+            "example": "{{active}}",
+            "description": "Variable Postman sugerida: {{active}}"
           }
         ],
         "responses": {
@@ -791,6 +913,14 @@
             "description": "Error interno al listar los doctores."
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -863,10 +993,19 @@
                     "example": "Especialista en medicina interna."
                   }
                 }
+              },
+              "example": {
+                "user_id": "{{userId}}",
+                "specialty_id": "{{specialtyId}}",
+                "professional_id": "valor-prueba",
+                "bio": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -888,9 +1027,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{specialtyId}}"
             },
-            "example": "{{specialtyId}}"
+            "example": "{{specialtyId}}",
+            "description": "Variable Postman sugerida: {{specialtyId}}"
           }
         ],
         "responses": {
@@ -904,6 +1045,14 @@
             "description": "Error interno al consultar los doctores."
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -945,6 +1094,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1011,10 +1163,19 @@
                     "example": "Gomez"
                   }
                 }
+              },
+              "example": {
+                "bio": "valor-prueba",
+                "phone_number": "0999999999",
+                "first_name": "valor-prueba",
+                "last_name": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1056,6 +1217,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1154,10 +1318,24 @@
                     "example": false
                   }
                 }
+              },
+              "example": {
+                "cedula": "valor-prueba",
+                "first_name": "valor-prueba",
+                "last_name": "valor-prueba",
+                "email": "test@example.com",
+                "phone_number": "0999999999",
+                "specialty_id": "{{specialtyId}}",
+                "license_number": "valor-prueba",
+                "status": "{{status}}",
+                "promote_existing": true
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1179,9 +1357,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{doctorId}}"
             },
-            "example": "{{id}}"
+            "example": "{{doctorId}}",
+            "description": "Variable Postman sugerida: {{doctorId}}"
           }
         ],
         "responses": {
@@ -1198,6 +1378,14 @@
             "description": "Error interno al obtener el doctor."
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1217,9 +1405,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{doctorId}}"
             },
-            "example": "{{id}}"
+            "example": "{{doctorId}}",
+            "description": "Variable Postman sugerida: {{doctorId}}"
           }
         ],
         "responses": {
@@ -1271,10 +1461,18 @@
                     "example": "Especialista en medicina interna."
                   }
                 }
+              },
+              "example": {
+                "specialty_id": "{{specialtyId}}",
+                "professional_id": "valor-prueba",
+                "bio": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1294,9 +1492,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{doctorId}}"
             },
-            "example": "{{id}}"
+            "example": "{{doctorId}}",
+            "description": "Variable Postman sugerida: {{doctorId}}"
           }
         ],
         "responses": {
@@ -1324,6 +1524,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1345,9 +1548,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{doctorId}}"
             },
-            "example": "{{id}}"
+            "example": "{{doctorId}}",
+            "description": "Variable Postman sugerida: {{doctorId}}"
           }
         ],
         "responses": {
@@ -1378,6 +1583,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1413,6 +1621,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1490,10 +1701,20 @@
                     "example": "00000000-0000-4000-8000-000000000003"
                   }
                 }
+              },
+              "example": {
+                "doctor_id": "{{doctorId}}",
+                "scheduled_start": "{{scheduledStart}}",
+                "reason": "Consulta general de prueba automatizada",
+                "duration_minutes": 1,
+                "patient_user_id": "{{patientId}}"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1532,6 +1753,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1570,6 +1794,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1591,9 +1818,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{patientUserId}}"
             },
-            "example": "{{patientUserId}}"
+            "example": "{{patientUserId}}",
+            "description": "Variable Postman sugerida: {{patientUserId}}"
           }
         ],
         "responses": {
@@ -1618,6 +1847,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1659,6 +1891,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1680,9 +1915,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{id}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -1707,6 +1944,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1726,9 +1966,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{id}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -1778,10 +2020,18 @@
                     "example": "00000000-0000-4000-8000-000000000005"
                   }
                 }
+              },
+              "example": {
+                "reason": "Consulta general de prueba automatizada",
+                "room_id": "valor-prueba",
+                "consultation_room_id": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1801,9 +2051,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{id}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -1857,10 +2109,18 @@
                     "example": "00000000-0000-4000-8000-000000000004"
                   }
                 }
+              },
+              "example": {
+                "doctor_id": "{{doctorId}}",
+                "consultation_room_id": "valor-prueba",
+                "room_id": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1880,9 +2140,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{id}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -1922,10 +2184,16 @@
                     "example": "Cancelada por el usuario"
                   }
                 }
+              },
+              "example": {
+                "reason": "Consulta general de prueba automatizada"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -1947,9 +2215,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{id}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -1995,10 +2265,16 @@
                     "example": 4
                   }
                 }
+              },
+              "example": {
+                "status_id": "{{status}}"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2020,9 +2296,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{id}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -2053,6 +2331,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2074,9 +2355,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{id}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -2107,6 +2390,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2128,9 +2414,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{id}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -2173,10 +2461,16 @@
                     "example": "Cancelada por administracion"
                   }
                 }
+              },
+              "example": {
+                "reason": "Consulta general de prueba automatizada"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2204,6 +2498,14 @@
             "description": "Error interno al listar las especialidades."
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2267,10 +2569,18 @@
                     "example": 45.5
                   }
                 }
+              },
+              "example": {
+                "name": "{{createdSpecialtyName}}",
+                "description": "Dato generado automáticamente desde Swagger filtrado",
+                "consultation_fee": 50
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2298,6 +2608,14 @@
             "description": "Error interno al obtener las estadisticas."
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2319,9 +2637,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{specialtyId}}"
             },
-            "example": "{{id}}"
+            "example": "{{specialtyId}}",
+            "description": "Variable Postman sugerida: {{specialtyId}}"
           }
         ],
         "responses": {
@@ -2338,6 +2658,14 @@
             "description": "Error interno al obtener la especialidad."
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2357,9 +2685,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{specialtyId}}"
             },
-            "example": "{{id}}"
+            "example": "{{specialtyId}}",
+            "description": "Variable Postman sugerida: {{specialtyId}}"
           }
         ],
         "responses": {
@@ -2411,10 +2741,18 @@
                     "example": 50
                   }
                 }
+              },
+              "example": {
+                "name": "{{createdSpecialtyName}}",
+                "description": "Dato generado automáticamente desde Swagger filtrado",
+                "consultation_fee": 50
               }
             }
           }
         },
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2434,9 +2772,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{specialtyId}}"
             },
-            "example": "{{id}}"
+            "example": "{{specialtyId}}",
+            "description": "Variable Postman sugerida: {{specialtyId}}"
           }
         ],
         "responses": {
@@ -2464,6 +2804,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{crudBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -2485,18 +2828,22 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{doctorId}}"
             },
-            "example": "{{doctorId}}"
+            "example": "{{doctorId}}",
+            "description": "Variable Postman sugerida: {{doctorId}}"
           },
           {
             "name": "date",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{scheduledDate}}"
             },
-            "example": "{{scheduledDate}}"
+            "example": "{{scheduledDate}}",
+            "description": "Variable Postman sugerida: {{scheduledDate}}"
           }
         ],
         "responses": {
@@ -2516,6 +2863,14 @@
             "description": "Error interno al calcular la disponibilidad."
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -2537,9 +2892,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{doctorId}}"
             },
-            "example": "{{doctorId}}"
+            "example": "{{doctorId}}",
+            "description": "Variable Postman sugerida: {{doctorId}}"
           }
         ],
         "responses": {
@@ -2556,6 +2913,14 @@
             "description": "Error interno al calcular la disponibilidad semanal."
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -2577,16 +2942,21 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{doctorId}}"
             },
-            "example": "{{doctorId}}"
+            "example": "{{doctorId}}",
+            "description": "Variable Postman sugerida: {{doctorId}}"
           },
           {
             "name": "daysAhead",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{daysAhead}}"
+            },
+            "example": "{{daysAhead}}",
+            "description": "Variable Postman sugerida: {{daysAhead}}"
           }
         ],
         "responses": {
@@ -2603,6 +2973,14 @@
             "description": "Error interno al buscar el siguiente horario."
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -2663,10 +3041,23 @@
                     "example": "09:30"
                   }
                 }
+              },
+              "example": {
+                "doctorId": "{{doctorId}}",
+                "date": "{{scheduledDate}}",
+                "time": "{{scheduledTime}}"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -2688,9 +3079,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{appointmentId}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -2713,6 +3106,14 @@
             "description": "Error interno al confirmar la cita."
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -2786,10 +3187,18 @@
                     "example": "Consulta general"
                   }
                 }
+              },
+              "example": {
+                "doctor_id": "{{doctorId}}",
+                "scheduled_start": "{{scheduledStart}}",
+                "reason": "Consulta general de prueba automatizada"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -2811,9 +3220,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{appointmentId}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -2863,10 +3274,16 @@
                     "example": "2026-07-02T10:00:00.000Z"
                   }
                 }
+              },
+              "example": {
+                "scheduled_start": "{{scheduledStart}}"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -2888,9 +3305,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{appointmentId}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -2930,10 +3349,16 @@
                     "example": "No podre asistir"
                   }
                 }
+              },
+              "example": {
+                "reason": "Consulta general de prueba automatizada"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -2955,9 +3380,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{appointmentId}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -2998,10 +3425,16 @@
                     "example": "any"
                   }
                 }
+              },
+              "example": {
+                "roomId": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -3023,9 +3456,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{appointmentId}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -3069,10 +3504,16 @@
                     "example": "00000000-0000-4000-8000-000000000002"
                   }
                 }
+              },
+              "example": {
+                "roomId": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -3094,9 +3535,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{appointmentId}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           }
         ],
         "responses": {
@@ -3127,6 +3570,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -3148,23 +3594,31 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{appointmentId}}"
             },
-            "example": "{{appointmentId}}"
+            "example": "{{appointmentId}}",
+            "description": "Variable Postman sugerida: {{appointmentId}}"
           },
           {
             "name": "startDate",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{startDate}}"
+            },
+            "example": "{{startDate}}",
+            "description": "Variable Postman sugerida: {{startDate}}"
           },
           {
             "name": "endDate",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{endDate}}"
+            },
+            "example": "{{endDate}}",
+            "description": "Variable Postman sugerida: {{endDate}}"
           }
         ],
         "responses": {
@@ -3195,6 +3649,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -3216,9 +3673,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "{{doctorId}}"
             },
-            "example": "{{doctorId}}"
+            "example": "{{doctorId}}",
+            "description": "Variable Postman sugerida: {{doctorId}}"
           }
         ],
         "responses": {
@@ -3249,6 +3708,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -3287,6 +3749,9 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{businessBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{businessBaseUrl}}",
@@ -3314,6 +3779,14 @@
             "description": "Error interno al iniciar Google OAuth."
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3334,15 +3807,21 @@
             "name": "code",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{code}}"
+            },
+            "example": "{{code}}",
+            "description": "Variable Postman sugerida: {{code}}"
           },
           {
             "name": "error",
             "in": "query",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "example": "{{error}}"
+            },
+            "example": "{{error}}",
+            "description": "Variable Postman sugerida: {{error}}"
           }
         ],
         "responses": {
@@ -3356,6 +3835,14 @@
             "description": "Error interno durante el callback; se redirige al frontend con el error."
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3436,10 +3923,28 @@
                     "example": "patient"
                   }
                 }
+              },
+              "example": {
+                "email": "test@example.com",
+                "password": "{{adminPassword}}",
+                "first_name": "valor-prueba",
+                "last_name": "valor-prueba",
+                "phone_number": "0999999999",
+                "cedula": "valor-prueba",
+                "date_of_birth": "valor-prueba",
+                "role": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3495,10 +4000,17 @@
                     "example": "ClaveSegura1"
                   }
                 }
+              },
+              "example": {
+                "email": "{{adminEmail}}",
+                "password": "{{adminPassword}}"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "const json = pm.response.json();\n\nconst token =\n    json.token ||\n    json.accessToken ||\n    json.access_token ||\n    json.data?.token ||\n    json.data?.accessToken ||\n    json.data?.access_token ||\n    json.result?.token ||\n    json.user?.token;\n\nif (token) {\n    pm.environment.set(\"adminToken\", token);\n}\n\nconst userId =\n    json.user?.id ||\n    json.data?.user?.id ||\n    json.data?.id ||\n    json.id;\n\nif (userId) {\n    pm.environment.set(\"adminUserId\", userId);\n}",
+        "x-postman-auth-role": "admin",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3545,10 +4057,21 @@
                     "example": "paciente@example.com"
                   }
                 }
+              },
+              "example": {
+                "email": "test@example.com"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3601,10 +4124,22 @@
                     "example": "NuevaClave1"
                   }
                 }
+              },
+              "example": {
+                "token": "valor-prueba",
+                "newPassword": "{{adminPassword}}"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3669,10 +4204,17 @@
                     "example": "NuevaClave1"
                   }
                 }
+              },
+              "example": {
+                "currentPassword": "{{adminPassword}}",
+                "newPassword": "{{adminPassword}}"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3718,10 +4260,21 @@
                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                   }
                 }
+              },
+              "example": {
+                "token": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3769,10 +4322,16 @@
                     "example": "session-id"
                   }
                 }
+              },
+              "example": {
+                "sessionId": "valor-prueba"
               }
             }
           }
         },
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
+        "x-postman-auth": "bearer",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3808,6 +4367,8 @@
             "bearerAuth": []
           }
         ],
+        "x-postman-server-variable": "{{externalBaseUrl}}",
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
         "servers": [
           {
             "url": "{{externalBaseUrl}}",
@@ -3818,17 +4379,18 @@
     },
     "/health": {
       "get": {
-        "tags": [
-          "Health"
-        ],
-        "summary": "Verificar estado de las APIs",
-        "description": "Permite comprobar si los servicios CRUD API, Business API y External API están activos.",
+        "description": "",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Servicio activo."
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
           }
         },
+        "x-postman-server-variable": null,
+        "x-postman-test-script": "let json = {};\ntry {\n    json = pm.response.json();\n} catch (e) {\n    json = {};\n}\n\nconst data =\n    json.data ||\n    json.result ||\n    json;\n\nconst firstItem =\n    Array.isArray(data) ? data[0] :\n    Array.isArray(data?.items) ? data.items[0] :\n    Array.isArray(data?.rows) ? data.rows[0] :\n    Array.isArray(data?.doctors) ? data.doctors[0] :\n    Array.isArray(data?.patients) ? data.patients[0] :\n    Array.isArray(data?.specialties) ? data.specialties[0] :\n    Array.isArray(data?.appointments) ? data.appointments[0] :\n    Array.isArray(json.doctors) ? json.doctors[0] :\n    Array.isArray(json.patients) ? json.patients[0] :\n    Array.isArray(json.specialties) ? json.specialties[0] :\n    Array.isArray(json.appointments) ? json.appointments[0] :\n    data;\n\nconst patientId =\n    json.patient?.id ||\n    data?.patient?.id ||\n    firstItem?.patient_id ||\n    firstItem?.patientId ||\n    firstItem?.id;\n\nif (patientId && pm.info.requestName.toLowerCase().includes(\"patient\")) {\n    pm.environment.set(\"patientId\", patientId);\n}\n\nconst doctorId =\n    json.doctor?.id ||\n    data?.doctor?.id ||\n    firstItem?.doctor_id ||\n    firstItem?.doctorId ||\n    firstItem?.id;\n\nif (doctorId && pm.info.requestName.toLowerCase().includes(\"doctor\")) {\n    pm.environment.set(\"doctorId\", doctorId);\n}\n\nconst specialtyId =\n    json.specialty?.id ||\n    data?.specialty?.id ||\n    firstItem?.specialty_id ||\n    firstItem?.specialtyId ||\n    firstItem?.id;\n\nif (specialtyId && pm.info.requestName.toLowerCase().includes(\"specialt\")) {\n    pm.environment.set(\"specialtyId\", specialtyId);\n}\n\nconst appointmentId =\n    json.appointment?.id ||\n    data?.appointment?.id ||\n    firstItem?.appointment_id ||\n    firstItem?.appointmentId ||\n    firstItem?.id;\n\nif (appointmentId && pm.info.requestName.toLowerCase().includes(\"appointment\")) {\n    pm.environment.set(\"appointmentId\", appointmentId);\n}",
         "servers": [
           {
             "url": "{{crudBaseUrl}}",
@@ -3854,5 +4416,39 @@
         "bearerFormat": "JWT"
       }
     }
+  },
+  "x-postman-environment-template": {
+    "externalBaseUrl": "http://localhost:3003",
+    "crudBaseUrl": "http://localhost:3001",
+    "businessBaseUrl": "http://localhost:3002",
+    "patientEmail": "paciente1@example.com",
+    "patientPassword": "ClaveSegura1",
+    "patientToken": "",
+    "patientUserId": "",
+    "patientId": "",
+    "doctorEmail": "doctor@clinica.com",
+    "doctorPassword": "admin123",
+    "doctorToken": "",
+    "doctorUserId": "",
+    "doctorId": "",
+    "adminEmail": "admin@clinica.com",
+    "adminPassword": "admin123",
+    "adminToken": "",
+    "adminUserId": "",
+    "specialtyId": "",
+    "createdSpecialtyId": "",
+    "createdSpecialtyName": "",
+    "updatedSpecialtyName": "",
+    "appointmentId": "",
+    "scheduledDate": "2026-07-01",
+    "scheduledTime": "09:30",
+    "timezoneOffset": "-05:00",
+    "scheduledStart": "2026-07-01T09:30:00-05:00",
+    "startDate": "2026-07-01",
+    "endDate": "2026-07-31",
+    "page": "1",
+    "limit": "10",
+    "status": "scheduled",
+    "search": ""
   }
 }
