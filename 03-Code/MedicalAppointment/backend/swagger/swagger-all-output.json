@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Sistema de Agendamiento de Citas Médicas - Todos los Endpoints",
-    "description": "Documentación Swagger filtrada para todos los endpoints principales con servidores configurados mediante variables.",
+    "description": "Swagger filtrado para todos los endpoints principales con servidores configurados mediante variables.",
     "version": "1.0.0"
   },
   "servers": [
