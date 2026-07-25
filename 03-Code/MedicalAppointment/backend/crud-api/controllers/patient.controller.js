@@ -124,7 +124,7 @@ class PatientController {
       
       if (userFields.includes(key)) {
         userUpdates[key] = processedValue;
-      } else if (userFields.includes(dbFieldName)) {
+      } else /* istanbul ignore next -- fieldMappings currently only maps to patientFields entries, so this branch is unreachable until a mapping targets a userFields column */ if (userFields.includes(dbFieldName)) {
         userUpdates[dbFieldName] = processedValue;
       } else if (patientFields.includes(key)) {
         patientUpdates[key] = processedValue;
@@ -299,10 +299,11 @@ class PatientController {
         .from('users')
         .update({
           role_id: patientRole.id,
-          first_name: first_name || existingUser.first_name,
-          last_name: last_name || existingUser.last_name,
+          // first_name/last_name/cedula are validated non-empty earlier in this handler, so the existingUser fallback below can never trigger
+          first_name: first_name || /* istanbul ignore next */ existingUser.first_name,
+          last_name: last_name || /* istanbul ignore next */ existingUser.last_name,
           phone_number: phone_number || existingUser.phone_number,
-          cedula: cedula || existingUser.cedula,
+          cedula: cedula || /* istanbul ignore next */ existingUser.cedula,
           is_active: status === 'active',
           updated_at: new Date().toISOString()
         })

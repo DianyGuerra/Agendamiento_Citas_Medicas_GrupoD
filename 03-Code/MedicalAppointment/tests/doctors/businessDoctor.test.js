@@ -130,6 +130,26 @@ describe('Doctor module unit tests - Business layer', () => {
 
       await expect(context.service.isSlotAvailable(DOCTOR_ID, FUTURE_DATE, '09:30')).resolves.toBe(true);
       expect(context.service.getAvailableSlots).toHaveBeenCalledWith(DOCTOR_ID, FUTURE_DATE);
+
+      // Excepcion con solo una de las horas personalizadas: no cumple la condicion y
+      // debe continuar hacia el horario regular en vez de usar horas personalizadas.
+      context = loadFreshAvailabilityService();
+      context.fromMock
+        .mockReturnValueOnce(createSuccessfulQuery(createScheduleException({
+          exception_type: 'custom_hours',
+          exception_start_time: '08:00',
+          exception_end_time: null
+        })))
+        .mockReturnValueOnce(createSuccessfulQuery(createSchedule()))
+        .mockReturnValueOnce(createSuccessfulQuery([]));
+
+      await expect(context.service.getAvailableSlots(DOCTOR_ID, FUTURE_DATE)).resolves.toEqual([
+        createAvailabilitySlot({ time: '09:00' }),
+        createAvailabilitySlot({ time: '09:30' }),
+        createAvailabilitySlot({ time: '10:00' }),
+        createAvailabilitySlot({ time: '10:30' })
+      ]);
+      expect(context.fromMock).toHaveBeenCalledWith('doctor_schedules');
     });
 
     test('builds weekly availability and finds next slots while handling empty days', async () => {
@@ -171,6 +191,52 @@ describe('Doctor module unit tests - Business layer', () => {
       expect(context.service.getAvailableSlots).toHaveBeenCalledTimes(3);
     });
 
+    test('falls back to default weeks/daysAhead when the caller omits them', async () => {
+      // Cubre los valores por defecto de los parametros (weeks = 4, daysAhead = 30).
+      let context = loadFreshAvailabilityService();
+      jest.spyOn(context.service, 'getAvailableSlots').mockResolvedValue([]);
+
+      await context.service.getWeeklyAvailability(DOCTOR_ID, FUTURE_DATE);
+      expect(context.service.getAvailableSlots).toHaveBeenCalledTimes(28); // 4 semanas * 7 dias
+
+      context = loadFreshAvailabilityService();
+      jest.spyOn(context.service, 'getAvailableSlots').mockResolvedValue([]);
+
+      await context.service.getNextAvailableSlot(DOCTOR_ID);
+      expect(context.service.getAvailableSlots).toHaveBeenCalledTimes(30);
+    });
+
+    test('filters today\'s slots by a 30-minute buffer and skips days that throw errors', async () => {
+      // Cubre la rama i===0 de getNextAvailableSlot: filtrado por hora actual y el catch/continue.
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date('2026-07-24T08:00:00'));
+
+      try {
+        let context = loadFreshAvailabilityService();
+        const pastSlot = createAvailabilitySlot({ time: '07:00' });
+        const futureSlot = createAvailabilitySlot({ time: '09:00' });
+        jest.spyOn(context.service, 'getAvailableSlots').mockResolvedValueOnce([pastSlot, futureSlot]);
+
+        await expect(context.service.getNextAvailableSlot(DOCTOR_ID, 5)).resolves.toEqual({
+          date: expect.any(String),
+          slot: futureSlot
+        });
+        expect(context.service.getAvailableSlots).toHaveBeenCalledTimes(1);
+
+        context = loadFreshAvailabilityService();
+        jest.spyOn(context.service, 'getAvailableSlots')
+          .mockRejectedValueOnce(new Error('today lookup failed'))
+          .mockResolvedValueOnce([createAvailabilitySlot({ time: '10:00' })]);
+
+        await expect(context.service.getNextAvailableSlot(DOCTOR_ID, 5)).resolves.toEqual(
+          expect.objectContaining({ slot: createAvailabilitySlot({ time: '10:00' }) })
+        );
+        expect(context.service.getAvailableSlots).toHaveBeenCalledTimes(2);
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+
     test('handles private helper queries, formatting, and Supabase errors', async () => {
       // Cubre helpers internos: citas ocupadas, dia de semana, errores de excepciones/horarios y fallos tolerados.
       let context = loadFreshAvailabilityService();
@@ -206,6 +272,10 @@ describe('Doctor module unit tests - Business layer', () => {
       await expect(context.service._getBookedSlots(DOCTOR_ID, FUTURE_DATE)).resolves.toEqual([]);
       expect(consoleErrorSpy).toHaveBeenCalled();
       consoleErrorSpy.mockRestore();
+
+      context = loadFreshAvailabilityService();
+      context.fromMock.mockReturnValueOnce(createSuccessfulQuery(null));
+      await expect(context.service._getBookedSlots(DOCTOR_ID, FUTURE_DATE)).resolves.toEqual([]);
     });
   });
 
@@ -251,6 +321,19 @@ describe('Doctor module unit tests - Business layer', () => {
       );
 
       context = loadFreshAvailabilityController();
+      context.availabilityService.getWeeklyAvailability.mockResolvedValue({});
+      await invokeHandler(context.controller.getWeeklyAvailability, createReq({
+        params: { doctorId: DOCTOR_ID },
+        query: {}
+      }));
+      const todayISO = new Date().toISOString().split('T')[0];
+      expect(context.availabilityService.getWeeklyAvailability).toHaveBeenCalledWith(
+        DOCTOR_ID,
+        todayISO,
+        4
+      );
+
+      context = loadFreshAvailabilityController();
       context.availabilityService.getNextAvailableSlot.mockResolvedValue(null);
       await invokeHandler(context.controller.getNextAvailable, createReq({
         params: { doctorId: DOCTOR_ID },
@@ -280,6 +363,14 @@ describe('Doctor module unit tests - Business layer', () => {
         expect.anything(),
         { doctorId: DOCTOR_ID, nextSlot }
       );
+
+      context = loadFreshAvailabilityController();
+      context.availabilityService.getNextAvailableSlot.mockResolvedValue(nextSlot);
+      await invokeHandler(context.controller.getNextAvailable, createReq({
+        params: { doctorId: DOCTOR_ID },
+        query: {}
+      }));
+      expect(context.availabilityService.getNextAvailableSlot).toHaveBeenCalledWith(DOCTOR_ID, 30);
     });
 
     test('validates required request fields and checks a specific slot', async () => {

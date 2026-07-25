@@ -77,6 +77,13 @@ app.use(requestLogger);
 app.use(sanitizeBody);
 
 // =============================================================================
+// SWAGGER DOCS
+// =============================================================================
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('../swagger/swagger-output.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+// =============================================================================
 // API ROUTES
 // =============================================================================
 

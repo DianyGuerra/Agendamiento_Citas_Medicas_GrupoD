@@ -15,6 +15,7 @@
     "test:doctor": "jest --config ./jest.doctor.config.cjs",
     "test:doctor:crud": "jest --config ./jest.doctor.config.cjs --runTestsByPath ../tests/doctors/crudDoctor.test.js",
     "test:doctor:business": "jest --config ./jest.doctor.config.cjs --runTestsByPath ../tests/doctors/businessDoctor.test.js",
+    "test:coverage:all": "jest --config ./jest.all.config.cjs",
     "start": "node server.js",
     "start:crud": "node crud-api/server.js",
     "start:business": "node business-api/server.js",
@@ -24,7 +25,8 @@
     "dev:business": "nodemon business-api/server.js",
     "dev:external": "nodemon external-api/server.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "swagger": "node swagger/swagger.js"
   },
   "keywords": [
     "medical",

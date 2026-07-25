@@ -128,6 +128,17 @@ describe('Patient module unit tests - CRUD layer', () => {
 			expect(stats).toEqual({ total: 2, active: 1, inactive: 1 });
 		});
 
+		test('getStats defaults total and active counts to 0 when no patients are found', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({ data: [], error: null });
+
+			fromMock.mockReturnValueOnce(query);
+
+			const stats = await repo.getStats();
+
+			expect(stats).toEqual({ total: 0, active: 0, inactive: 0 });
+		});
+
 		test('findByUserId throws error on database error', async () => {
 			const { repo, fromMock } = loadPatientRepository();
 			const query = createQueryMock({
@@ -217,6 +228,30 @@ describe('Patient module unit tests - CRUD layer', () => {
 			expect(rows).toHaveLength(2);
 		});
 
+		test('findAllWithUserInfo uses defaults when called without options and without limit/offset', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({ data: null, error: null });
+
+			fromMock.mockReturnValueOnce(query);
+
+			const rows = await repo.findAllWithUserInfo();
+
+			expect(query.limit).not.toHaveBeenCalled();
+			expect(query.range).not.toHaveBeenCalled();
+			expect(rows).toEqual([]);
+		});
+
+		test('findAllWithUserInfo falls back to a default page size when offset is set without a limit', async () => {
+			const { repo, fromMock } = loadPatientRepository();
+			const query = createQueryMock({ data: [], error: null });
+
+			fromMock.mockReturnValueOnce(query);
+
+			await repo.findAllWithUserInfo({ offset: 5 });
+
+			expect(query.range).toHaveBeenCalledWith(5, 24);
+		});
+
 		test('findAllWithUserInfo throws on database error', async () => {
 			const { repo, fromMock } = loadPatientRepository();
 			const query = createQueryMock({
@@ -228,6 +263,23 @@ describe('Patient module unit tests - CRUD layer', () => {
 
 			await expect(repo.findAllWithUserInfo({ limit: 10 }))
 				.rejects.toThrow('Database error');
+		});
+
+		test('createForUser creates a patient record merging user id with patient data', async () => {
+			const { repo, createMock } = loadPatientRepository();
+
+			const created = await repo.createForUser('user-1', { blood_type: 'O+' });
+
+			expect(createMock).toHaveBeenCalledWith({ user_id: 'user-1', blood_type: 'O+' });
+			expect(created).toEqual({ id: 'new-id', user_id: 'user-1', blood_type: 'O+' });
+		});
+
+		test('createForUser defaults patient data to an empty object', async () => {
+			const { repo, createMock } = loadPatientRepository();
+
+			await repo.createForUser('user-2');
+
+			expect(createMock).toHaveBeenCalledWith({ user_id: 'user-2' });
 		});
 
 		test('getStats throws error on database error', async () => {

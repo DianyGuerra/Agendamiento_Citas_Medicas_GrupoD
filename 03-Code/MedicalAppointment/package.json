@@ -4,5 +4,9 @@
   },
   "devDependencies": {
     "jest": "^30.4.2"
+  },
+  "dependencies": {
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   }
 }

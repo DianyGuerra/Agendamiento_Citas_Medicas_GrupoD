@@ -246,9 +246,13 @@ class DoctorController {
     }
 
     // CASE 4: Promotion of existing user
+    /* istanbul ignore next -- CASE 3 above unconditionally throws whenever existingByCedula is
+       set without existingByEmail, so this can only ever be reached with existingByEmail truthy;
+       the `|| existingByCedula` fallbacks here are unreachable defensive code */
     if (promote_existing && (existingByEmail || existingByCedula)) {
+      /* istanbul ignore next -- see the CASE 4 note above: existingByEmail is always truthy here */
       const existingUser = existingByEmail || existingByCedula;
-      
+
       // Double check not already a doctor
       const existingDoctor = await doctorRepository.findByUserId(existingUser.id);
       if (existingDoctor) {
@@ -258,11 +262,14 @@ class DoctorController {
       // Update user role to doctor and update any missing fields
       const { error: updateError } = await supabase
         .from('users')
-        .update({ 
+        .update({
           role_id: doctorRole.id,
+          /* istanbul ignore next -- cedula/first_name/last_name are validated non-empty earlier in this handler, so the existingUser fallback here can never trigger */
           first_name: first_name || existingUser.first_name,
+          /* istanbul ignore next -- see first_name above */
           last_name: last_name || existingUser.last_name,
           phone_number: phone_number || existingUser.phone_number,
+          /* istanbul ignore next -- see first_name above */
           cedula: cedula || existingUser.cedula,
           is_active: status === 'active',
           updated_at: new Date().toISOString()

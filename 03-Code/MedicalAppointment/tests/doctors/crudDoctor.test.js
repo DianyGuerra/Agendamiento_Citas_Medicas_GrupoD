@@ -236,6 +236,66 @@ describe('Doctor module unit tests - CRUD layer', () => {
       await expect(repo.findBySpecialty('sp-1')).rejects.toThrow('Database error: Specialty query failed');
       await expect(repo.findAllWithDetails()).rejects.toThrow('Database error: Find all failed');
     });
+
+    test('applies range pagination when an offset is provided, with and without an explicit limit', async () => {
+      // Cubre la rama `if (offset)` en findBySpecialty/findAllWithDetails, con y sin limit explicito.
+      const { repo, fromMock } = loadDoctorRepository();
+      const specialtyWithLimitQuery = createSuccessfulQuery([]);
+      const specialtyWithoutLimitQuery = createSuccessfulQuery([]);
+      const allWithLimitQuery = createSuccessfulQuery([]);
+      const allWithoutLimitQuery = createSuccessfulQuery([]);
+
+      fromMock
+        .mockReturnValueOnce(specialtyWithLimitQuery)
+        .mockReturnValueOnce(specialtyWithoutLimitQuery)
+        .mockReturnValueOnce(allWithLimitQuery)
+        .mockReturnValueOnce(allWithoutLimitQuery);
+
+      await repo.findBySpecialty('sp-1', { limit: 5, offset: 10 });
+      expect(specialtyWithLimitQuery.limit).toHaveBeenCalledWith(5);
+      expect(specialtyWithLimitQuery.range).toHaveBeenCalledWith(10, 14);
+
+      await repo.findBySpecialty('sp-1', { offset: 10 });
+      expect(specialtyWithoutLimitQuery.limit).not.toHaveBeenCalled();
+      expect(specialtyWithoutLimitQuery.range).toHaveBeenCalledWith(10, 29);
+
+      await repo.findAllWithDetails({ limit: 5, offset: 10 });
+      expect(allWithLimitQuery.limit).toHaveBeenCalledWith(5);
+      expect(allWithLimitQuery.range).toHaveBeenCalledWith(10, 14);
+
+      await repo.findAllWithDetails({ offset: 10 });
+      expect(allWithoutLimitQuery.limit).not.toHaveBeenCalled();
+      expect(allWithoutLimitQuery.range).toHaveBeenCalledWith(10, 29);
+    });
+
+    test('sorts doctors with a missing users relation as if their last name were empty', async () => {
+      // El comparador de ordenamiento se invoca como cmp(arr[1], arr[0]); para cubrir la
+      // rama `a.users?.last_name || ''` el elemento SIN relacion users debe quedar en la
+      // segunda posicion del arreglo de entrada.
+      const { repo, fromMock } = loadDoctorRepository();
+      fromMock.mockReturnValueOnce(createSuccessfulQuery([
+        createDoctorWithRelations({
+          id: 'doc-with-name',
+          users: createExistingUser({ last_name: 'Bravo', is_active: true })
+        }),
+        createDoctorWithRelations({ id: 'doc-no-users', users: null })
+      ]));
+
+      const sorted = await repo.findBySpecialty('sp-1');
+      expect(sorted.map((doctor) => doctor.id)).toEqual(['doc-no-users', 'doc-with-name']);
+    });
+
+    test('defaults to an empty list when Supabase returns a null data payload without an error', async () => {
+      // Cubre la rama `(data || [])` cuando Supabase responde sin filas y sin error.
+      const { repo, fromMock } = loadDoctorRepository();
+
+      fromMock
+        .mockReturnValueOnce(createSuccessfulQuery(null))
+        .mockReturnValueOnce(createSuccessfulQuery(null));
+
+      await expect(repo.findBySpecialty('sp-1')).resolves.toEqual([]);
+      await expect(repo.findAllWithDetails()).resolves.toEqual([]);
+    });
   });
 
   // ========================================================================
@@ -315,6 +375,14 @@ describe('Doctor module unit tests - CRUD layer', () => {
       context.doctorRepository.findByUserId.mockResolvedValue(doctor);
       await invokeHandler(context.controller.getProfile, createReq({ user: { id: 'user-1' } }));
       expect(context.doctorRepository.findByUserId).toHaveBeenCalledWith('user-1');
+
+      context = loadFreshController();
+      context.doctorRepository.findByUserId.mockResolvedValue(null);
+      const missingProfile = await invokeHandler(
+        context.controller.getProfile,
+        createReq({ user: { id: 'user-1' } })
+      );
+      expectNextError(missingProfile, 'Doctor');
 
       context = loadFreshController();
       context.doctorRepository.findBySpecialty.mockResolvedValue([doctor]);
@@ -434,7 +502,28 @@ describe('Doctor module unit tests - CRUD layer', () => {
       await invokeHandler(context.controller.createWithUser, createReq({ body: createDoctorBody() }));
       expect(context.responseBuilderMock.success).toHaveBeenCalledWith(
         expect.anything(),
-        expect.objectContaining({ requires_promotion: true }),
+        expect.objectContaining({
+          requires_promotion: true,
+          existing_user: expect.objectContaining({ current_role: 'patient' })
+        }),
+        200,
+        'Usuario existente encontrado'
+      );
+
+      // Same CASE 1 promotion response, but the matched user has no roles relation
+      // loaded, exercising the `?.name || 'unknown'` fallback.
+      context = loadFreshController();
+      const existingUserNoRole = createExistingUser({ roles: undefined });
+      context.fromMock.mockReturnValueOnce(createRoleQueryMock());
+      context.userRepository.findByEmail.mockResolvedValue(existingUserNoRole);
+      context.userRepository.findByCedula.mockResolvedValue(existingUserNoRole);
+      context.doctorRepository.findByUserId.mockResolvedValue(null);
+      await invokeHandler(context.controller.createWithUser, createReq({ body: createDoctorBody() }));
+      expect(context.responseBuilderMock.success).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          existing_user: expect.objectContaining({ current_role: 'unknown' })
+        }),
         200,
         'Usuario existente encontrado'
       );
@@ -461,6 +550,202 @@ describe('Doctor module unit tests - CRUD layer', () => {
         professional_id: 'MED-001'
       }));
       expect(context.responseBuilderMock.created).toHaveBeenCalled();
+    });
+
+    test('rejects createWithUser when the matched user is already a doctor (same-user and promotion paths)', async () => {
+      // Cubre el "ya es doctor" tanto en CASE 1 (email+cedula) como en CASE 4 (promocion explicita).
+      let context = loadFreshController();
+      const sameUser = createExistingUser({ id: 'user-same' });
+      context.fromMock.mockReturnValueOnce(createRoleQueryMock());
+      context.userRepository.findByEmail.mockResolvedValue(sameUser);
+      context.userRepository.findByCedula.mockResolvedValue(sameUser);
+      context.doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord({ user_id: 'user-same' }));
+      const alreadyDoctorSameUser = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
+      expectNextError(alreadyDoctorSameUser, 'ya está registrado como doctor');
+
+      // CASE 4 has its own "already a doctor" guard, only reachable when only one of
+      // email/cedula matched (so CASE 1/2 don't already short-circuit) and the doctor
+      // record appears between CASE 2's check and CASE 4's re-check.
+      context = loadFreshController();
+      const promotedUser = createExistingUser({ id: 'user-promo' });
+      context.fromMock.mockReturnValueOnce(createRoleQueryMock());
+      context.userRepository.findByEmail.mockResolvedValue(promotedUser);
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      context.doctorRepository.findByUserId
+        .mockResolvedValueOnce(null)
+        .mockResolvedValueOnce(createDoctorRecord({ user_id: 'user-promo' }));
+      const alreadyDoctorPromotion = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody({ promote_existing: true })
+      }));
+      expect(context.doctorRepository.findByUserId).toHaveBeenCalledTimes(2);
+      expectNextError(alreadyDoctorPromotion, 'ya está registrado como doctor');
+    });
+
+    test('rejects createWithUser on email-only and cedula-only conflicts', async () => {
+      // Cubre CASE 2 (email existente con cedula distinta o doctor ya registrado) y CASE 3 (solo cedula existe).
+      let context = loadFreshController();
+      context.fromMock.mockReturnValueOnce(createRoleQueryMock());
+      context.userRepository.findByEmail.mockResolvedValue(createExistingUser({ cedula: '9999999999' }));
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      const mismatchedCedula = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody({ cedula: '1723456789' })
+      }));
+      expectNextError(mismatchedCedula, 'ya está registrado con una cédula diferente');
+
+      context = loadFreshController();
+      context.fromMock.mockReturnValueOnce(createRoleQueryMock());
+      context.userRepository.findByEmail.mockResolvedValue(createExistingUser());
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      context.doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord());
+      const emailAlreadyDoctor = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
+      expectNextError(emailAlreadyDoctor, 'Este email ya pertenece a un doctor registrado');
+
+      context = loadFreshController();
+      context.fromMock.mockReturnValueOnce(createRoleQueryMock());
+      context.userRepository.findByEmail.mockResolvedValue(createExistingUser({ roles: { name: 'patient' } }));
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      context.doctorRepository.findByUserId.mockResolvedValue(null);
+      await invokeHandler(context.controller.createWithUser, createReq({ body: createDoctorBody() }));
+      expect(context.responseBuilderMock.success).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          requires_promotion: true,
+          existing_user: expect.objectContaining({ current_role: 'patient' })
+        }),
+        200,
+        'Usuario existente encontrado'
+      );
+
+      // Same CASE 2 promotion response, but with no roles relation loaded, exercising
+      // the `?.name || 'unknown'` fallback for the email-only match.
+      context = loadFreshController();
+      context.fromMock.mockReturnValueOnce(createRoleQueryMock());
+      context.userRepository.findByEmail.mockResolvedValue(createExistingUser({ roles: undefined }));
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      context.doctorRepository.findByUserId.mockResolvedValue(null);
+      await invokeHandler(context.controller.createWithUser, createReq({ body: createDoctorBody() }));
+      expect(context.responseBuilderMock.success).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          existing_user: expect.objectContaining({ current_role: 'unknown' })
+        }),
+        200,
+        'Usuario existente encontrado'
+      );
+
+      context = loadFreshController();
+      context.fromMock.mockReturnValueOnce(createRoleQueryMock());
+      context.userRepository.findByEmail.mockResolvedValue(null);
+      context.userRepository.findByCedula.mockResolvedValue(createExistingUser({ email: 'other@example.com' }));
+      const cedulaOnly = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
+      expectNextError(cedulaOnly, 'ya está registrada con otro email');
+    });
+
+    test('falls back to the existing user\'s phone number when promoting without one in the body', async () => {
+      // Cubre la rama `phone_number || existingUser.phone_number` en la promocion (CASE 4).
+      const context = loadFreshController();
+      const existingUser = createExistingUser({ phone_number: '0987654321' });
+      const updateUserQuery = createSuccessfulQuery(null);
+      context.fromMock
+        .mockReturnValueOnce(createRoleQueryMock())
+        .mockReturnValueOnce(updateUserQuery);
+      context.userRepository.findByEmail.mockResolvedValue(existingUser);
+      context.userRepository.findByCedula.mockResolvedValue(existingUser);
+      context.doctorRepository.findByUserId.mockResolvedValue(null);
+      context.doctorRepository.create.mockResolvedValue(createDoctorRecord());
+
+      const bodyWithoutPhone = createDoctorBody({ promote_existing: true });
+      delete bodyWithoutPhone.phone_number;
+
+      await invokeHandler(context.controller.createWithUser, createReq({ body: bodyWithoutPhone }));
+      expect(updateUserQuery.update).toHaveBeenCalledWith(expect.objectContaining({
+        phone_number: '0987654321'
+      }));
+    });
+
+    test('propagates the update failure when promoting an existing user to doctor', async () => {
+      // Cubre el error de Supabase al actualizar el rol del usuario durante la promocion (CASE 4).
+      const context = loadFreshController();
+      context.fromMock
+        .mockReturnValueOnce(createRoleQueryMock())
+        .mockReturnValueOnce(createQueryMock({ data: null, error: { message: 'update role failed' } }));
+      context.userRepository.findByEmail.mockResolvedValue(createExistingUser());
+      context.userRepository.findByCedula.mockResolvedValue(createExistingUser());
+      context.doctorRepository.findByUserId.mockResolvedValue(null);
+      const updateFailure = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody({ promote_existing: true })
+      }));
+      expectNextError(updateFailure, 'Error al actualizar usuario');
+    });
+
+    test('reports unique constraint violations and generic insert errors when creating a brand-new doctor user', async () => {
+      // Cubre CASE 5: email duplicado, cedula duplicada y errores genericos de insercion.
+      let context = loadFreshController();
+      context.fromMock
+        .mockReturnValueOnce(createRoleQueryMock())
+        .mockReturnValueOnce(createQueryMock({
+          data: null,
+          error: { code: '23505', message: 'duplicate key value violates unique constraint "users_email_key"' }
+        }));
+      context.userRepository.findByEmail.mockResolvedValue(null);
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      const duplicateEmail = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
+      expectNextError(duplicateEmail, 'El email ya está en uso');
+
+      context = loadFreshController();
+      context.fromMock
+        .mockReturnValueOnce(createRoleQueryMock())
+        .mockReturnValueOnce(createQueryMock({
+          data: null,
+          error: { code: '23505', message: 'duplicate key value violates unique constraint "users_cedula_key"' }
+        }));
+      context.userRepository.findByEmail.mockResolvedValue(null);
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      const duplicateCedula = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
+      expectNextError(duplicateCedula, 'La cédula ya está en uso');
+
+      context = loadFreshController();
+      context.fromMock
+        .mockReturnValueOnce(createRoleQueryMock())
+        .mockReturnValueOnce(createQueryMock({
+          data: null,
+          error: { code: '500', message: 'unexpected insert failure' }
+        }));
+      context.userRepository.findByEmail.mockResolvedValue(null);
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      const genericInsertError = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
+      expectNextError(genericInsertError, 'Error al crear usuario: unexpected insert failure');
+
+      // Unique constraint violation (23505) whose message names neither "email" nor
+      // "cedula": falls through both inner ifs to the generic error below them.
+      context = loadFreshController();
+      context.fromMock
+        .mockReturnValueOnce(createRoleQueryMock())
+        .mockReturnValueOnce(createQueryMock({
+          data: null,
+          error: { code: '23505', message: 'duplicate key value violates unique constraint "users_pkey"' }
+        }));
+      context.userRepository.findByEmail.mockResolvedValue(null);
+      context.userRepository.findByCedula.mockResolvedValue(null);
+      const genericUniqueConstraint = await invokeHandler(context.controller.createWithUser, createReq({
+        body: createDoctorBody()
+      }));
+      expectNextError(
+        genericUniqueConstraint,
+        'Error al crear usuario: duplicate key value violates unique constraint "users_pkey"'
+      );
     });
 
     test('updates, deletes, and reactivates doctors with success and not-found branches', async () => {
@@ -519,6 +804,14 @@ describe('Doctor module unit tests - CRUD layer', () => {
         200,
         'Doctor activado exitosamente'
       );
+
+      context = loadFreshController();
+      context.doctorRepository.findById.mockResolvedValue(null);
+      const missingActivate = await invokeHandler(
+        context.controller.activate,
+        createReq({ params: { id: 'missing-doc' } })
+      );
+      expectNextError(missingActivate, 'Doctor');
     });
 
     test('resets doctor passwords and reports missing doctor, missing user, or update failures', async () => {
@@ -576,6 +869,24 @@ describe('Doctor module unit tests - CRUD layer', () => {
         createReq({ params: { id: 'doc-1' } })
       );
       expectNextError(failedUpdate, 'Error al restablecer');
+
+      // Cubre los valores por defecto 'TEMP'/'XXX' cuando el usuario no tiene cedula ni apellido.
+      context = loadFreshController();
+      context.doctorRepository.findWithDetails.mockResolvedValue(createDoctorRecord());
+      context.userRepository.findById.mockResolvedValue(createExistingUser({
+        cedula: null,
+        last_name: null
+      }));
+      context.fromMock.mockReturnValueOnce(createSuccessfulQuery(null));
+      await invokeHandler(context.controller.resetPassword, createReq({ params: { id: 'doc-1' } }));
+      expect(context.responseBuilderMock.success).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          temporary_password: expect.stringMatching(/^TEMPXXX!1234$/)
+        }),
+        200,
+        expect.stringContaining('restablecida exitosamente')
+      );
     });
 
     test('updates own profile and returns doctor schedules or patients for doctor-scoped endpoints', async () => {
@@ -598,6 +909,40 @@ describe('Doctor module unit tests - CRUD layer', () => {
         phone_number: '0999999999'
       });
       expect(context.doctorRepository.update).toHaveBeenCalledWith('doc-1', { bio: 'Nueva bio' });
+
+      // Cubre las ramas restantes de `first_name || last_name || phone_number`:
+      // solo last_name, solo phone_number, y ninguno de los tres (sin actualizar el usuario).
+      context = loadFreshController();
+      context.doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord());
+      context.doctorRepository.update.mockResolvedValue(createDoctorRecord());
+      await invokeHandler(context.controller.updateProfile, createReq({
+        user: { id: 'user-1' },
+        body: { last_name: 'Mora' }
+      }));
+      expect(context.userRepository.update).toHaveBeenCalledWith('user-1', expect.objectContaining({
+        last_name: 'Mora'
+      }));
+
+      context = loadFreshController();
+      context.doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord());
+      context.doctorRepository.update.mockResolvedValue(createDoctorRecord());
+      await invokeHandler(context.controller.updateProfile, createReq({
+        user: { id: 'user-1' },
+        body: { phone_number: '0987654321' }
+      }));
+      expect(context.userRepository.update).toHaveBeenCalledWith('user-1', expect.objectContaining({
+        phone_number: '0987654321'
+      }));
+
+      context = loadFreshController();
+      context.doctorRepository.findByUserId.mockResolvedValue(createDoctorRecord());
+      context.doctorRepository.update.mockResolvedValue(createDoctorRecord());
+      await invokeHandler(context.controller.updateProfile, createReq({
+        user: { id: 'user-1' },
+        body: { bio: 'Solo bio' }
+      }));
+      expect(context.userRepository.update).not.toHaveBeenCalled();
+      expect(context.doctorRepository.update).toHaveBeenCalledWith('doc-1', { bio: 'Solo bio' });
 
       context = loadFreshController();
       context.doctorRepository.findByUserId.mockResolvedValue(null);
