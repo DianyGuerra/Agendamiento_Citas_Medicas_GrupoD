@@ -1,0 +1,1742 @@
+{
+  "info": {
+    "name": "MedicalAppointment - Flujos Automatizados",
+    "description": "Colección generada automáticamente para ejecutar flujos funcionales principales del sistema de agendamiento de citas médicas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "00 - Health checks",
+      "item": [
+        {
+          "name": "Health - External API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{externalBaseUrl}}/health",
+              "host": [
+                "{{externalBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Health - CRUD API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/health",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Health - Business API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{businessBaseUrl}}/health",
+              "host": [
+                "{{businessBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ruta 1 - Paciente agenda cita",
+      "item": [
+        {
+          "name": "01 - Login paciente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{externalBaseUrl}}/api/v1/auth/login",
+              "host": [
+                "{{externalBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{patientEmail}}\",\n  \"password\": \"{{patientPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const token =",
+                  "    json.token ||",
+                  "    json.data?.token ||",
+                  "    json.result?.token ||",
+                  "    json.user?.token ||",
+                  "    json.data?.accessToken ||",
+                  "    json.accessToken;",
+                  "",
+                  "pm.test(\"Token recibido\", function () {",
+                  "    pm.expect(token).to.exist;",
+                  "});",
+                  "",
+                  "if (token) {",
+                  "    pm.environment.set(\"patientToken\", token);",
+                  "}",
+                  "",
+                  "const userId =",
+                  "    json.user?.id ||",
+                  "    json.data?.user?.id ||",
+                  "    json.data?.id ||",
+                  "    json.id;",
+                  "",
+                  "if (userId) {",
+                  "    pm.environment.set(\"patientUserId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 - Obtener usuario autenticado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{externalBaseUrl}}/api/v1/auth/me",
+              "host": [
+                "{{externalBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{patientToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const user =",
+                  "    json.data?.user ||",
+                  "    json.data ||",
+                  "    json.user ||",
+                  "    json;",
+                  "",
+                  "const userId = user?.id;",
+                  "",
+                  "if (userId) {",
+                  "    pm.environment.set(\"patientUserId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 - Obtener mi perfil de paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/patients/me",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients",
+                "me"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{patientToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const patient =",
+                  "    json.data?.patient ||",
+                  "    json.data ||",
+                  "    json.patient ||",
+                  "    json;",
+                  "",
+                  "if (patient?.id) {",
+                  "    pm.environment.set(\"patientId\", patient.id);",
+                  "}",
+                  "",
+                  "if (patient?.user_id) {",
+                  "    pm.environment.set(\"patientUserId\", patient.user_id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Listar especialidades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/specialties/",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "specialties"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const data =",
+                  "    Array.isArray(json.data) ? json.data :",
+                  "    Array.isArray(json.specialties) ? json.specialties :",
+                  "    Array.isArray(json) ? json :",
+                  "    [];",
+                  "",
+                  "if (data.length > 0) {",
+                  "    pm.environment.set(\"specialtyId\", data[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 - Listar doctores activos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/doctors/",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "doctors"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const data =",
+                  "    Array.isArray(json.data) ? json.data :",
+                  "    Array.isArray(json.doctors) ? json.doctors :",
+                  "    Array.isArray(json) ? json :",
+                  "    [];",
+                  "",
+                  "if (data.length > 0) {",
+                  "    pm.environment.set(\"doctorId\", data[0].id);",
+                  "",
+                  "    if (data[0].specialty_id) {",
+                  "        pm.environment.set(\"specialtyId\", data[0].specialty_id);",
+                  "    }",
+                  "",
+                  "    if (data[0].user_id) {",
+                  "        pm.environment.set(\"doctorUserId\", data[0].user_id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 - Consultar horarios disponibles por fecha",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{businessBaseUrl}}/api/v1/availability/doctor/{{doctorId}}/date/{{scheduledDate}}",
+              "host": [
+                "{{businessBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "availability",
+                "doctor",
+                "{{doctorId}}",
+                "date",
+                "{{scheduledDate}}"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Consulta de disponibilidad procesada\", function () {",
+                  "            pm.expect(pm.response.code).to.be.oneOf([200, 204, 400, 409]);",
+                  "        });",
+                  "",
+                  "        pm.test(\"No hay error interno 500\", function () {",
+                  "            pm.expect(pm.response.code).to.not.equal(500);",
+                  "        });",
+                  "",
+                  "        pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "            pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "        });",
+                  "",
+                  "        let json = {};",
+                  "        try {",
+                  "            json = pm.response.json();",
+                  "        } catch (e) {",
+                  "            json = {};",
+                  "        }",
+                  "",
+                  "        const possibleSlots =",
+                  "            json.data?.availableSlots ||",
+                  "            json.data?.available_slots ||",
+                  "            json.data?.slots ||",
+                  "            json.data?.timeSlots ||",
+                  "            json.data?.available_times ||",
+                  "            json.data?.availableTimes ||",
+                  "            json.availableSlots ||",
+                  "            json.available_slots ||",
+                  "            json.slots ||",
+                  "            json.timeSlots ||",
+                  "            json.available_times ||",
+                  "            json.availableTimes ||",
+                  "            json.data ||",
+                  "            [];",
+                  "",
+                  "        let selectedSlot = null;",
+                  "",
+                  "        if (Array.isArray(possibleSlots) && possibleSlots.length > 0) {",
+                  "            selectedSlot = possibleSlots.find(slot => {",
+                  "                if (typeof slot === \"string\") return true;",
+                  "                return slot.available !== false && slot.is_available !== false;",
+                  "            });",
+                  "        }",
+                  "",
+                  "        if (selectedSlot) {",
+                  "            let timeValue = null;",
+                  "            let scheduledStart = null;",
+                  "",
+                  "            if (typeof selectedSlot === \"string\") {",
+                  "                timeValue = selectedSlot;",
+                  "            } else {",
+                  "                timeValue =",
+                  "                    selectedSlot.time ||",
+                  "                    selectedSlot.start_time ||",
+                  "                    selectedSlot.startTime ||",
+                  "                    selectedSlot.hour;",
+                  "",
+                  "                scheduledStart =",
+                  "                    selectedSlot.scheduled_start ||",
+                  "                    selectedSlot.scheduledStart ||",
+                  "                    selectedSlot.start ||",
+                  "                    selectedSlot.start_datetime ||",
+                  "                    selectedSlot.startDateTime;",
+                  "            }",
+                  "",
+                  "            if (!scheduledStart && timeValue) {",
+                  "                const timezoneOffset = pm.environment.get(\"timezoneOffset\") || \"-05:00\";",
+                  "                scheduledStart = pm.environment.get(\"scheduledDate\") + \"T\" + timeValue + \":00\" + timezoneOffset;",
+                  "            }",
+                  "",
+                  "            if (timeValue) {",
+                  "                pm.environment.set(\"scheduledTime\", timeValue);",
+                  "            }",
+                  "",
+                  "            if (scheduledStart) {",
+                  "                pm.environment.set(\"scheduledStart\", scheduledStart);",
+                  "            }",
+                  "        }",
+                  "",
+                  "        pm.test(\"Horario disponible encontrado\", function () {",
+                  "            pm.expect(pm.environment.get(\"scheduledStart\")).to.exist;",
+                  "        });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "07 - Verificar disponibilidad de horario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{businessBaseUrl}}/api/v1/availability/check",
+              "host": [
+                "{{businessBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "availability",
+                "check"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctorId\": \"{{doctorId}}\",\n  \"date\": \"{{scheduledDate}}\",\n  \"time\": \"{{scheduledTime}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "08 - Agendar una cita",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{businessBaseUrl}}/api/v1/scheduling/book",
+              "host": [
+                "{{businessBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "scheduling",
+                "book"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{patientToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctor_id\": \"{{doctorId}}\",\n  \"scheduled_start\": \"{{scheduledStart}}\",\n  \"reason\": \"Consulta general de prueba automatizada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"La cita fue agendada correctamente\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "",
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "let json = {};",
+                  "try {",
+                  "    json = pm.response.json();",
+                  "} catch (e) {",
+                  "    json = {};",
+                  "}",
+                  "",
+                  "const appointment =",
+                  "    json.data?.appointment ||",
+                  "    json.data ||",
+                  "    json.appointment ||",
+                  "    json;",
+                  "",
+                  "const appointmentId =",
+                  "    appointment?.id ||",
+                  "    json.appointment_id ||",
+                  "    json.data?.appointment_id;",
+                  "",
+                  "pm.test(\"ID de cita recibido\", function () {",
+                  "    pm.expect(appointmentId).to.exist;",
+                  "});",
+                  "",
+                  "if (appointmentId) {",
+                  "    pm.environment.set(\"appointmentId\", appointmentId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "09 - Listar mis citas como paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/appointments/patient",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "appointments",
+                "patient"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{patientToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const data =",
+                  "    Array.isArray(json.data) ? json.data :",
+                  "    Array.isArray(json.appointments) ? json.appointments :",
+                  "    Array.isArray(json) ? json :",
+                  "    [];",
+                  "",
+                  "if (!pm.environment.get(\"appointmentId\") && data.length > 0) {",
+                  "    pm.environment.set(\"appointmentId\", data[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "10 - Obtener cita por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/appointments/{{appointmentId}}",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "appointments",
+                "{{appointmentId}}"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{patientToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ruta 2 - Doctor consulta citas",
+      "item": [
+        {
+          "name": "01 - Login doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{externalBaseUrl}}/api/v1/auth/login",
+              "host": [
+                "{{externalBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{doctorEmail}}\",\n  \"password\": \"{{doctorPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const token =",
+                  "    json.token ||",
+                  "    json.data?.token ||",
+                  "    json.result?.token ||",
+                  "    json.user?.token ||",
+                  "    json.data?.accessToken ||",
+                  "    json.accessToken;",
+                  "",
+                  "pm.test(\"Token recibido\", function () {",
+                  "    pm.expect(token).to.exist;",
+                  "});",
+                  "",
+                  "if (token) {",
+                  "    pm.environment.set(\"doctorToken\", token);",
+                  "}",
+                  "",
+                  "const userId =",
+                  "    json.user?.id ||",
+                  "    json.data?.user?.id ||",
+                  "    json.data?.id ||",
+                  "    json.id;",
+                  "",
+                  "if (userId) {",
+                  "    pm.environment.set(\"doctorUserId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 - Obtener usuario autenticado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{externalBaseUrl}}/api/v1/auth/me",
+              "host": [
+                "{{externalBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{doctorToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const user =",
+                  "    json.data?.user ||",
+                  "    json.data ||",
+                  "    json.user ||",
+                  "    json;",
+                  "",
+                  "const userId = user?.id;",
+                  "",
+                  "if (userId) {",
+                  "    pm.environment.set(\"doctorUserId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 - Obtener mi perfil de doctor",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/doctors/me",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "doctors",
+                "me"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{doctorToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const doctor =",
+                  "    json.data?.doctor ||",
+                  "    json.data ||",
+                  "    json.doctor ||",
+                  "    json;",
+                  "",
+                  "if (doctor?.id) {",
+                  "    pm.environment.set(\"doctorId\", doctor.id);",
+                  "}",
+                  "",
+                  "if (doctor?.user_id) {",
+                  "    pm.environment.set(\"doctorUserId\", doctor.user_id);",
+                  "}",
+                  "",
+                  "if (doctor?.specialty_id) {",
+                  "    pm.environment.set(\"specialtyId\", doctor.specialty_id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Listar mis citas como doctor",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/appointments/doctor",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "appointments",
+                "doctor"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{doctorToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 - Listar mis pacientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/doctors/my-patients",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "doctors",
+                "my-patients"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{doctorToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ruta 3 - Admin gestiona especialidades",
+      "item": [
+        {
+          "name": "01 - Login admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{externalBaseUrl}}/api/v1/auth/login",
+              "host": [
+                "{{externalBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const token =",
+                  "    json.token ||",
+                  "    json.data?.token ||",
+                  "    json.result?.token ||",
+                  "    json.user?.token ||",
+                  "    json.data?.accessToken ||",
+                  "    json.accessToken;",
+                  "",
+                  "pm.test(\"Token recibido\", function () {",
+                  "    pm.expect(token).to.exist;",
+                  "});",
+                  "",
+                  "if (token) {",
+                  "    pm.environment.set(\"adminToken\", token);",
+                  "}",
+                  "",
+                  "const userId =",
+                  "    json.user?.id ||",
+                  "    json.data?.user?.id ||",
+                  "    json.data?.id ||",
+                  "    json.id;",
+                  "",
+                  "if (userId) {",
+                  "    pm.environment.set(\"adminUserId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 - Obtener usuario autenticado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{externalBaseUrl}}/api/v1/auth/me",
+              "host": [
+                "{{externalBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const user =",
+                  "    json.data?.user ||",
+                  "    json.data ||",
+                  "    json.user ||",
+                  "    json;",
+                  "",
+                  "const userId = user?.id;",
+                  "",
+                  "if (userId) {",
+                  "    pm.environment.set(\"adminUserId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 - Listar especialidades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/specialties/",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "specialties"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const data =",
+                  "    Array.isArray(json.data) ? json.data :",
+                  "    Array.isArray(json.specialties) ? json.specialties :",
+                  "    Array.isArray(json) ? json :",
+                  "    [];",
+                  "",
+                  "if (data.length > 0) {",
+                  "    pm.environment.set(\"specialtyId\", data[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Obtener estadísticas de especialidades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/specialties/stats",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "specialties",
+                "stats"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 - Crear especialidad de prueba",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/specialties/",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "specialties"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{createdSpecialtyName}}\",\n  \"description\": \"Especialidad creada durante pruebas automatizadas en Postman\",\n  \"consultation_fee\": 45.5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = Date.now().toString().slice(-6);",
+                  "pm.environment.set(\"createdSpecialtyName\", \"Especialidad Test \" + suffix);",
+                  "pm.environment.set(\"updatedSpecialtyName\", \"Especialidad Test Actualizada \" + suffix);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const specialty =",
+                  "    json.data?.specialty ||",
+                  "    json.data ||",
+                  "    json.specialty ||",
+                  "    json;",
+                  "",
+                  "const createdSpecialtyId =",
+                  "    specialty?.id ||",
+                  "    json.specialty_id ||",
+                  "    json.data?.specialty_id;",
+                  "",
+                  "pm.test(\"Especialidad creada\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(createdSpecialtyId).to.exist;",
+                  "});",
+                  "",
+                  "if (createdSpecialtyId) {",
+                  "    pm.environment.set(\"createdSpecialtyId\", createdSpecialtyId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 - Consultar especialidad creada",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/specialties/{{createdSpecialtyId}}",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "specialties",
+                "{{createdSpecialtyId}}"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "07 - Actualizar especialidad creada",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/specialties/{{createdSpecialtyId}}",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "specialties",
+                "{{createdSpecialtyId}}"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{updatedSpecialtyName}}\",\n  \"description\": \"Especialidad actualizada durante pruebas automatizadas en Postman\",\n  \"consultation_fee\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "08 - Eliminar especialidad creada",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{crudBaseUrl}}/api/v1/specialties/{{createdSpecialtyId}}",
+              "host": [
+                "{{crudBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "specialties",
+                "{{createdSpecialtyId}}"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No hay error interno 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.equal(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test(\"Código HTTP controlado\", function () {",
+                  "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test(\"No hay error interno 500\", function () {",
+          "    pm.expect(pm.response.code).to.not.equal(500);",
+          "});",
+          "",
+          "pm.test(\"Tiempo de respuesta menor a 3000 ms\", function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+          "});",
+          "",
+          "pm.test(\"Código HTTP controlado\", function () {",
+          "    pm.expect([200, 201, 204, 400, 401, 403, 404, 409, 422]).to.include(pm.response.code);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": []
+}

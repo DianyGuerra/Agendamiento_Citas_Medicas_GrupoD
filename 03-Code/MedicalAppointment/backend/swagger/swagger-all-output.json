@@ -1,65 +1,58 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Sistema de Agendamiento de Citas Médicas",
-    "description": "Documentación automática de endpoints del backend",
+    "title": "Sistema de Agendamiento de Citas Médicas - Todos los Endpoints",
+    "description": "Swagger filtrado para todos los endpoints principales con servidores configurados mediante variables.",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://localhost:3001",
+      "url": "{{crudBaseUrl}}",
       "description": "CRUD API"
     },
     {
-      "url": "http://localhost:3002",
+      "url": "{{businessBaseUrl}}",
       "description": "Business API"
     },
     {
-      "url": "http://localhost:3003",
+      "url": "{{externalBaseUrl}}",
       "description": "External API"
     }
   ],
   "paths": {
     "/health": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
+        "tags": [
+          "Health"
         ],
+        "summary": "Verificar estado de las APIs",
+        "description": "Permite comprobar si los servicios CRUD API, Business API y External API están activos.",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "204": {
-            "description": "No Content"
+            "description": "Servicio activo."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          },
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          },
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/users/": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "role",
             "in": "query",
@@ -78,26 +71,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -108,28 +92,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/users/me": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -137,26 +112,17 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -184,7 +150,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/users/{id}": {
@@ -198,20 +170,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -224,7 +182,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -236,20 +200,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -262,7 +212,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -274,20 +230,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -300,7 +242,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/patients/stats": {
@@ -310,22 +258,7 @@
         ],
         "summary": "Obtener estadisticas de pacientes",
         "description": "Devuelve las cantidades total, activa e inactiva de usuarios con rol de paciente.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Estadisticas de pacientes."
@@ -347,6 +280,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -358,20 +297,6 @@
         "summary": "Listar pacientes",
         "description": "Devuelve pacientes activos con sus datos de usuario, paginacion y busqueda opcional.",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "search",
             "in": "query",
@@ -401,6 +326,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -411,22 +342,7 @@
         ],
         "summary": "Obtener mi perfil de paciente",
         "description": "Devuelve el perfil del paciente autenticado y crea el registro base si todavia no existe.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Perfil del paciente autenticado."
@@ -448,6 +364,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       },
       "put": {
@@ -456,22 +378,7 @@
         ],
         "summary": "Actualizar mi perfil de paciente",
         "description": "Actualiza los campos de usuario y del perfil clinico del paciente autenticado.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Perfil actualizado."
@@ -623,7 +530,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/patients/with-user": {
@@ -633,22 +546,7 @@
         ],
         "summary": "Crear paciente con cuenta de usuario",
         "description": "Crea una cuenta y su perfil de paciente, o agrega el perfil a un usuario existente cuando promote_existing es true.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Usuario existente localizado; se requiere confirmacion de promocion."
@@ -780,7 +678,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/patients/user/{userId}": {
@@ -795,20 +699,6 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -835,6 +725,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -850,20 +746,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -893,6 +775,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       },
       "put": {
@@ -906,20 +794,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -1046,7 +920,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -1059,20 +939,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -1102,6 +968,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -1113,13 +985,6 @@
         "summary": "Listar doctores activos",
         "description": "Devuelve doctores activos con paginacion, busqueda y filtro opcional por especialidad.",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "specialty_id",
             "in": "query",
@@ -1152,7 +1017,13 @@
           "500": {
             "description": "Error interno al listar los doctores."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -1160,22 +1031,7 @@
         ],
         "summary": "Crear perfil de doctor",
         "description": "Crea un perfil de doctor para un usuario existente.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Perfil de doctor creado."
@@ -1237,7 +1093,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctors/specialty/{specialtyId}": {
@@ -1255,13 +1117,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -1274,7 +1129,13 @@
           "500": {
             "description": "Error interno al consultar los doctores."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctors/me": {
@@ -1284,22 +1145,7 @@
         ],
         "summary": "Obtener mi perfil de doctor",
         "description": "Devuelve el perfil de doctor asociado al usuario autenticado.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Perfil del doctor autenticado."
@@ -1324,6 +1170,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       },
       "put": {
@@ -1332,22 +1184,7 @@
         ],
         "summary": "Actualizar mi perfil de doctor",
         "description": "Actualiza datos personales del usuario y la biografia del perfil de doctor autenticado.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Perfil actualizado."
@@ -1403,7 +1240,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctors/my-patients": {
@@ -1413,22 +1256,7 @@
         ],
         "summary": "Listar mis pacientes",
         "description": "Devuelve los pacientes unicos que tienen citas no canceladas con el doctor autenticado.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Pacientes del doctor autenticado."
@@ -1453,6 +1281,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -1463,22 +1297,7 @@
         ],
         "summary": "Crear doctor con cuenta de usuario",
         "description": "Crea una cuenta y su perfil de doctor, o promueve un usuario existente cuando promote_existing es true.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Usuario existente localizado; se requiere confirmacion de promocion."
@@ -1564,7 +1383,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctors/{id}": {
@@ -1579,13 +1404,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -1604,7 +1422,13 @@
           "500": {
             "description": "Error interno al obtener el doctor."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -1617,20 +1441,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -1688,7 +1498,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -1701,20 +1517,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -1744,6 +1546,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -1759,20 +1567,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -1805,6 +1599,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -1815,22 +1615,7 @@
         ],
         "summary": "Listar citas",
         "description": "Lista las citas con paginacion y filtros opcionales por estado, doctor o paciente.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Listado paginado de citas."
@@ -1849,6 +1634,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       },
       "post": {
@@ -1857,22 +1648,7 @@
         ],
         "summary": "Crear cita",
         "description": "Crea una cita para el paciente autenticado y calcula su hora de finalizacion.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Cita creada."
@@ -1939,7 +1715,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/appointments/unbilled": {
@@ -1949,22 +1731,7 @@
         ],
         "summary": "Listar citas completadas sin facturar",
         "description": "Devuelve las citas completadas que todavia no tienen un registro de facturacion.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Listado de citas sin facturar."
@@ -1986,6 +1753,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -1996,22 +1769,7 @@
         ],
         "summary": "Listar mis citas como paciente",
         "description": "Devuelve las citas del paciente autenticado con filtros opcionales por estado y proximidad.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Citas del paciente autenticado."
@@ -2033,6 +1791,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -2048,20 +1812,6 @@
             "name": "patientUserId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2088,6 +1838,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -2098,22 +1854,7 @@
         ],
         "summary": "Listar mis citas como doctor",
         "description": "Devuelve las citas asignadas al doctor autenticado con filtros opcionales de fecha y estado.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Citas del doctor autenticado."
@@ -2138,6 +1879,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -2153,20 +1900,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2193,6 +1926,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       },
       "put": {
@@ -2206,20 +1945,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2275,7 +2000,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "patch": {
         "tags": [
@@ -2288,20 +2019,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2361,7 +2078,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -2374,20 +2097,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2433,7 +2142,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/appointments/{id}/status": {
@@ -2448,20 +2163,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2513,7 +2214,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/appointments/{id}/confirm": {
@@ -2528,20 +2235,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2574,6 +2267,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -2589,20 +2288,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2635,6 +2320,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -2650,20 +2341,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2712,7 +2389,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/specialties/": {
@@ -2722,15 +2405,7 @@
         ],
         "summary": "Listar especialidades",
         "description": "Devuelve todas las especialidades ordenadas por nombre.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Listado de especialidades."
@@ -2741,7 +2416,13 @@
           "500": {
             "description": "Error interno al listar las especialidades."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -2749,22 +2430,7 @@
         ],
         "summary": "Crear especialidad",
         "description": "Crea una especialidad con nombre unico, descripcion y tarifa opcionales.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Especialidad creada."
@@ -2817,7 +2483,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/specialties/stats": {
@@ -2827,15 +2499,7 @@
         ],
         "summary": "Obtener estadisticas de especialidades",
         "description": "Devuelve conteos de especialidades y doctores, incluida la especialidad con mas doctores activos.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Estadisticas de especialidades."
@@ -2846,7 +2510,13 @@
           "500": {
             "description": "Error interno al obtener las estadisticas."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/specialties/{id}": {
@@ -2861,13 +2531,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2886,7 +2549,13 @@
           "500": {
             "description": "Error interno al obtener la especialidad."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -2899,20 +2568,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2970,7 +2625,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -2983,20 +2644,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -3026,6 +2673,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
         ]
       }
     },
@@ -3033,13 +2686,6 @@
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "doctor_id",
             "in": "query",
@@ -3052,26 +2698,17 @@
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3082,7 +2719,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/doctor/{doctorId}": {
@@ -3096,41 +2739,25 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/me": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3141,26 +2768,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3185,7 +2803,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/{id}": {
@@ -3199,20 +2823,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3225,7 +2835,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -3237,20 +2853,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3263,7 +2865,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -3275,20 +2883,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3301,28 +2895,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/bulk": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3350,7 +2935,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/doctor/{doctorId}": {
@@ -3361,13 +2952,6 @@
             "name": "doctorId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -3391,27 +2975,19 @@
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/me": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "startDate",
             "in": "query",
@@ -3437,28 +3013,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3501,7 +3068,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/{id}": {
@@ -3512,20 +3085,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -3541,28 +3100,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/request": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3602,28 +3152,19 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/my-requests": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3634,7 +3175,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/request/{id}": {
@@ -3648,20 +3195,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3674,28 +3207,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/pending": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3706,7 +3230,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/{id}/approve": {
@@ -3720,20 +3250,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3760,7 +3276,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/schedules/exceptions/{id}/reject": {
@@ -3774,20 +3296,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3814,28 +3322,19 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3846,26 +3345,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3876,26 +3366,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3906,28 +3387,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/lab-reports/all": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -3938,7 +3410,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/lab-reports/{reportId}/status": {
@@ -3952,20 +3430,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3978,7 +3442,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/lab-reports/{reportId}/results": {
@@ -3992,20 +3462,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4018,7 +3474,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -4030,20 +3492,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4056,28 +3504,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/lab-reports": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4088,26 +3527,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4118,7 +3548,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/lab-reports/appointment/{appointmentId}": {
@@ -4132,20 +3568,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4158,28 +3580,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/lab-reports/doctor": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4190,28 +3603,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/lab-reports/patient-upload": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4222,7 +3626,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/lab-reports/{reportId}/patient-results": {
@@ -4236,20 +3646,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4262,7 +3658,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-records/{patientId}": {
@@ -4276,20 +3678,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4302,7 +3690,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -4314,20 +3708,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4340,28 +3720,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescriptions/": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4372,26 +3743,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4402,28 +3764,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescriptions/generate-qr-codes": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4434,7 +3787,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescriptions/appointment/{appointmentId}": {
@@ -4448,20 +3807,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4474,7 +3819,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescriptions/{id}": {
@@ -4488,20 +3839,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4511,7 +3848,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -4523,20 +3866,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4549,7 +3878,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -4561,20 +3896,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4587,28 +3908,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescription-renewals/": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4619,26 +3931,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4649,28 +3952,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescription-renewals/pending-count": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4681,7 +3975,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescription-renewals/{id}": {
@@ -4695,20 +3995,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4721,7 +4007,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -4733,20 +4025,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4759,7 +4037,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescription-renewals/{id}/approve": {
@@ -4773,20 +4057,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4799,7 +4069,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/prescription-renewals/{id}/reject": {
@@ -4813,20 +4089,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4839,27 +4101,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billings/": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "patientId",
             "in": "query",
@@ -4903,26 +4157,17 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -4933,7 +4178,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billings/{id}": {
@@ -4947,20 +4198,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -4970,7 +4207,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -4979,20 +4222,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -5008,7 +4237,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billings/{id}/status": {
@@ -5022,20 +4257,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5048,20 +4269,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultation-rooms/": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "activeOnly",
             "in": "query",
@@ -5074,26 +4294,17 @@
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -5104,26 +4315,30 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultation-rooms/available": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultation-rooms/{id}": {
@@ -5137,20 +4352,19 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -5162,20 +4376,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5188,7 +4388,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -5200,20 +4406,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5226,7 +4418,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultation-rooms/{id}/availability": {
@@ -5240,20 +4438,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5266,28 +4450,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultation-notes/": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -5298,26 +4473,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -5328,7 +4494,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultation-notes/appointment/{appointmentId}": {
@@ -5342,20 +4514,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5368,7 +4526,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultation-notes/{id}": {
@@ -5382,20 +4546,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5405,7 +4555,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -5417,20 +4573,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5443,7 +4585,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -5455,20 +4603,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5481,27 +4615,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctor-ratings/": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "limit",
             "in": "query",
@@ -5527,26 +4653,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -5557,28 +4674,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctor-ratings/averages": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -5589,7 +4697,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctor-ratings/doctor/{doctorId}": {
@@ -5600,20 +4714,6 @@
             "name": "doctorId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -5633,7 +4733,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctor-ratings/doctor/{doctorId}/average": {
@@ -5647,20 +4753,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5670,7 +4762,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctor-ratings/appointment/{appointmentId}": {
@@ -5684,20 +4782,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5707,7 +4791,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/doctor-ratings/{id}": {
@@ -5721,20 +4811,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5744,7 +4820,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -5756,20 +4838,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5782,7 +4850,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -5794,20 +4868,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5820,27 +4880,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/waiting-list/": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "doctor_id",
             "in": "query",
@@ -5873,26 +4925,17 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -5903,7 +4946,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/waiting-list/doctor/{doctorId}/count": {
@@ -5917,20 +4966,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5943,7 +4978,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/waiting-list/{id}": {
@@ -5957,20 +4998,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -5980,7 +5007,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -5989,20 +5022,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -6018,7 +5037,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -6027,20 +5052,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -6070,7 +5081,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/waiting-list/{id}/status": {
@@ -6081,20 +5098,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -6110,27 +5113,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-services/": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "category",
             "in": "query",
@@ -6153,26 +5148,17 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -6183,28 +5169,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-services/categories": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -6212,7 +5189,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/medical-services/{id}": {
@@ -6226,20 +5209,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6249,7 +5218,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -6261,20 +5236,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6287,7 +5248,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -6299,20 +5266,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6325,7 +5278,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-items/billing/{billingId}": {
@@ -6339,20 +5298,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6365,28 +5310,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-items/": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -6397,7 +5333,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-items/{id}": {
@@ -6411,20 +5353,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6437,28 +5365,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/insurance-providers/": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -6466,26 +5385,17 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -6496,7 +5406,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/insurance-providers/{id}": {
@@ -6510,20 +5426,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6533,7 +5435,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -6545,20 +5453,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6571,7 +5465,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -6583,20 +5483,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6609,7 +5495,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/insurance-providers/code/{code}": {
@@ -6623,20 +5515,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6646,28 +5524,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/stats": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -6675,27 +5544,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "role",
             "in": "query",
@@ -6725,7 +5586,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}": {
@@ -6739,20 +5606,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6762,7 +5615,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}/status": {
@@ -6773,20 +5632,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -6813,7 +5658,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}/role": {
@@ -6824,20 +5675,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -6867,7 +5704,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}/verify-email": {
@@ -6878,20 +5721,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -6918,7 +5747,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}/activity": {
@@ -6932,20 +5767,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6955,7 +5776,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}/password-resets": {
@@ -6969,20 +5796,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -6992,7 +5805,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}/password-reset": {
@@ -7003,20 +5822,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7043,7 +5848,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}/invalidate-tokens": {
@@ -7057,20 +5868,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -7080,7 +5877,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/users/{id}/set-password": {
@@ -7091,20 +5894,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7134,28 +5923,19 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/roles": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -7163,26 +5943,17 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -7213,7 +5984,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/roles/{id}": {
@@ -7227,20 +6004,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -7250,7 +6013,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -7259,20 +6028,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7305,7 +6060,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -7314,20 +6075,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7340,7 +6087,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/roles/{id}/permissions": {
@@ -7351,20 +6104,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7391,28 +6130,19 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/administrators": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -7420,7 +6150,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/administrators/{id}": {
@@ -7434,20 +6170,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -7457,7 +6179,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/administrators/{id}/permissions": {
@@ -7468,20 +6196,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7511,7 +6225,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/administrators/{id}/super-admin": {
@@ -7525,20 +6245,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -7548,27 +6254,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/audit-logs": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "userId",
             "in": "query",
@@ -7612,28 +6310,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/audit-logs/filters": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -7641,28 +6330,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/security/permissions-matrix": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -7670,21 +6350,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -7692,7 +6370,13 @@
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/availability/doctor/{doctorId}/date/{date}": {
@@ -7718,13 +6402,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -7743,7 +6420,13 @@
           "500": {
             "description": "Error interno al calcular la disponibilidad."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/availability/doctor/{doctorId}/weekly": {
@@ -7758,13 +6441,6 @@
             "name": "doctorId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7783,7 +6459,13 @@
           "500": {
             "description": "Error interno al calcular la disponibilidad semanal."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/availability/doctor/{doctorId}/next": {
@@ -7798,13 +6480,6 @@
             "name": "doctorId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7830,7 +6505,13 @@
           "500": {
             "description": "Error interno al buscar el siguiente horario."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/availability/check": {
@@ -7840,15 +6521,7 @@
         ],
         "summary": "Verificar disponibilidad de un horario",
         "description": "Comprueba si la hora indicada esta disponible para el doctor en la fecha solicitada.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Resultado de disponibilidad del horario."
@@ -7896,7 +6569,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/scheduling/confirm-public/{appointmentId}": {
@@ -7911,13 +6590,6 @@
             "name": "appointmentId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -7942,7 +6614,13 @@
           "500": {
             "description": "Error interno al confirmar la cita."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/scheduling/book": {
@@ -7952,22 +6630,7 @@
         ],
         "summary": "Agendar una cita",
         "description": "Agenda una cita para el paciente autenticado, valida al doctor y comprueba conflictos y disponibilidad.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Cita agendada."
@@ -8028,7 +6691,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/scheduling/reschedule/{appointmentId}": {
@@ -8043,20 +6712,6 @@
             "name": "appointmentId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -8112,7 +6767,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/scheduling/cancel/{appointmentId}": {
@@ -8127,20 +6788,6 @@
             "name": "appointmentId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -8186,7 +6833,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/scheduling/confirm/{appointmentId}": {
@@ -8201,20 +6854,6 @@
             "name": "appointmentId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -8261,7 +6900,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/scheduling/start/{appointmentId}": {
@@ -8276,20 +6921,6 @@
             "name": "appointmentId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -8339,7 +6970,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
+        ]
       }
     },
     "/api/v1/scheduling/complete/{appointmentId}": {
@@ -8354,20 +6991,6 @@
             "name": "appointmentId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -8400,6 +7023,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
         ]
       }
     },
@@ -8415,20 +7044,6 @@
             "name": "appointmentId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -8475,6 +7090,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
         ]
       }
     },
@@ -8490,20 +7111,6 @@
             "name": "doctorId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -8536,6 +7143,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
         ]
       }
     },
@@ -8546,22 +7159,7 @@
         ],
         "summary": "Actualizar citas pasadas sin atencion",
         "description": "Marca como no_show las citas programadas o confirmadas cuyo horario ya finalizo.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Cantidad de citas actualizadas."
@@ -8583,6 +7181,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{businessBaseUrl}}",
+            "description": "Business API"
+          }
         ]
       }
     },
@@ -8594,20 +7198,6 @@
             "name": "appointmentId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -8623,7 +7213,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultations/complete/{appointmentId}": {
@@ -8639,20 +7235,6 @@
             }
           },
           {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "limit",
             "in": "query",
             "schema": {
@@ -8670,7 +7252,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultations/patient/{patientUserId}/summary": {
@@ -8686,20 +7274,6 @@
             }
           },
           {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "limit",
             "in": "query",
             "schema": {
@@ -8717,7 +7291,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultations/patient/{patientUserId}/appointments": {
@@ -8731,20 +7311,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -8757,7 +7323,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultations/{appointmentId}/prescriptions": {
@@ -8771,20 +7343,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -8797,7 +7355,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultations/{appointmentId}/prescription": {
@@ -8811,20 +7375,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -8837,7 +7387,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/consultations/{appointmentId}/create-follow-up": {
@@ -8851,20 +7407,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -8877,28 +7419,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-calculations/my-billings": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -8909,7 +7442,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-calculations/calculate/{appointmentId}": {
@@ -8923,20 +7462,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -8949,7 +7474,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-calculations/generate/{appointmentId}": {
@@ -8963,20 +7494,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -8989,7 +7506,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-calculations/payment/{billingId}": {
@@ -9003,20 +7526,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -9029,7 +7538,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-calculations/insurance-claim/{billingId}": {
@@ -9043,20 +7558,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -9069,27 +7570,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/billing-calculations/statistics": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "startDate",
             "in": "query",
@@ -9122,27 +7615,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/my-stats": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "startDate",
             "in": "query",
@@ -9168,27 +7653,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/my-appointments": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "startDate",
             "in": "query",
@@ -9228,27 +7705,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/my-ratings": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "limit",
             "in": "query",
@@ -9267,27 +7736,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/appointments": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "startDate",
             "in": "query",
@@ -9334,27 +7795,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/productivity": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "doctorId",
             "in": "query",
@@ -9387,27 +7840,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/patient-flow": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "startDate",
             "in": "query",
@@ -9433,27 +7878,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/revenue": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "startDate",
             "in": "query",
@@ -9493,27 +7930,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/specialty-demand": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "startDate",
             "in": "query",
@@ -9539,28 +7968,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/general-stats": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -9571,28 +7991,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/doctor-stats": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -9603,28 +8014,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reports/advanced-stats": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -9635,104 +8037,87 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/validations/appointment": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/validations/schedule": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/validations/medical-record": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/validations/prescription": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/validations/patient-profile/me": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -9743,7 +8128,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/validations/patient-profile/{patientUserId}": {
@@ -9757,20 +8148,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -9783,7 +8160,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/auth/google": {
@@ -9793,15 +8176,7 @@
         ],
         "summary": "Iniciar autenticacion con Google",
         "description": "Redirige al usuario a la pantalla de consentimiento de Google OAuth.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -9812,7 +8187,13 @@
           "500": {
             "description": "Error interno al iniciar Google OAuth."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/google/callback": {
@@ -9823,13 +8204,6 @@
         "summary": "Procesar callback de Google OAuth",
         "description": "Procesa el codigo devuelto por Google y redirige al frontend con el token y el usuario autenticado.",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "code",
             "in": "query",
@@ -9855,7 +8229,13 @@
           "500": {
             "description": "Error interno durante el callback; se redirige al frontend con el error."
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/register": {
@@ -9865,15 +8245,7 @@
         ],
         "summary": "Registrar usuario",
         "description": "Crea una cuenta local, crea el perfil de paciente cuando corresponde y devuelve un JWT.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Usuario registrado y token emitido."
@@ -9941,7 +8313,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/login": {
@@ -9951,15 +8329,7 @@
         ],
         "summary": "Iniciar sesion",
         "description": "Valida las credenciales de una cuenta activa y devuelve un JWT.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Inicio de sesion exitoso."
@@ -10002,7 +8372,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/password-reset/request": {
@@ -10012,15 +8388,7 @@
         ],
         "summary": "Solicitar restablecimiento de password",
         "description": "Genera un token de restablecimiento para el email indicado y solicita el envio del correo.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Solicitud procesada sin revelar si el email existe."
@@ -10054,7 +8422,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/password-reset/confirm": {
@@ -10064,15 +8438,7 @@
         ],
         "summary": "Confirmar restablecimiento de password",
         "description": "Actualiza el password usando un token de restablecimiento vigente y no utilizado.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Password actualizado."
@@ -10112,7 +8478,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/change-password": {
@@ -10122,22 +8494,7 @@
         ],
         "summary": "Cambiar password autenticado",
         "description": "Comprueba el password actual y lo reemplaza por uno nuevo para el usuario autenticado.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Password cambiado."
@@ -10189,7 +8546,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/refresh-token": {
@@ -10199,15 +8562,7 @@
         ],
         "summary": "Renovar JWT",
         "description": "Emite un JWT nuevo a partir de un token existente que no supere la antiguedad permitida.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "JWT renovado."
@@ -10240,7 +8595,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/logout": {
@@ -10250,22 +8611,7 @@
         ],
         "summary": "Cerrar sesion",
         "description": "Cierra la sesion del usuario autenticado y elimina la sesion indicada cuando se envia sessionId.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Sesion cerrada."
@@ -10300,7 +8646,13 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
+        ]
       }
     },
     "/api/v1/auth/me": {
@@ -10310,22 +8662,7 @@
         ],
         "summary": "Obtener usuario autenticado",
         "description": "Devuelve los datos del usuario cargados por el middleware de autenticacion.",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Usuario autenticado."
@@ -10344,6 +8681,12 @@
           {
             "bearerAuth": []
           }
+        ],
+        "servers": [
+          {
+            "url": "{{externalBaseUrl}}",
+            "description": "External API"
+          }
         ]
       }
     },
@@ -10351,20 +8694,6 @@
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "limit",
             "in": "query",
@@ -10387,28 +8716,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/user/unread-count": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10416,7 +8736,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/{id}/read": {
@@ -10430,20 +8756,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -10453,7 +8765,13 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/{id}": {
@@ -10467,20 +8785,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -10490,27 +8794,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/broadcasts": {
       "get": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "limit",
             "in": "query",
@@ -10529,28 +8825,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/appointment-confirmation": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10561,28 +8848,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/appointment-cancellation": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10593,28 +8871,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/prescription": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10625,28 +8894,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/custom": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10695,28 +8955,19 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/password-reset-link": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10750,28 +9001,19 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/notifications/temporary-password": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10802,28 +9044,19 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reminders/process": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10834,28 +9067,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reminders/create": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10866,28 +9090,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reminders/pending/count": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -10898,7 +9113,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reminders/due/{hours}": {
@@ -10912,20 +9133,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -10938,7 +9145,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/reminders/appointment/{appointmentId}": {
@@ -10952,20 +9165,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -10978,7 +9177,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -10990,20 +9195,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -11016,7 +9207,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/qr-codes/verify-prescription/{token}": {
@@ -11030,20 +9227,19 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/qr-codes/prescription/{prescriptionId}": {
@@ -11054,20 +9250,6 @@
             "name": "prescriptionId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -11083,7 +9265,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/qr-codes/appointment/{appointmentId}": {
@@ -11097,20 +9285,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -11120,28 +9294,19 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/qr-codes/patient/check-in": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "204": {
             "description": "No Content"
@@ -11166,27 +9331,19 @@
               }
             }
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     },
     "/api/v1/qr-codes/verify": {
       "post": {
         "description": "",
         "parameters": [
-          {
-            "name": "origin",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "x-forwarded-for",
             "in": "header",
@@ -11205,7 +9362,13 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "servers": [
+          {
+            "url": "{{crudBaseUrl}}",
+            "description": "CRUD API"
+          }
+        ]
       }
     }
   },
