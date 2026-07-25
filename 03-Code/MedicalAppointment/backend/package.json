@@ -25,7 +25,10 @@
     "dev:business": "nodemon business-api/server.js",
     "dev:external": "nodemon external-api/server.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "swagger": "node swagger/swagger.js",
+    "swagger:principal": "node swagger/filter-principal.js",
+    "swagger:servers": "node swagger/filter-servers.js"
   },
   "keywords": [
     "medical",
