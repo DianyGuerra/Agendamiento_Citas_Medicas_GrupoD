@@ -3,12 +3,14 @@ module.exports = {
   roots: ['<rootDir>/../tests/patients'],
   testMatch: [
     '**/crudPatient.test.js',
+    '**/patientController.test.js',
     '**/businessPatient.test.js'
   ],
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
     '<rootDir>/crud-api/routes/patient.routes.js',
+    '<rootDir>/crud-api/controllers/patient.controller.js',
     '<rootDir>/crud-api/repositories/patient.repository.js',
     '<rootDir>/business-api/services/validation.service.js',
     '<rootDir>/business-api/services/billingCalculation.service.js'

@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Coverage
+coverage/
+**/coverage/
+
+# Reports
+coverage-final.json
+lcov.info
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Vercel
+.vercel/
+
+# Scanner
+.scannerwork/
+
+# Claude
+.claude/
+CLAUDE.md
+
+# Zip files
+*.zip

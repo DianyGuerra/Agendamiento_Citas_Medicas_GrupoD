@@ -61,6 +61,13 @@ app.use(compression());
 app.use(requestLogger);
 
 // =============================================================================
+// SWAGGER DOCS
+// =============================================================================
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('../swagger/swagger-output.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+// =============================================================================
 // HEALTH CHECK & INFO
 // =============================================================================
 

@@ -230,6 +230,29 @@ describe('Business layer unit tests - Patient-related business-api', () => {
 			expect(Array.isArray(rows)).toBe(true);
 		});
 
+		test('calculateBilling defaults duration to 30 minutes when schedule timestamps are missing', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const appointmentQuery = createQueryMock({
+				data: {
+					id: 'apt-4',
+					patient_user_id: 'patient-4',
+					doctors: { id: 'doctor-4', specialties: { name: 'General', consultation_fee: '80.00' } },
+					scheduled_start: null,
+					scheduled_end: null
+				},
+				error: null
+			});
+			const patientQuery = createQueryMock({ data: { insurance_plan: null, insurance_number: null }, error: null });
+
+			fromMock.mockReturnValueOnce(appointmentQuery).mockReturnValueOnce(patientQuery);
+
+			const result = await service.calculateBilling('apt-4');
+
+			expect(result.breakdown.durationMinutes).toBe(30);
+			expect(result.breakdown.durationMultiplier).toBe(1.0);
+		});
+
 		test('calculateBilling handles appointment with null doctor specialties', async () => {
 			const { service, fromMock } = loadBillingCalculationService();
 
@@ -456,6 +479,238 @@ describe('Business layer unit tests - Patient-related business-api', () => {
 			expect(result.pendingAmount).toBe(50);
 			expect(result.overdueAmount).toBe(75);
 			expect(parseFloat(result.collectionRate)).toBeCloseTo(44.44, 2);
+		});
+
+		test('calculateBilling throws NotFoundError when the appointment does not exist', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const appointmentQuery = createQueryMock({ data: null, error: { code: 'PGRST116' } });
+			fromMock.mockReturnValueOnce(appointmentQuery);
+
+			await expect(service.calculateBilling('missing-apt')).rejects.toThrow('Cita');
+		});
+
+		test('generateBillingRecord rejects when a billing already exists for the appointment', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const appointmentQuery = createQueryMock({
+				data: {
+					id: 'apt-1',
+					patient_user_id: 'patient-1',
+					doctors: { id: 'doctor-1', specialties: null },
+					scheduled_start: '2026-08-01T09:00:00.000Z',
+					scheduled_end: '2026-08-01T09:30:00.000Z'
+				},
+				error: null
+			});
+			const patientQuery = createQueryMock({ data: { insurance_plan: null, insurance_number: null }, error: null });
+			const appointmentQuery2 = createQueryMock({
+				data: { patient_user_id: 'patient-1', doctors: { id: 'doctor-1' } },
+				error: null
+			});
+			const existingBillingQuery = createQueryMock({ data: { id: 'existing-bill' }, error: null });
+
+			fromMock
+				.mockReturnValueOnce(appointmentQuery)
+				.mockReturnValueOnce(patientQuery)
+				.mockReturnValueOnce(appointmentQuery2)
+				.mockReturnValueOnce(existingBillingQuery);
+
+			await expect(service.generateBillingRecord('apt-1')).rejects.toThrow('Ya existe una factura');
+		});
+
+		test('processPayment throws NotFoundError when the billing does not exist', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const billingQuery = createQueryMock({ data: null, error: { code: 'PGRST116' } });
+			fromMock.mockReturnValueOnce(billingQuery);
+
+			await expect(service.processPayment('missing-bill', { payment_method: 'cash' })).rejects.toThrow('Factura');
+		});
+
+		test('applyInsuranceClaim throws NotFoundError when the billing does not exist', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const billingQuery = createQueryMock({ data: null, error: { code: 'PGRST116' } });
+			fromMock.mockReturnValueOnce(billingQuery);
+
+			await expect(service.applyInsuranceClaim('missing-bill', { claim_number: 'CLM-1', approved_amount: 0 }))
+				.rejects.toThrow('Factura');
+		});
+
+		test('generateBillingRecord throws when the insert itself returns an error', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const appointmentQuery = createQueryMock({
+				data: {
+					id: 'apt-1',
+					patient_user_id: 'patient-1',
+					doctors: { id: 'doctor-1', specialties: null },
+					scheduled_start: '2026-08-01T09:00:00.000Z',
+					scheduled_end: '2026-08-01T09:30:00.000Z'
+				},
+				error: null
+			});
+			const patientQuery = createQueryMock({ data: { insurance_plan: null, insurance_number: null }, error: null });
+			const appointmentQuery2 = createQueryMock({ data: { patient_user_id: 'patient-1', doctors: { id: 'doctor-1' } }, error: null });
+			const existingBillingQuery = createQueryMock({ data: null, error: null });
+			const insertBillingQuery = createQueryMock({ data: null, error: new Error('insert failed') });
+
+			fromMock
+				.mockReturnValueOnce(appointmentQuery)
+				.mockReturnValueOnce(patientQuery)
+				.mockReturnValueOnce(appointmentQuery2)
+				.mockReturnValueOnce(existingBillingQuery)
+				.mockReturnValueOnce(insertBillingQuery);
+
+			await expect(service.generateBillingRecord('apt-1')).rejects.toThrow('insert failed');
+		});
+
+		test('processPayment propagates an error thrown by the update query', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const billingQuery = createQueryMock({ data: { id: 'bill-1', status: 'pending', total_amount: '100' }, error: null });
+			const updateQuery = createQueryMock({ data: null, error: new Error('update failed') });
+
+			fromMock.mockReturnValueOnce(billingQuery).mockReturnValueOnce(updateQuery);
+
+			await expect(service.processPayment('bill-1', { payment_method: 'cash' })).rejects.toThrow('update failed');
+		});
+
+		test('applyInsuranceClaim keeps existing status when patient still owes a balance', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const billingQuery = createQueryMock({ data: { id: 'bill-1', status: 'pending', total_amount: '100' }, error: null });
+			const updateQuery = createQueryMock({ data: { id: 'bill-1', status: 'pending' }, error: null });
+
+			fromMock.mockReturnValueOnce(billingQuery).mockReturnValueOnce(updateQuery);
+
+			const result = await service.applyInsuranceClaim('bill-1', { claim_number: 'CLM-2', approved_amount: 40 });
+
+			expect(result.patientResponsibility).toBe(60);
+		});
+
+		test('applyInsuranceClaim propagates an error thrown by the update query', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const billingQuery = createQueryMock({ data: { id: 'bill-1', status: 'pending', total_amount: '100' }, error: null });
+			const updateQuery = createQueryMock({ data: null, error: new Error('update failed') });
+
+			fromMock.mockReturnValueOnce(billingQuery).mockReturnValueOnce(updateQuery);
+
+			await expect(service.applyInsuranceClaim('bill-1', { claim_number: 'CLM-3', approved_amount: 10 }))
+				.rejects.toThrow('update failed');
+		});
+
+		test('getBillingStatistics throws when the query returns an error', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const query = createQueryMock({ data: null, error: new Error('stats query failed') });
+			fromMock.mockReturnValueOnce(query);
+
+			await expect(service.getBillingStatistics()).rejects.toThrow('stats query failed');
+		});
+
+		test('getBillingStatistics handles missing status/amount and repeated status keys', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const query = createQueryMock({
+				data: [
+					{ total_amount: '100', status: 'paid', created_at: '2026-08-01' },
+					{ total_amount: undefined, status: 'paid', created_at: '2026-08-01' },
+					{ total_amount: '50', status: undefined, created_at: '2026-08-02' },
+					{ total_amount: 'not-a-number', status: 'pending', created_at: '2026-08-02' },
+					{ total_amount: null, status: 'overdue', created_at: '2026-08-03' }
+				],
+				error: null
+			});
+
+			fromMock.mockReturnValueOnce(query);
+
+			const result = await service.getBillingStatistics();
+
+			expect(result.totalBillings).toBe(5);
+			expect(result.byStatus.paid.count).toBe(2);
+			expect(result.byStatus.unknown.count).toBe(1);
+			expect(result.pendingAmount).toBe(0);
+			expect(result.overdueAmount).toBe(0);
+		});
+
+		test('getPatientBillings throws when the query returns an error', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const query = createQueryMock({ data: null, error: new Error('billings query failed') });
+			fromMock.mockReturnValueOnce(query);
+
+			await expect(service.getPatientBillings('patient-1')).rejects.toThrow('billings query failed');
+		});
+
+		test('getPatientBillings returns empty array when data is null', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const query = createQueryMock({ data: null, error: null });
+			fromMock.mockReturnValueOnce(query);
+
+			const rows = await service.getPatientBillings('patient-1');
+
+			expect(rows).toEqual([]);
+		});
+
+		test('getPatientBillings falls back to defaults when amount, status and doctor data are missing', async () => {
+			const { service, fromMock } = loadBillingCalculationService();
+
+			const query = createQueryMock({
+				data: [
+					{ id: 'bill-2', total_amount: 0, status: null, appointments: null }
+				],
+				error: null
+			});
+
+			fromMock.mockReturnValueOnce(query);
+
+			const rows = await service.getPatientBillings('patient-1');
+
+			expect(rows[0]).toMatchObject({
+				amount: 0,
+				status_code: null,
+				status_label: 'Pending',
+				doctor_first_name: '',
+				doctor_last_name: '',
+				specialty_name: ''
+			});
+		});
+
+		describe('private helper methods', () => {
+			test('_getInsuranceDiscount returns 0 immediately when no provider id is given', async () => {
+				const { service } = loadBillingCalculationService();
+
+				const discount = await service._getInsuranceDiscount(null);
+
+				expect(discount).toBe(0);
+			});
+
+			test('_getInsuranceDiscount defaults to 15% when the provider has no coverage_percentage on record', async () => {
+				const { service, fromMock } = loadBillingCalculationService();
+				fromMock.mockReturnValueOnce(createQueryMock({ data: { coverage_percentage: null }, error: null }));
+
+				const discount = await service._getInsuranceDiscount('provider-1');
+
+				expect(discount).toBe(15);
+			});
+
+			test('_getDurationMultiplier returns 1.0 when duration is falsy', () => {
+				const { service } = loadBillingCalculationService();
+
+				expect(service._getDurationMultiplier(0)).toBe(1.0);
+				expect(service._getDurationMultiplier(null)).toBe(1.0);
+			});
+
+			test('_getBillingStatus falls back to pending for an unrecognized status code', () => {
+				const { service } = loadBillingCalculationService();
+
+				expect(service._getBillingStatus('not-a-real-status')).toBe('pending');
+				expect(service._getBillingStatus('paid')).toBe('paid');
+			});
 		});
 
 		test('getBillingStatistics returns zero values for empty result', async () => {
@@ -760,6 +1015,30 @@ describe('Business layer unit tests - Patient-related business-api', () => {
 			);
 		});
 
+		test('validateScheduleConfiguration accepts a valid day name string without a day_of_week error', () => {
+			const { service } = loadValidationService();
+
+			const result = service.validateScheduleConfiguration({
+				day_of_week: 'monday',
+				start_time: '08:00',
+				end_time: '17:00'
+			});
+
+			expect(result.errors.find(e => e.field === 'day_of_week')).toBeUndefined();
+		});
+
+		test('validateScheduleConfiguration skips the day_of_week check entirely when it is neither a number nor a string', () => {
+			const { service } = loadValidationService();
+
+			const result = service.validateScheduleConfiguration({
+				day_of_week: null,
+				start_time: '08:00',
+				end_time: '17:00'
+			});
+
+			expect(result.errors.find(e => e.field === 'day_of_week')).toBeUndefined();
+		});
+
 		test('validateScheduleConfiguration accepts valid schedule', () => {
 			const { service } = loadValidationService();
 
@@ -1033,6 +1312,183 @@ describe('Business layer unit tests - Patient-related business-api', () => {
 					})
 				])
 			);
+		});
+
+		test('validateAppointmentBooking warns when appointment is less than 24 hours away', async () => {
+			const { service } = loadValidationService();
+
+			jest.spyOn(service, '_checkPatientStatus').mockResolvedValue({ isActive: true });
+			jest.spyOn(service, '_checkDoctorStatus').mockResolvedValue({ isActive: true });
+			jest.spyOn(service, '_checkAppointmentConflicts').mockResolvedValue({
+				patientConflict: false,
+				doctorConflict: false
+			});
+
+			jest.useFakeTimers();
+			jest.setSystemTime(new Date(2026, 7, 3, 10, 0, 0)); // Monday Aug 3 2026, 10:00 local
+
+			try {
+				const result = await service.validateAppointmentBooking({
+					patient_user_id: 'patient-1',
+					doctor_id: 'doctor-1',
+					scheduled_start: new Date(2026, 7, 3, 14, 0, 0).toISOString()
+				});
+
+				expect(result.warnings).toEqual(
+					expect.arrayContaining([
+						expect.objectContaining({
+							field: 'scheduled_start',
+							message: expect.stringContaining('24 horas')
+						})
+					])
+				);
+			} finally {
+				jest.useRealTimers();
+			}
+		});
+
+		test('validatePatientProfile lists missing optional patient fields and recommendations', async () => {
+			const { service, fromMock } = loadValidationService();
+			const query = createQueryMock({
+				data: {
+					id: 'patient-1',
+					first_name: 'Ana',
+					last_name: 'Lopez',
+					email: 'ana@example.com',
+					phone: '123',
+					patients: {
+						id: 'pat-1',
+						date_of_birth: '1990-01-01',
+						gender: 'female',
+						address: null,
+						emergency_contact_name: null,
+						blood_type: null,
+						insurance_provider_id: null
+					}
+				},
+				error: null
+			});
+
+			fromMock.mockReturnValueOnce(query);
+
+			const result = await service.validatePatientProfile('patient-1');
+
+			expect(result.missingFields).toEqual(
+				expect.arrayContaining([
+					expect.objectContaining({ field: 'address', required: false }),
+					expect.objectContaining({ field: 'emergency_contact_name', required: false }),
+					expect.objectContaining({ field: 'blood_type', required: false }),
+					expect.objectContaining({ field: 'insurance_provider_id', required: false })
+				])
+			);
+			expect(result.recommendations).toEqual(
+				expect.arrayContaining([
+					expect.stringContaining('contacto de emergencia'),
+					expect.stringContaining('información de seguro'),
+					expect.stringContaining('tipo de sangre')
+				])
+			);
+		});
+
+		describe('private status/conflict helpers', () => {
+			test('_checkPatientStatus returns isActive true when the user is active', async () => {
+				const { service, fromMock } = loadValidationService();
+				fromMock.mockReturnValueOnce(createQueryMock({ data: { is_active: true }, error: null }));
+
+				const result = await service._checkPatientStatus('patient-1');
+
+				expect(result).toEqual({ isActive: true });
+			});
+
+			test('_checkPatientStatus returns isActive false when no user data is found', async () => {
+				const { service, fromMock } = loadValidationService();
+				fromMock.mockReturnValueOnce(createQueryMock({ data: null, error: { code: 'PGRST116' } }));
+
+				const result = await service._checkPatientStatus('missing-patient');
+
+				expect(result).toEqual({ isActive: false });
+			});
+
+			test('_checkDoctorStatus returns isActive true when doctor and user are both active', async () => {
+				const { service, fromMock } = loadValidationService();
+				fromMock.mockReturnValueOnce(createQueryMock({
+					data: { active: true, users: { is_active: true } },
+					error: null
+				}));
+
+				const result = await service._checkDoctorStatus('doctor-1');
+
+				expect(result).toEqual({ isActive: true });
+			});
+
+			test('_checkDoctorStatus returns isActive false when doctor record is inactive', async () => {
+				const { service, fromMock } = loadValidationService();
+				fromMock.mockReturnValueOnce(createQueryMock({
+					data: { active: false, users: { is_active: true } },
+					error: null
+				}));
+
+				const result = await service._checkDoctorStatus('doctor-1');
+
+				expect(result).toEqual({ isActive: false });
+			});
+
+			test('_checkDoctorStatus returns isActive false when no doctor data is found', async () => {
+				const { service, fromMock } = loadValidationService();
+				fromMock.mockReturnValueOnce(createQueryMock({ data: null, error: { code: 'PGRST116' } }));
+
+				const result = await service._checkDoctorStatus('missing-doctor');
+
+				expect(result).toEqual({ isActive: false });
+			});
+
+			test('_checkAppointmentConflicts detects a patient conflict within the 30 minute window', async () => {
+				const { service, fromMock } = loadValidationService();
+
+				const patientQuery = createQueryMock({
+					data: [{ id: 'apt-1', scheduled_start: '2026-08-03T10:10:00.000Z' }],
+					error: null
+				});
+				const doctorQuery = createQueryMock({ data: [], error: null });
+
+				fromMock.mockReturnValueOnce(patientQuery).mockReturnValueOnce(doctorQuery);
+
+				const result = await service._checkAppointmentConflicts('patient-1', 'doctor-1', '2026-08-03T10:00:00.000Z');
+
+				expect(result).toEqual({ patientConflict: true, doctorConflict: false });
+			});
+
+			test('_checkAppointmentConflicts detects a doctor conflict and handles null data', async () => {
+				const { service, fromMock } = loadValidationService();
+
+				const patientQuery = createQueryMock({ data: null, error: null });
+				const doctorQuery = createQueryMock({
+					data: [{ id: 'apt-2', scheduled_start: '2026-08-03T10:05:00.000Z' }],
+					error: null
+				});
+
+				fromMock.mockReturnValueOnce(patientQuery).mockReturnValueOnce(doctorQuery);
+
+				const result = await service._checkAppointmentConflicts('patient-1', 'doctor-1', '2026-08-03T10:00:00.000Z');
+
+				expect(result).toEqual({ patientConflict: false, doctorConflict: true });
+			});
+
+			test('_checkAppointmentConflicts returns no conflicts when appointments do not overlap', async () => {
+				const { service, fromMock } = loadValidationService();
+
+				const patientQuery = createQueryMock({
+					data: [{ id: 'apt-3', scheduled_start: '2026-08-03T13:00:00.000Z' }],
+					error: null
+				});
+				const doctorQuery = createQueryMock({ data: [], error: null });
+
+				fromMock.mockReturnValueOnce(patientQuery).mockReturnValueOnce(doctorQuery);
+
+				const result = await service._checkAppointmentConflicts('patient-1', 'doctor-1', '2026-08-03T10:00:00.000Z');
+
+				expect(result).toEqual({ patientConflict: false, doctorConflict: false });
+			});
 		});
 
 		test('validatePrescription rejects missing doctor', () => {
