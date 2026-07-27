@@ -160,15 +160,6 @@ export default function (data) {
       { headers: { Authorization: `Bearer ${patientToken}` } }
     );
 
-    /* 
-    // Opción B: Cancelación lógica si tu API no permite DELETE directo
-    const delRes = http.post(
-      `${businessBaseUrl}/api/v1/scheduling/cancel/${appointmentId}`,
-      JSON.stringify({ reason: 'Cancelación por prueba k6' }),
-      { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${patientToken}` } }
-    );
-    */
-
     check(delRes, {
       'appointment deleted/cancelled 200': r => r.status === 200 || r.status === 204
     });
