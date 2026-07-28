@@ -9,7 +9,8 @@ module.exports = [
       'node_modules/**', // Ignora paquetes instalados por npm.
       'coverage/**',    // Ignora reportes de cobertura de Jest.
       'dist/**',        // Ignora carpetas de distribución si existen.
-      'build/**'        // Ignora builds generados si existen.
+      'build/**',       // Ignora builds generados si existen.
+      'performance/k6/**' // Scripts de k6: corren en el runtime propio de k6 (ES modules), no en Node/CommonJS.
     ]
   },
 
