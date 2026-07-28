@@ -3,14 +3,8 @@ name: CI/CD Workflow
 on:
   push:
     branches: [main]
-    paths:
-      - '03-Code/MedicalAppointment/**'
-      - '.github/workflows/ci-cd.yml'
   pull_request:
     branches: [main]
-    paths:
-      - '03-Code/MedicalAppointment/**'
-      - '.github/workflows/ci-cd.yml'
   workflow_dispatch:
 
 jobs:
