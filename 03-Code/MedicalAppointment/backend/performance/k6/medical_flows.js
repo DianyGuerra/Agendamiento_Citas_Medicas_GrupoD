@@ -1,17 +1,12 @@
 import http from 'k6/http';
 import { check, group, sleep } from 'k6';
 
-// Build stages from environment variables
-const TARGET_VUS = __ENV.TARGET_VUS ? parseInt(__ENV.TARGET_VUS, 10) : 20;
-const WARMUP_DURATION = __ENV.WARMUP_DURATION || '1m';
-const LOAD_DURATION = __ENV.LOAD_DURATION || '5m';
-const COOLDOWN_DURATION = __ENV.COOLDOWN_DURATION || '1m';
 
 export const options = {
   stages: [
-    { duration: WARMUP_DURATION, target: TARGET_VUS }, // calentamiento
-    { duration: LOAD_DURATION, target: TARGET_VUS },   // carga
-    { duration: COOLDOWN_DURATION, target: 0 },        // enfriamiento
+    { duration: '2m', target: 100 }, // Subida inicial ligera
+    { duration: '5m', target: 600 }, // Mantiene la meseta de carga máxima
+    { duration: '2m', target: 0 },   // Bajada progresiva a cero
   ],
   thresholds: {
     // El 95% de las peticiones debe durar menos de 1.2s
@@ -113,7 +108,7 @@ export default function (data) {
 
       if (doctorId) {
         const av = http.get(`${businessBaseUrl}/api/v1/availability/doctor/${doctorId}/date/${scheduledDate}`);
-        check(av, { 'availability 200': r => r.status === 200 || r.status === 204 || r.status === 400 || r.status === 409 });
+        check(av, { 'availability 200': r => r.status === 200 || r.status === 204 });
         try {
           const js = av.json();
           const possible = js.data?.availableSlots || js.data?.slots || js.slots || js.data || [];
@@ -128,7 +123,7 @@ export default function (data) {
       // 07 - Verificar disponibilidad de horario
       if (doctorId && scheduledTime) {
         const chk = http.post(`${businessBaseUrl}/api/v1/availability/check`, JSON.stringify({ doctorId, date: scheduledDate, time: scheduledTime }), { headers: { 'Content-Type': 'application/json' } });
-        check(chk, { 'availability/check 200': r => r.status === 200 || r.status === 204 || r.status === 409 || r.status === 400 });
+        check(chk, { 'availability/check 200': r => r.status === 200 || r.status === 204 });
       }
 
       // 08 - Agendar una cita
