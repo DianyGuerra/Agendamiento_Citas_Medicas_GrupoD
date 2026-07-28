@@ -26,5 +26,13 @@ module.exports = {
     '<rootDir>/crud-api/repositories/patient.repository.js',
     '<rootDir>/business-api/services/validation.service.js',
     '<rootDir>/business-api/services/billingCalculation.service.js'
-  ]
+  ],
+  coverageThreshold: {
+  global: {
+    statements: 100,
+    branches: 100,
+    functions: 100,
+    lines: 100
+  }
+}
 };
